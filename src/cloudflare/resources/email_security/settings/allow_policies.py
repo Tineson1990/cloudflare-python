@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Type, Iterable, Optional, cast
+from typing import Type, Union, Iterable, Optional, cast
+from datetime import datetime
 from typing_extensions import Literal
 
 import httpx
@@ -68,6 +69,7 @@ class AllowPoliciesResource(SyncAPIResource):
         pattern_type: Literal["EMAIL", "DOMAIN", "IP", "UNKNOWN"],
         verify_sender: bool,
         comments: Optional[str] | Omit = omit,
+        expires_at: Union[str, datetime, None] | Omit = omit,
         is_recipient: bool | Omit = omit,
         is_sender: bool | Omit = omit,
         is_spoof: bool | Omit = omit,
@@ -99,7 +101,8 @@ class AllowPoliciesResource(SyncAPIResource):
               (e.g. `example.com`), or a plain IPv4 or IPv6 address or CIDR block for IP (e.g.
               `1.2.3.4`, `1.2.3.0/24`, `2606:4700:4700::1111`, or `2606:4700:4700::/48`); the
               API rejects private or unique-local, loopback, link-local, unspecified, and IPv4
-              broadcast addresses, including their IPv4-mapped IPv6 equivalents.
+              broadcast addresses, including their IPv4-mapped IPv6 equivalents. The API also
+              rejects a pattern that equals a domain onboarded to the account, ignoring case.
 
           pattern_type: Type of pattern matching.
 
@@ -115,6 +118,10 @@ class AllowPoliciesResource(SyncAPIResource):
 
           verify_sender: Enforce DMARC, SPF or DKIM authentication. When on, Email Security only honors
               policies that pass authentication.
+
+          expires_at: Timestamp at which the policy expires. After this time, Email Security ignores
+              the policy. The value must lie in the future. Send `null` to clear the
+              expiration.
 
           is_recipient:
               Deprecated as of July 1, 2025. Use `is_exempt_recipient` instead. End of life:
@@ -150,6 +157,7 @@ class AllowPoliciesResource(SyncAPIResource):
                     "pattern_type": pattern_type,
                     "verify_sender": verify_sender,
                     "comments": comments,
+                    "expires_at": expires_at,
                     "is_recipient": is_recipient,
                     "is_sender": is_sender,
                     "is_spoof": is_spoof,
@@ -171,6 +179,7 @@ class AllowPoliciesResource(SyncAPIResource):
         *,
         account_id: str,
         direction: Literal["asc", "desc"] | Omit = omit,
+        expired: bool | Omit = omit,
         is_acceptable_sender: bool | Omit = omit,
         is_exempt_recipient: bool | Omit = omit,
         is_trusted_sender: bool | Omit = omit,
@@ -199,6 +208,9 @@ class AllowPoliciesResource(SyncAPIResource):
 
           direction: The sorting direction.
 
+          expired: Filter to return only expired policies (`true`) or only policies that still
+              apply (`false`). Omit to return both.
+
           is_acceptable_sender: Filter to show only policies where messages from the sender are exempted from
               Spam, Spoof, and Bulk dispositions (not Malicious or Suspicious).
 
@@ -212,17 +224,9 @@ class AllowPoliciesResource(SyncAPIResource):
 
           page: Current page within paginated list of results.
 
-          pattern_type: Type of pattern matching.
+          pattern: Filter by exact pattern value.
 
-              - EMAIL: matches a full email address (e.g. `user@example.com`)
-              - DOMAIN: matches a domain name (e.g. `example.com`)
-              - IP: matches a plain IPv4 or IPv6 address (e.g. `1.2.3.4` or
-                `2606:4700:4700::1111`) or CIDR block (e.g. `1.2.3.0/24` or
-                `2606:4700:4700::/48`). The API rejects private or unique-local, loopback,
-                link-local, unspecified, and IPv4 broadcast addresses, including their
-                IPv4-mapped IPv6 equivalents.
-              - UNKNOWN: deprecated; you cannot use this when creating or updating policies,
-                but it may appear on existing entries.
+          pattern_type: Filter by pattern type.
 
           per_page: The number of results per page. Maximum value is 1000.
 
@@ -251,6 +255,7 @@ class AllowPoliciesResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "direction": direction,
+                        "expired": expired,
                         "is_acceptable_sender": is_acceptable_sender,
                         "is_exempt_recipient": is_exempt_recipient,
                         "is_trusted_sender": is_trusted_sender,
@@ -333,14 +338,24 @@ class AllowPoliciesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[AllowPolicyBatchResponse]:
-        """Executes multiple operations atomically.
-
-        All four operation arrays (deletes,
-        patches, puts, posts) are required and executed in order. Send empty arrays for
-        unused operations.
+        """
+        Executes multiple allow policy operations atomically: delete, partially update,
+        replace, and create allow policies in a single request. All four operation
+        arrays (deletes, patches, puts, posts) are required and executed in order. Send
+        empty arrays for unused operations.
 
         Args:
           account_id: Identifier.
+
+          deletes: IDs of the allow policies to delete.
+
+          patches: Partial updates to apply — each entry carries the policy's ID and only the
+              fields to change.
+
+          posts: Allow policies to create.
+
+          puts: Full replacements to apply — each entry carries the policy's ID and every field
+              of its new value.
 
           extra_headers: Send extra headers
 
@@ -379,6 +394,7 @@ class AllowPoliciesResource(SyncAPIResource):
         *,
         account_id: str,
         comments: Optional[str] | Omit = omit,
+        expires_at: Union[str, datetime, None] | Omit = omit,
         is_acceptable_sender: bool | Omit = omit,
         is_exempt_recipient: bool | Omit = omit,
         is_recipient: bool | Omit = omit,
@@ -406,6 +422,10 @@ class AllowPoliciesResource(SyncAPIResource):
 
           policy_id: Allow policy identifier.
 
+          expires_at: Timestamp at which the policy expires. After this time, Email Security ignores
+              the policy. The value must lie in the future. Send `null` to clear the
+              expiration.
+
           is_acceptable_sender: Exempts messages from this sender from Spam, Spoof and Bulk dispositions only;
               Malicious and Suspicious dispositions still apply.
 
@@ -430,7 +450,8 @@ class AllowPoliciesResource(SyncAPIResource):
               (e.g. `example.com`), or a plain IPv4 or IPv6 address or CIDR block for IP (e.g.
               `1.2.3.4`, `1.2.3.0/24`, `2606:4700:4700::1111`, or `2606:4700:4700::/48`); the
               API rejects private or unique-local, loopback, link-local, unspecified, and IPv4
-              broadcast addresses, including their IPv4-mapped IPv6 equivalents.
+              broadcast addresses, including their IPv4-mapped IPv6 equivalents. The API also
+              rejects a pattern that equals a domain onboarded to the account, ignoring case.
 
           pattern_type: Type of pattern matching.
 
@@ -468,6 +489,7 @@ class AllowPoliciesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "comments": comments,
+                    "expires_at": expires_at,
                     "is_acceptable_sender": is_acceptable_sender,
                     "is_exempt_recipient": is_exempt_recipient,
                     "is_recipient": is_recipient,
@@ -573,6 +595,7 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
         pattern_type: Literal["EMAIL", "DOMAIN", "IP", "UNKNOWN"],
         verify_sender: bool,
         comments: Optional[str] | Omit = omit,
+        expires_at: Union[str, datetime, None] | Omit = omit,
         is_recipient: bool | Omit = omit,
         is_sender: bool | Omit = omit,
         is_spoof: bool | Omit = omit,
@@ -604,7 +627,8 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
               (e.g. `example.com`), or a plain IPv4 or IPv6 address or CIDR block for IP (e.g.
               `1.2.3.4`, `1.2.3.0/24`, `2606:4700:4700::1111`, or `2606:4700:4700::/48`); the
               API rejects private or unique-local, loopback, link-local, unspecified, and IPv4
-              broadcast addresses, including their IPv4-mapped IPv6 equivalents.
+              broadcast addresses, including their IPv4-mapped IPv6 equivalents. The API also
+              rejects a pattern that equals a domain onboarded to the account, ignoring case.
 
           pattern_type: Type of pattern matching.
 
@@ -620,6 +644,10 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
 
           verify_sender: Enforce DMARC, SPF or DKIM authentication. When on, Email Security only honors
               policies that pass authentication.
+
+          expires_at: Timestamp at which the policy expires. After this time, Email Security ignores
+              the policy. The value must lie in the future. Send `null` to clear the
+              expiration.
 
           is_recipient:
               Deprecated as of July 1, 2025. Use `is_exempt_recipient` instead. End of life:
@@ -655,6 +683,7 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
                     "pattern_type": pattern_type,
                     "verify_sender": verify_sender,
                     "comments": comments,
+                    "expires_at": expires_at,
                     "is_recipient": is_recipient,
                     "is_sender": is_sender,
                     "is_spoof": is_spoof,
@@ -676,6 +705,7 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
         *,
         account_id: str,
         direction: Literal["asc", "desc"] | Omit = omit,
+        expired: bool | Omit = omit,
         is_acceptable_sender: bool | Omit = omit,
         is_exempt_recipient: bool | Omit = omit,
         is_trusted_sender: bool | Omit = omit,
@@ -704,6 +734,9 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
 
           direction: The sorting direction.
 
+          expired: Filter to return only expired policies (`true`) or only policies that still
+              apply (`false`). Omit to return both.
+
           is_acceptable_sender: Filter to show only policies where messages from the sender are exempted from
               Spam, Spoof, and Bulk dispositions (not Malicious or Suspicious).
 
@@ -717,17 +750,9 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
 
           page: Current page within paginated list of results.
 
-          pattern_type: Type of pattern matching.
+          pattern: Filter by exact pattern value.
 
-              - EMAIL: matches a full email address (e.g. `user@example.com`)
-              - DOMAIN: matches a domain name (e.g. `example.com`)
-              - IP: matches a plain IPv4 or IPv6 address (e.g. `1.2.3.4` or
-                `2606:4700:4700::1111`) or CIDR block (e.g. `1.2.3.0/24` or
-                `2606:4700:4700::/48`). The API rejects private or unique-local, loopback,
-                link-local, unspecified, and IPv4 broadcast addresses, including their
-                IPv4-mapped IPv6 equivalents.
-              - UNKNOWN: deprecated; you cannot use this when creating or updating policies,
-                but it may appear on existing entries.
+          pattern_type: Filter by pattern type.
 
           per_page: The number of results per page. Maximum value is 1000.
 
@@ -756,6 +781,7 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
                 query=maybe_transform(
                     {
                         "direction": direction,
+                        "expired": expired,
                         "is_acceptable_sender": is_acceptable_sender,
                         "is_exempt_recipient": is_exempt_recipient,
                         "is_trusted_sender": is_trusted_sender,
@@ -838,14 +864,24 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[AllowPolicyBatchResponse]:
-        """Executes multiple operations atomically.
-
-        All four operation arrays (deletes,
-        patches, puts, posts) are required and executed in order. Send empty arrays for
-        unused operations.
+        """
+        Executes multiple allow policy operations atomically: delete, partially update,
+        replace, and create allow policies in a single request. All four operation
+        arrays (deletes, patches, puts, posts) are required and executed in order. Send
+        empty arrays for unused operations.
 
         Args:
           account_id: Identifier.
+
+          deletes: IDs of the allow policies to delete.
+
+          patches: Partial updates to apply — each entry carries the policy's ID and only the
+              fields to change.
+
+          posts: Allow policies to create.
+
+          puts: Full replacements to apply — each entry carries the policy's ID and every field
+              of its new value.
 
           extra_headers: Send extra headers
 
@@ -884,6 +920,7 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
         *,
         account_id: str,
         comments: Optional[str] | Omit = omit,
+        expires_at: Union[str, datetime, None] | Omit = omit,
         is_acceptable_sender: bool | Omit = omit,
         is_exempt_recipient: bool | Omit = omit,
         is_recipient: bool | Omit = omit,
@@ -911,6 +948,10 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
 
           policy_id: Allow policy identifier.
 
+          expires_at: Timestamp at which the policy expires. After this time, Email Security ignores
+              the policy. The value must lie in the future. Send `null` to clear the
+              expiration.
+
           is_acceptable_sender: Exempts messages from this sender from Spam, Spoof and Bulk dispositions only;
               Malicious and Suspicious dispositions still apply.
 
@@ -935,7 +976,8 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
               (e.g. `example.com`), or a plain IPv4 or IPv6 address or CIDR block for IP (e.g.
               `1.2.3.4`, `1.2.3.0/24`, `2606:4700:4700::1111`, or `2606:4700:4700::/48`); the
               API rejects private or unique-local, loopback, link-local, unspecified, and IPv4
-              broadcast addresses, including their IPv4-mapped IPv6 equivalents.
+              broadcast addresses, including their IPv4-mapped IPv6 equivalents. The API also
+              rejects a pattern that equals a domain onboarded to the account, ignoring case.
 
           pattern_type: Type of pattern matching.
 
@@ -973,6 +1015,7 @@ class AsyncAllowPoliciesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "comments": comments,
+                    "expires_at": expires_at,
                     "is_acceptable_sender": is_acceptable_sender,
                     "is_exempt_recipient": is_exempt_recipient,
                     "is_recipient": is_recipient,

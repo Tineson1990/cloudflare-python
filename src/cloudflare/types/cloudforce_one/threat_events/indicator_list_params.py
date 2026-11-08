@@ -50,10 +50,10 @@ class IndicatorListParams(TypedDict, total=False):
 
     dataset_ids: Annotated[SequenceNotStr[str], PropertyInfo(alias="datasetIds")]
     """
-    Dataset UUIDs to query, or one standalone scope value: 'all'/'\\**' for legacy
-    all-datasets behavior, 'analytics' for isAnalytics=true datasets, or
-    'operational' for isAnalytics=false datasets. If not provided, uses the default
-    dataset.
+    Dataset UUIDs to query, or one standalone scope value: 'all'/'\\**' or
+    'operational' for readable intelligence datasets (isAnalytics=false), or
+    'analytics' for readable analytics datasets (isAnalytics=true). If not provided,
+    uses the default dataset.
     """
 
     format: Literal["json", "stix2", "taxii"]
@@ -92,7 +92,10 @@ class IndicatorListParams(TypedDict, total=False):
     related_events_limit: Annotated[float, PropertyInfo(alias="relatedEventsLimit")]
     """Limit the number of related events returned per indicator.
 
-    Default: 2. Set to 0 for none, -1 for all events.
+    Default: 2. Set to 0 for none, -1 for all events. For JSON responses, when the
+    limit hides events, the indicator carries `relatedEventsHasMore: true` and the
+    response includes an advisory message — the cap is never applied silently. STIX
+    and TAXII representations do not include related-event data.
     """
 
     search: Iterable[Search]

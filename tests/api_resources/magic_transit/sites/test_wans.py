@@ -10,9 +10,7 @@ import pytest
 from cloudflare import Cloudflare, AsyncCloudflare
 from tests.utils import assert_matches_type
 from cloudflare.pagination import SyncSinglePage, AsyncSinglePage
-from cloudflare.types.magic_transit.sites import (
-    WAN,
-)
+from cloudflare.types.magic_transit.sites import WAN
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -35,12 +33,17 @@ class TestWANs:
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             physport=1,
+            health_check_rate="low",
+            load_balance_inner_flows=True,
             name="name",
             priority=0,
+            provisioned_download_kbps=500,
+            provisioned_upload_kbps=100,
             static_addressing={
                 "address": "192.0.2.0/24",
                 "gateway_address": "192.0.2.1",
                 "secondary_address": "192.0.2.0/24",
+                "secondary_gateway_address": "192.0.2.1",
             },
             vlan_tag=42,
         )
@@ -105,13 +108,18 @@ class TestWANs:
             wan_id="023e105f4ecef8ad9ca31a8372d0c353",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
+            health_check_rate="low",
+            load_balance_inner_flows=True,
             name="name",
             physport=1,
             priority=0,
+            provisioned_download_kbps=500,
+            provisioned_upload_kbps=100,
             static_addressing={
                 "address": "192.0.2.0/24",
                 "gateway_address": "192.0.2.1",
                 "secondary_address": "192.0.2.0/24",
+                "secondary_gateway_address": "192.0.2.1",
             },
             vlan_tag=42,
         )
@@ -291,13 +299,18 @@ class TestWANs:
             wan_id="023e105f4ecef8ad9ca31a8372d0c353",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
+            health_check_rate="low",
+            load_balance_inner_flows=True,
             name="name",
             physport=1,
             priority=0,
+            provisioned_download_kbps=500,
+            provisioned_upload_kbps=100,
             static_addressing={
                 "address": "192.0.2.0/24",
                 "gateway_address": "192.0.2.1",
                 "secondary_address": "192.0.2.0/24",
+                "secondary_gateway_address": "192.0.2.1",
             },
             vlan_tag=42,
         )
@@ -435,12 +448,17 @@ class TestAsyncWANs:
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             physport=1,
+            health_check_rate="low",
+            load_balance_inner_flows=True,
             name="name",
             priority=0,
+            provisioned_download_kbps=500,
+            provisioned_upload_kbps=100,
             static_addressing={
                 "address": "192.0.2.0/24",
                 "gateway_address": "192.0.2.1",
                 "secondary_address": "192.0.2.0/24",
+                "secondary_gateway_address": "192.0.2.1",
             },
             vlan_tag=42,
         )
@@ -505,13 +523,18 @@ class TestAsyncWANs:
             wan_id="023e105f4ecef8ad9ca31a8372d0c353",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
+            health_check_rate="low",
+            load_balance_inner_flows=True,
             name="name",
             physport=1,
             priority=0,
+            provisioned_download_kbps=500,
+            provisioned_upload_kbps=100,
             static_addressing={
                 "address": "192.0.2.0/24",
                 "gateway_address": "192.0.2.1",
                 "secondary_address": "192.0.2.0/24",
+                "secondary_gateway_address": "192.0.2.1",
             },
             vlan_tag=42,
         )
@@ -691,13 +714,18 @@ class TestAsyncWANs:
             wan_id="023e105f4ecef8ad9ca31a8372d0c353",
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
+            health_check_rate="low",
+            load_balance_inner_flows=True,
             name="name",
             physport=1,
             priority=0,
+            provisioned_download_kbps=500,
+            provisioned_upload_kbps=100,
             static_addressing={
                 "address": "192.0.2.0/24",
                 "gateway_address": "192.0.2.1",
                 "secondary_address": "192.0.2.0/24",
+                "secondary_gateway_address": "192.0.2.1",
             },
             vlan_tag=42,
         )

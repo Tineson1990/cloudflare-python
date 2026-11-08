@@ -73,6 +73,7 @@ class FlagsResource(SyncAPIResource):
         rules: Iterable[flag_create_params.Rule],
         variations: Dict[str, Union[Optional[str], float, bool, Dict[str, object], Iterable[object]]],
         description: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, Union[bool, str, float]]] | Omit = omit,
         type: Literal["boolean", "string", "number", "json"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -84,12 +85,13 @@ class FlagsResource(SyncAPIResource):
         """Creates a flag.
 
         Returns 409 if the key already exists. `type` is always inferred
-        from variation values; legacy request-side values are ignored.
+        from variation values; legacy request-side values are ignored. Optional
+        `metadata` can be attached at creation.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
           default_variation: Variation the API serves when the flag is off, or when it's on but no rule
               matches the context. Must be a key in `variations`.
@@ -104,6 +106,12 @@ class FlagsResource(SyncAPIResource):
 
           variations: Map of variation name to value. All values share the same type (boolean, string,
               number, or JSON object/array), and each serialized value stays within 10KB.
+
+          description: Optional operator-facing description. It does not affect flag evaluation.
+
+          metadata: Key-value metadata associated with the flag. `null` or an empty object clears
+              existing metadata; omission semantics depend on the endpoint (PUT clears it,
+              PATCH preserves it).
 
           type: Deprecated compatibility field. Omit it; the API ignores this value and infers
               the type from the flag's variations.
@@ -130,6 +138,7 @@ class FlagsResource(SyncAPIResource):
                     "rules": rules,
                     "variations": variations,
                     "description": description,
+                    "metadata": metadata,
                     "type": type,
                 },
                 flag_create_params.FlagCreateParams,
@@ -156,6 +165,7 @@ class FlagsResource(SyncAPIResource):
         rules: Iterable[flag_update_params.Rule],
         variations: Dict[str, Union[Optional[str], float, bool, Dict[str, object], Iterable[object]]],
         description: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, Union[bool, str, float]]] | Omit = omit,
         type: Literal["boolean", "string", "number", "json"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -166,15 +176,17 @@ class FlagsResource(SyncAPIResource):
     ) -> FlagUpdateResponse:
         """Replaces the entire flag definition.
 
-        Omitted fields are dropped, not preserved —
-        read before writing. Each update appends a changelog entry.
+        Omitted fields are cleared, not preserved —
+        read before writing. The path key identifies the flag and cannot be renamed by
+        changing the body `key`. A changelog entry is appended when the flag content
+        actually changes; identical updates are no-ops.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
-          flag_key: Flag key (slug).
+          flag_key: Case-sensitive key identifying the flag within the app.
 
           default_variation: Variation the API serves when the flag is off, or when it's on but no rule
               matches the context. Must be a key in `variations`.
@@ -189,6 +201,12 @@ class FlagsResource(SyncAPIResource):
 
           variations: Map of variation name to value. All values share the same type (boolean, string,
               number, or JSON object/array), and each serialized value stays within 10KB.
+
+          description: Optional operator-facing description. It does not affect flag evaluation.
+
+          metadata: Key-value metadata associated with the flag. `null` or an empty object clears
+              existing metadata; omission semantics depend on the endpoint (PUT clears it,
+              PATCH preserves it).
 
           type: Deprecated compatibility field. Omit it; the API ignores this value and infers
               the type from the flag's variations.
@@ -222,6 +240,7 @@ class FlagsResource(SyncAPIResource):
                     "rules": rules,
                     "variations": variations,
                     "description": description,
+                    "metadata": metadata,
                     "type": type,
                 },
                 flag_update_params.FlagUpdateParams,
@@ -242,7 +261,7 @@ class FlagsResource(SyncAPIResource):
         *,
         account_id: str,
         cursor: str | Omit = omit,
-        limit: str | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -256,9 +275,9 @@ class FlagsResource(SyncAPIResource):
         forward; a null cursor indicates the last page.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
           cursor: Pagination cursor from a previous response.
 
@@ -310,15 +329,16 @@ class FlagsResource(SyncAPIResource):
     ) -> FlagDeleteResponse:
         """Deletes a flag permanently.
 
-        Subsequent evaluations fall back to the
-        caller-supplied default. Cannot be undone.
+        After deletion propagates, direct evaluations return
+        not found; typed binding accessors may return the caller-supplied default.
+        Cannot be undone.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
-          flag_key: Flag key (slug).
+          flag_key: Case-sensitive key identifying the flag within the app.
 
           extra_headers: Send extra headers
 
@@ -365,14 +385,15 @@ class FlagsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FlagGetResponse:
         """
-        Returns the full flag definition including rules, variations, and audit fields.
+        Returns the full flag definition including rules, variations, metadata, and
+        audit fields.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
-          flag_key: Flag key (slug).
+          flag_key: Case-sensitive key identifying the flag within the app.
 
           extra_headers: Send extra headers
 
@@ -441,6 +462,7 @@ class AsyncFlagsResource(AsyncAPIResource):
         rules: Iterable[flag_create_params.Rule],
         variations: Dict[str, Union[Optional[str], float, bool, Dict[str, object], Iterable[object]]],
         description: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, Union[bool, str, float]]] | Omit = omit,
         type: Literal["boolean", "string", "number", "json"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -452,12 +474,13 @@ class AsyncFlagsResource(AsyncAPIResource):
         """Creates a flag.
 
         Returns 409 if the key already exists. `type` is always inferred
-        from variation values; legacy request-side values are ignored.
+        from variation values; legacy request-side values are ignored. Optional
+        `metadata` can be attached at creation.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
           default_variation: Variation the API serves when the flag is off, or when it's on but no rule
               matches the context. Must be a key in `variations`.
@@ -472,6 +495,12 @@ class AsyncFlagsResource(AsyncAPIResource):
 
           variations: Map of variation name to value. All values share the same type (boolean, string,
               number, or JSON object/array), and each serialized value stays within 10KB.
+
+          description: Optional operator-facing description. It does not affect flag evaluation.
+
+          metadata: Key-value metadata associated with the flag. `null` or an empty object clears
+              existing metadata; omission semantics depend on the endpoint (PUT clears it,
+              PATCH preserves it).
 
           type: Deprecated compatibility field. Omit it; the API ignores this value and infers
               the type from the flag's variations.
@@ -498,6 +527,7 @@ class AsyncFlagsResource(AsyncAPIResource):
                     "rules": rules,
                     "variations": variations,
                     "description": description,
+                    "metadata": metadata,
                     "type": type,
                 },
                 flag_create_params.FlagCreateParams,
@@ -524,6 +554,7 @@ class AsyncFlagsResource(AsyncAPIResource):
         rules: Iterable[flag_update_params.Rule],
         variations: Dict[str, Union[Optional[str], float, bool, Dict[str, object], Iterable[object]]],
         description: Optional[str] | Omit = omit,
+        metadata: Optional[Dict[str, Union[bool, str, float]]] | Omit = omit,
         type: Literal["boolean", "string", "number", "json"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -534,15 +565,17 @@ class AsyncFlagsResource(AsyncAPIResource):
     ) -> FlagUpdateResponse:
         """Replaces the entire flag definition.
 
-        Omitted fields are dropped, not preserved —
-        read before writing. Each update appends a changelog entry.
+        Omitted fields are cleared, not preserved —
+        read before writing. The path key identifies the flag and cannot be renamed by
+        changing the body `key`. A changelog entry is appended when the flag content
+        actually changes; identical updates are no-ops.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
-          flag_key: Flag key (slug).
+          flag_key: Case-sensitive key identifying the flag within the app.
 
           default_variation: Variation the API serves when the flag is off, or when it's on but no rule
               matches the context. Must be a key in `variations`.
@@ -557,6 +590,12 @@ class AsyncFlagsResource(AsyncAPIResource):
 
           variations: Map of variation name to value. All values share the same type (boolean, string,
               number, or JSON object/array), and each serialized value stays within 10KB.
+
+          description: Optional operator-facing description. It does not affect flag evaluation.
+
+          metadata: Key-value metadata associated with the flag. `null` or an empty object clears
+              existing metadata; omission semantics depend on the endpoint (PUT clears it,
+              PATCH preserves it).
 
           type: Deprecated compatibility field. Omit it; the API ignores this value and infers
               the type from the flag's variations.
@@ -590,6 +629,7 @@ class AsyncFlagsResource(AsyncAPIResource):
                     "rules": rules,
                     "variations": variations,
                     "description": description,
+                    "metadata": metadata,
                     "type": type,
                 },
                 flag_update_params.FlagUpdateParams,
@@ -610,7 +650,7 @@ class AsyncFlagsResource(AsyncAPIResource):
         *,
         account_id: str,
         cursor: str | Omit = omit,
-        limit: str | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -624,9 +664,9 @@ class AsyncFlagsResource(AsyncAPIResource):
         forward; a null cursor indicates the last page.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
           cursor: Pagination cursor from a previous response.
 
@@ -678,15 +718,16 @@ class AsyncFlagsResource(AsyncAPIResource):
     ) -> FlagDeleteResponse:
         """Deletes a flag permanently.
 
-        Subsequent evaluations fall back to the
-        caller-supplied default. Cannot be undone.
+        After deletion propagates, direct evaluations return
+        not found; typed binding accessors may return the caller-supplied default.
+        Cannot be undone.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
-          flag_key: Flag key (slug).
+          flag_key: Case-sensitive key identifying the flag within the app.
 
           extra_headers: Send extra headers
 
@@ -733,14 +774,15 @@ class AsyncFlagsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FlagGetResponse:
         """
-        Returns the full flag definition including rules, variations, and audit fields.
+        Returns the full flag definition including rules, variations, metadata, and
+        audit fields.
 
         Args:
-          account_id: Cloudflare account ID.
+          account_id: Cloudflare account ID that owns the Flagship app.
 
-          app_id: App identifier.
+          app_id: Flagship app ID returned when the app was created.
 
-          flag_key: Flag key (slug).
+          flag_key: Case-sensitive key identifying the flag within the app.
 
           extra_headers: Send extra headers
 

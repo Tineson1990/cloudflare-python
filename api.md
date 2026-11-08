@@ -9,7 +9,6 @@ from cloudflare.types import (
     CloudflareTunnel,
     ErrorData,
     Identifier,
-    LoadBalancerPreview,
     Member,
     PaginationInfo,
     Permission,
@@ -157,6 +156,8 @@ Methods:
 
 # [DurableObjects](src/cloudflare/resources/durable_objects/api.md)
 
+# [Containers](src/cloudflare/resources/containers/api.md)
+
 # [Queues](src/cloudflare/resources/queues/api.md)
 
 # [APIGateway](src/cloudflare/resources/api_gateway/api.md)
@@ -193,7 +194,7 @@ Methods:
 
 # [MagicNetworkMonitoring](src/cloudflare/resources/magic_network_monitoring/api.md)
 
-# [MagicCloudNetworking](src/cloudflare/resources/magic_cloud_networking/api.md)
+# [Monetization](src/cloudflare/resources/monetization/api.md)
 
 # [NetworkInterconnects](src/cloudflare/resources/network_interconnects/api.md)
 
@@ -218,6 +219,8 @@ Methods:
 # [R2](src/cloudflare/resources/r2/api.md)
 
 # [R2DataCatalog](src/cloudflare/resources/r2_data_catalog/api.md)
+
+# [BasinCatalog](src/cloudflare/resources/basin_catalog/api.md)
 
 # [WorkersForPlatforms](src/cloudflare/resources/workers_for_platforms/api.md)
 
@@ -314,6 +317,8 @@ Methods:
 # [SecretsStore](src/cloudflare/resources/secrets_store/api.md)
 
 # [Pipelines](src/cloudflare/resources/pipelines/api.md)
+
+# [K2](src/cloudflare/resources/k2/api.md)
 
 # [SchemaValidation](src/cloudflare/resources/schema_validation/api.md)
 

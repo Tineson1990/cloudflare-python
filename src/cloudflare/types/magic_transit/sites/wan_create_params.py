@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
-from .wan_static_addressing_param import WANStaticAddressingParam
-
-__all__ = ["WANCreateParams"]
+__all__ = ["WANCreateParams", "StaticAddressing"]
 
 
 class WANCreateParams(TypedDict, total=False):
@@ -15,15 +13,49 @@ class WANCreateParams(TypedDict, total=False):
 
     physport: Required[int]
 
+    health_check_rate: Literal["low", "mid", "high"]
+    """Magic WAN health check rate for tunnels created on this link.
+
+    The default value is `mid`.
+    """
+
+    load_balance_inner_flows: bool
+
     name: str
 
     priority: int
 
-    static_addressing: WANStaticAddressingParam
-    """(optional) if omitted, use DHCP.
+    provisioned_download_kbps: int
+    """Provisioned download rate of the WAN circuit in kilobits per second."""
 
-    Submit secondary_address when site is in high availability mode.
+    provisioned_upload_kbps: int
+    """Provisioned upload rate of the WAN circuit in kilobits per second."""
+
+    static_addressing: StaticAddressing
+    """Static addressing configuration for a WAN.
+
+    Omit to use DHCP. Submit secondary_address when the site is in high availability
+    mode.
     """
 
     vlan_tag: int
     """VLAN ID. Use zero for untagged."""
+
+
+class StaticAddressing(TypedDict, total=False):
+    """Static addressing configuration for a WAN.
+
+    Omit to use DHCP. Submit secondary_address when the site is in high availability mode.
+    """
+
+    address: Required[str]
+    """A valid CIDR notation representing an IP range."""
+
+    gateway_address: Required[str]
+    """A valid IPv4 address."""
+
+    secondary_address: str
+    """A valid CIDR notation representing an IP range."""
+
+    secondary_gateway_address: str
+    """Gateway address for the secondary connector of a high availability site."""

@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing import List, Union, Optional
+from datetime import datetime
+from typing_extensions import Literal, Required, Annotated, TypedDict
+
+from ...._utils import PropertyInfo
 
 __all__ = ["ContentPolicyEditParams"]
 
@@ -13,11 +16,23 @@ class ContentPolicyEditParams(TypedDict, total=False):
     """Identifier."""
 
     enabled: bool
+    """Whether the policy is active."""
+
+    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Timestamp at which the policy expires.
+
+    After this time, Email Security ignores the policy. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
 
     name: str
+    """Human-readable name of the policy."""
 
     notes: Optional[str]
+    """Optional note describing the purpose of the policy."""
 
     pattern: str
+    """Regular expression the policy matches against."""
 
     targets: List[Literal["SUBJECT", "BODY"]]
+    """Parts of the email the pattern is matched against."""

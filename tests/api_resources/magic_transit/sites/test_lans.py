@@ -40,6 +40,12 @@ class TestLANs:
             name="name",
             nat={"static_prefix": "192.0.2.0/24"},
             physport=1,
+            remote_subnets=[
+                {
+                    "local_alias_prefix": "192.0.2.0/24",
+                    "remote_prefix": "192.0.2.0/24",
+                }
+            ],
             routed_subnets=[
                 {
                     "next_hop": "192.0.2.1",
@@ -130,11 +136,18 @@ class TestLANs:
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
             bond_id=2,
+            ha_link=True,
             is_breakout=True,
             is_prioritized=True,
             name="name",
             nat={"static_prefix": "192.0.2.0/24"},
             physport=1,
+            remote_subnets=[
+                {
+                    "local_alias_prefix": "192.0.2.0/24",
+                    "remote_prefix": "192.0.2.0/24",
+                }
+            ],
             routed_subnets=[
                 {
                     "next_hop": "192.0.2.1",
@@ -344,11 +357,18 @@ class TestLANs:
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
             bond_id=2,
+            ha_link=True,
             is_breakout=True,
             is_prioritized=True,
             name="name",
             nat={"static_prefix": "192.0.2.0/24"},
             physport=1,
+            remote_subnets=[
+                {
+                    "local_alias_prefix": "192.0.2.0/24",
+                    "remote_prefix": "192.0.2.0/24",
+                }
+            ],
             routed_subnets=[
                 {
                     "next_hop": "192.0.2.1",
@@ -520,6 +540,12 @@ class TestAsyncLANs:
             name="name",
             nat={"static_prefix": "192.0.2.0/24"},
             physport=1,
+            remote_subnets=[
+                {
+                    "local_alias_prefix": "192.0.2.0/24",
+                    "remote_prefix": "192.0.2.0/24",
+                }
+            ],
             routed_subnets=[
                 {
                     "next_hop": "192.0.2.1",
@@ -610,11 +636,18 @@ class TestAsyncLANs:
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
             bond_id=2,
+            ha_link=True,
             is_breakout=True,
             is_prioritized=True,
             name="name",
             nat={"static_prefix": "192.0.2.0/24"},
             physport=1,
+            remote_subnets=[
+                {
+                    "local_alias_prefix": "192.0.2.0/24",
+                    "remote_prefix": "192.0.2.0/24",
+                }
+            ],
             routed_subnets=[
                 {
                     "next_hop": "192.0.2.1",
@@ -824,11 +857,18 @@ class TestAsyncLANs:
             account_id="023e105f4ecef8ad9ca31a8372d0c353",
             site_id="023e105f4ecef8ad9ca31a8372d0c353",
             bond_id=2,
+            ha_link=True,
             is_breakout=True,
             is_prioritized=True,
             name="name",
             nat={"static_prefix": "192.0.2.0/24"},
             physport=1,
+            remote_subnets=[
+                {
+                    "local_alias_prefix": "192.0.2.0/24",
+                    "remote_prefix": "192.0.2.0/24",
+                }
+            ],
             routed_subnets=[
                 {
                     "next_hop": "192.0.2.1",

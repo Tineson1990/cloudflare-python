@@ -66,21 +66,23 @@ class OrganizationsResource(SyncAPIResource):
     def create(
         self,
         *,
-        auth_domain: str,
-        name: str,
         account_id: str | Omit = omit,
         zone_id: str | Omit = omit,
         allow_authenticate_via_warp: bool | Omit = omit,
+        auth_domain: str | Omit = omit,
         auto_redirect_to_identity: bool | Omit = omit,
         deny_unmatched_requests: bool | Omit = omit,
         deny_unmatched_requests_exempted_zone_names: SequenceNotStr[str] | Omit = omit,
+        disable_end_user_app_creation: bool | Omit = omit,
         is_ui_read_only: bool | Omit = omit,
         login_design: LoginDesignParam | Omit = omit,
         mfa_config: organization_create_params.MfaConfig | Omit = omit,
         mfa_piv_key_requirements: organization_create_params.MfaPivKeyRequirements | Omit = omit,
         mfa_required_for_all_apps: bool | Omit = omit,
+        name: str | Omit = omit,
         service_token_inactivity: organization_create_params.ServiceTokenInactivity | Omit = omit,
         session_duration: str | Omit = omit,
+        strict_service_token_auth: bool | Omit = omit,
         ui_read_only_toggle_reason: str | Omit = omit,
         user_seat_expiration_inactive_time: str | Omit = omit,
         warp_auth_non_browser_401: bool | Omit = omit,
@@ -96,16 +98,16 @@ class OrganizationsResource(SyncAPIResource):
         Sets up a Zero Trust organization for your account or zone.
 
         Args:
-          auth_domain: The unique subdomain assigned to your Zero Trust organization.
-
-          name: The name of your Zero Trust organization.
-
           account_id: The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 
           zone_id: The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 
           allow_authenticate_via_warp: When set to true, users can authenticate via WARP for any application in your
               organization. Application settings will take precedence over this value.
+
+          auth_domain: The unique subdomain assigned to your Zero Trust organization. If omitted on
+              creation, a unique subdomain is auto-generated in the format
+              `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
 
           auto_redirect_to_identity: When set to `true`, users skip the identity provider selection step during
               login.
@@ -121,6 +123,8 @@ class OrganizationsResource(SyncAPIResource):
               by default if there is a configured Access application and policy that matches
               the request.
 
+          disable_end_user_app_creation: Whether creation of end user applications is disabled for this organization.
+
           is_ui_read_only: Lock all settings as Read-Only in the Dashboard, regardless of user permission.
               Updates may only be made via the API or Terraform for this account when enabled.
 
@@ -134,6 +138,10 @@ class OrganizationsResource(SyncAPIResource):
               the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the
               organization has any non-infrastructure applications.
 
+          name: The name of your Zero Trust organization. When omitted on creation, defaults to
+              the provided auth_domain; when both are omitted, defaults to the auto-generated
+              subdomain slug (e.g. frosty-moon-7a3b).
+
           service_token_inactivity: Configures automatic enforcement for inactive service tokens. A service token is
               inactive if no policy references it, and it has not successfully authenticated
               with an Access application during the selected inactivity period. This setting
@@ -142,6 +150,13 @@ class OrganizationsResource(SyncAPIResource):
           session_duration: The amount of time that tokens issued for applications will be valid. Must be in
               the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m,
               h.
+
+          strict_service_token_auth: Enables new behaviors for requests made with Access service tokens. Unauthorized
+              requests emit audit logs, and return a 401 or 403 status code in the response
+              instead of redirecting to the login page. Successful requests no longer receive
+              a CF_Authorization cookie in the response. Zero Trust organizations created on
+              or after October 5, 2026 will have this setting enabled by default, and cannot
+              disable it.
 
           ui_read_only_toggle_reason: A description of the reason why the UI read only field is being toggled.
 
@@ -185,19 +200,21 @@ class OrganizationsResource(SyncAPIResource):
             ),
             body=maybe_transform(
                 {
-                    "auth_domain": auth_domain,
-                    "name": name,
                     "allow_authenticate_via_warp": allow_authenticate_via_warp,
+                    "auth_domain": auth_domain,
                     "auto_redirect_to_identity": auto_redirect_to_identity,
                     "deny_unmatched_requests": deny_unmatched_requests,
                     "deny_unmatched_requests_exempted_zone_names": deny_unmatched_requests_exempted_zone_names,
+                    "disable_end_user_app_creation": disable_end_user_app_creation,
                     "is_ui_read_only": is_ui_read_only,
                     "login_design": login_design,
                     "mfa_config": mfa_config,
                     "mfa_piv_key_requirements": mfa_piv_key_requirements,
                     "mfa_required_for_all_apps": mfa_required_for_all_apps,
+                    "name": name,
                     "service_token_inactivity": service_token_inactivity,
                     "session_duration": session_duration,
+                    "strict_service_token_auth": strict_service_token_auth,
                     "ui_read_only_toggle_reason": ui_read_only_toggle_reason,
                     "user_seat_expiration_inactive_time": user_seat_expiration_inactive_time,
                     "warp_auth_non_browser_401": warp_auth_non_browser_401,
@@ -226,6 +243,7 @@ class OrganizationsResource(SyncAPIResource):
         custom_pages: organization_update_params.CustomPages | Omit = omit,
         deny_unmatched_requests: bool | Omit = omit,
         deny_unmatched_requests_exempted_zone_names: SequenceNotStr[str] | Omit = omit,
+        disable_end_user_app_creation: bool | Omit = omit,
         is_ui_read_only: bool | Omit = omit,
         login_design: LoginDesignParam | Omit = omit,
         mfa_config: organization_update_params.MfaConfig | Omit = omit,
@@ -234,6 +252,7 @@ class OrganizationsResource(SyncAPIResource):
         name: str | Omit = omit,
         service_token_inactivity: organization_update_params.ServiceTokenInactivity | Omit = omit,
         session_duration: str | Omit = omit,
+        strict_service_token_auth: bool | Omit = omit,
         ui_read_only_toggle_reason: str | Omit = omit,
         user_seat_expiration_inactive_time: str | Omit = omit,
         warp_auth_non_browser_401: bool | Omit = omit,
@@ -256,7 +275,9 @@ class OrganizationsResource(SyncAPIResource):
           allow_authenticate_via_warp: When set to true, users can authenticate via WARP for any application in your
               organization. Application settings will take precedence over this value.
 
-          auth_domain: The unique subdomain assigned to your Zero Trust organization.
+          auth_domain: The unique subdomain assigned to your Zero Trust organization. If omitted on
+              creation, a unique subdomain is auto-generated in the format
+              `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
 
           auto_redirect_to_identity: When set to `true`, users skip the identity provider selection step during
               login.
@@ -272,6 +293,8 @@ class OrganizationsResource(SyncAPIResource):
               by default if there is a configured Access application and policy that matches
               the request.
 
+          disable_end_user_app_creation: Whether creation of end user applications is disabled for this organization.
+
           is_ui_read_only: Lock all settings as Read-Only in the Dashboard, regardless of user permission.
               Updates may only be made via the API or Terraform for this account when enabled.
 
@@ -285,7 +308,9 @@ class OrganizationsResource(SyncAPIResource):
               the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the
               organization has any non-infrastructure applications.
 
-          name: The name of your Zero Trust organization.
+          name: The name of your Zero Trust organization. When omitted on creation, defaults to
+              the provided auth_domain; when both are omitted, defaults to the auto-generated
+              subdomain slug (e.g. frosty-moon-7a3b).
 
           service_token_inactivity: Configures automatic enforcement for inactive service tokens. A service token is
               inactive if no policy references it, and it has not successfully authenticated
@@ -295,6 +320,13 @@ class OrganizationsResource(SyncAPIResource):
           session_duration: The amount of time that tokens issued for applications will be valid. Must be in
               the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m,
               h.
+
+          strict_service_token_auth: Enables new behaviors for requests made with Access service tokens. Unauthorized
+              requests emit audit logs, and return a 401 or 403 status code in the response
+              instead of redirecting to the login page. Successful requests no longer receive
+              a CF_Authorization cookie in the response. Zero Trust organizations created on
+              or after October 5, 2026 will have this setting enabled by default, and cannot
+              disable it.
 
           ui_read_only_toggle_reason: A description of the reason why the UI read only field is being toggled.
 
@@ -344,6 +376,7 @@ class OrganizationsResource(SyncAPIResource):
                     "custom_pages": custom_pages,
                     "deny_unmatched_requests": deny_unmatched_requests,
                     "deny_unmatched_requests_exempted_zone_names": deny_unmatched_requests_exempted_zone_names,
+                    "disable_end_user_app_creation": disable_end_user_app_creation,
                     "is_ui_read_only": is_ui_read_only,
                     "login_design": login_design,
                     "mfa_config": mfa_config,
@@ -352,6 +385,7 @@ class OrganizationsResource(SyncAPIResource):
                     "name": name,
                     "service_token_inactivity": service_token_inactivity,
                     "session_duration": session_duration,
+                    "strict_service_token_auth": strict_service_token_auth,
                     "ui_read_only_toggle_reason": ui_read_only_toggle_reason,
                     "user_seat_expiration_inactive_time": user_seat_expiration_inactive_time,
                     "warp_auth_non_browser_401": warp_auth_non_browser_401,
@@ -540,21 +574,23 @@ class AsyncOrganizationsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        auth_domain: str,
-        name: str,
         account_id: str | Omit = omit,
         zone_id: str | Omit = omit,
         allow_authenticate_via_warp: bool | Omit = omit,
+        auth_domain: str | Omit = omit,
         auto_redirect_to_identity: bool | Omit = omit,
         deny_unmatched_requests: bool | Omit = omit,
         deny_unmatched_requests_exempted_zone_names: SequenceNotStr[str] | Omit = omit,
+        disable_end_user_app_creation: bool | Omit = omit,
         is_ui_read_only: bool | Omit = omit,
         login_design: LoginDesignParam | Omit = omit,
         mfa_config: organization_create_params.MfaConfig | Omit = omit,
         mfa_piv_key_requirements: organization_create_params.MfaPivKeyRequirements | Omit = omit,
         mfa_required_for_all_apps: bool | Omit = omit,
+        name: str | Omit = omit,
         service_token_inactivity: organization_create_params.ServiceTokenInactivity | Omit = omit,
         session_duration: str | Omit = omit,
+        strict_service_token_auth: bool | Omit = omit,
         ui_read_only_toggle_reason: str | Omit = omit,
         user_seat_expiration_inactive_time: str | Omit = omit,
         warp_auth_non_browser_401: bool | Omit = omit,
@@ -570,16 +606,16 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         Sets up a Zero Trust organization for your account or zone.
 
         Args:
-          auth_domain: The unique subdomain assigned to your Zero Trust organization.
-
-          name: The name of your Zero Trust organization.
-
           account_id: The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 
           zone_id: The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 
           allow_authenticate_via_warp: When set to true, users can authenticate via WARP for any application in your
               organization. Application settings will take precedence over this value.
+
+          auth_domain: The unique subdomain assigned to your Zero Trust organization. If omitted on
+              creation, a unique subdomain is auto-generated in the format
+              `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
 
           auto_redirect_to_identity: When set to `true`, users skip the identity provider selection step during
               login.
@@ -595,6 +631,8 @@ class AsyncOrganizationsResource(AsyncAPIResource):
               by default if there is a configured Access application and policy that matches
               the request.
 
+          disable_end_user_app_creation: Whether creation of end user applications is disabled for this organization.
+
           is_ui_read_only: Lock all settings as Read-Only in the Dashboard, regardless of user permission.
               Updates may only be made via the API or Terraform for this account when enabled.
 
@@ -608,6 +646,10 @@ class AsyncOrganizationsResource(AsyncAPIResource):
               the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the
               organization has any non-infrastructure applications.
 
+          name: The name of your Zero Trust organization. When omitted on creation, defaults to
+              the provided auth_domain; when both are omitted, defaults to the auto-generated
+              subdomain slug (e.g. frosty-moon-7a3b).
+
           service_token_inactivity: Configures automatic enforcement for inactive service tokens. A service token is
               inactive if no policy references it, and it has not successfully authenticated
               with an Access application during the selected inactivity period. This setting
@@ -616,6 +658,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           session_duration: The amount of time that tokens issued for applications will be valid. Must be in
               the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m,
               h.
+
+          strict_service_token_auth: Enables new behaviors for requests made with Access service tokens. Unauthorized
+              requests emit audit logs, and return a 401 or 403 status code in the response
+              instead of redirecting to the login page. Successful requests no longer receive
+              a CF_Authorization cookie in the response. Zero Trust organizations created on
+              or after October 5, 2026 will have this setting enabled by default, and cannot
+              disable it.
 
           ui_read_only_toggle_reason: A description of the reason why the UI read only field is being toggled.
 
@@ -659,19 +708,21 @@ class AsyncOrganizationsResource(AsyncAPIResource):
             ),
             body=await async_maybe_transform(
                 {
-                    "auth_domain": auth_domain,
-                    "name": name,
                     "allow_authenticate_via_warp": allow_authenticate_via_warp,
+                    "auth_domain": auth_domain,
                     "auto_redirect_to_identity": auto_redirect_to_identity,
                     "deny_unmatched_requests": deny_unmatched_requests,
                     "deny_unmatched_requests_exempted_zone_names": deny_unmatched_requests_exempted_zone_names,
+                    "disable_end_user_app_creation": disable_end_user_app_creation,
                     "is_ui_read_only": is_ui_read_only,
                     "login_design": login_design,
                     "mfa_config": mfa_config,
                     "mfa_piv_key_requirements": mfa_piv_key_requirements,
                     "mfa_required_for_all_apps": mfa_required_for_all_apps,
+                    "name": name,
                     "service_token_inactivity": service_token_inactivity,
                     "session_duration": session_duration,
+                    "strict_service_token_auth": strict_service_token_auth,
                     "ui_read_only_toggle_reason": ui_read_only_toggle_reason,
                     "user_seat_expiration_inactive_time": user_seat_expiration_inactive_time,
                     "warp_auth_non_browser_401": warp_auth_non_browser_401,
@@ -700,6 +751,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         custom_pages: organization_update_params.CustomPages | Omit = omit,
         deny_unmatched_requests: bool | Omit = omit,
         deny_unmatched_requests_exempted_zone_names: SequenceNotStr[str] | Omit = omit,
+        disable_end_user_app_creation: bool | Omit = omit,
         is_ui_read_only: bool | Omit = omit,
         login_design: LoginDesignParam | Omit = omit,
         mfa_config: organization_update_params.MfaConfig | Omit = omit,
@@ -708,6 +760,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
         name: str | Omit = omit,
         service_token_inactivity: organization_update_params.ServiceTokenInactivity | Omit = omit,
         session_duration: str | Omit = omit,
+        strict_service_token_auth: bool | Omit = omit,
         ui_read_only_toggle_reason: str | Omit = omit,
         user_seat_expiration_inactive_time: str | Omit = omit,
         warp_auth_non_browser_401: bool | Omit = omit,
@@ -730,7 +783,9 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           allow_authenticate_via_warp: When set to true, users can authenticate via WARP for any application in your
               organization. Application settings will take precedence over this value.
 
-          auth_domain: The unique subdomain assigned to your Zero Trust organization.
+          auth_domain: The unique subdomain assigned to your Zero Trust organization. If omitted on
+              creation, a unique subdomain is auto-generated in the format
+              `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
 
           auto_redirect_to_identity: When set to `true`, users skip the identity provider selection step during
               login.
@@ -746,6 +801,8 @@ class AsyncOrganizationsResource(AsyncAPIResource):
               by default if there is a configured Access application and policy that matches
               the request.
 
+          disable_end_user_app_creation: Whether creation of end user applications is disabled for this organization.
+
           is_ui_read_only: Lock all settings as Read-Only in the Dashboard, regardless of user permission.
               Updates may only be made via the API or Terraform for this account when enabled.
 
@@ -759,7 +816,9 @@ class AsyncOrganizationsResource(AsyncAPIResource):
               the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the
               organization has any non-infrastructure applications.
 
-          name: The name of your Zero Trust organization.
+          name: The name of your Zero Trust organization. When omitted on creation, defaults to
+              the provided auth_domain; when both are omitted, defaults to the auto-generated
+              subdomain slug (e.g. frosty-moon-7a3b).
 
           service_token_inactivity: Configures automatic enforcement for inactive service tokens. A service token is
               inactive if no policy references it, and it has not successfully authenticated
@@ -769,6 +828,13 @@ class AsyncOrganizationsResource(AsyncAPIResource):
           session_duration: The amount of time that tokens issued for applications will be valid. Must be in
               the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m,
               h.
+
+          strict_service_token_auth: Enables new behaviors for requests made with Access service tokens. Unauthorized
+              requests emit audit logs, and return a 401 or 403 status code in the response
+              instead of redirecting to the login page. Successful requests no longer receive
+              a CF_Authorization cookie in the response. Zero Trust organizations created on
+              or after October 5, 2026 will have this setting enabled by default, and cannot
+              disable it.
 
           ui_read_only_toggle_reason: A description of the reason why the UI read only field is being toggled.
 
@@ -818,6 +884,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     "custom_pages": custom_pages,
                     "deny_unmatched_requests": deny_unmatched_requests,
                     "deny_unmatched_requests_exempted_zone_names": deny_unmatched_requests_exempted_zone_names,
+                    "disable_end_user_app_creation": disable_end_user_app_creation,
                     "is_ui_read_only": is_ui_read_only,
                     "login_design": login_design,
                     "mfa_config": mfa_config,
@@ -826,6 +893,7 @@ class AsyncOrganizationsResource(AsyncAPIResource):
                     "name": name,
                     "service_token_inactivity": service_token_inactivity,
                     "session_duration": session_duration,
+                    "strict_service_token_auth": strict_service_token_auth,
                     "ui_read_only_toggle_reason": ui_read_only_toggle_reason,
                     "user_seat_expiration_inactive_time": user_seat_expiration_inactive_time,
                     "warp_auth_non_browser_401": warp_auth_non_browser_401,

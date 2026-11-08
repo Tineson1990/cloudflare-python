@@ -214,10 +214,11 @@ class HyperdriveHyperdriveConfigCreateWithIntegration(TypedDict, total=False):
     """Define configurations using a unique string identifier."""
 
     integration: Required[HyperdriveHyperdriveConfigCreateWithIntegrationIntegration]
-    """Connects to a PlanetScale database using credentials managed by Cloudflare.
-
-    The Cloudflare account must already be linked to PlanetScale in the Hyperdrive
-    dashboard.
+    """
+    Selects a PlanetScale database and provisions credentials managed by Cloudflare
+    when creating a Hyperdrive configuration. The Cloudflare account must already be
+    linked to PlanetScale in the Hyperdrive dashboard. The selection is returned as
+    read-only metadata and cannot be changed with replace or update operations.
     """
 
     name: Required[str]
@@ -249,9 +250,8 @@ class HyperdriveHyperdriveConfigCreateWithIntegration(TypedDict, total=False):
 
 
 class HyperdriveHyperdriveConfigCreateWithIntegrationIntegration(TypedDict, total=False):
-    """Connects to a PlanetScale database using credentials managed by Cloudflare.
-
-    The Cloudflare account must already be linked to PlanetScale in the Hyperdrive dashboard.
+    """
+    Selects a PlanetScale database and provisions credentials managed by Cloudflare when creating a Hyperdrive configuration. The Cloudflare account must already be linked to PlanetScale in the Hyperdrive dashboard. The selection is returned as read-only metadata and cannot be changed with replace or update operations.
     """
 
     database_branch_name: Required[str]
@@ -260,11 +260,11 @@ class HyperdriveHyperdriveConfigCreateWithIntegrationIntegration(TypedDict, tota
     database_name: Required[str]
     """The name of the PlanetScale database."""
 
-    integration: Required[Literal["planetscale"]]
-    """The database integration used by this operation."""
-
     organization_name: Required[str]
     """The name of the PlanetScale organization."""
+
+    provider: Required[Literal["planetscale"]]
+    """The database integration provider used by this operation."""
 
     scheme: Required[Literal["postgres", "postgresql", "mysql"]]
     """Specifies the URL scheme used to connect to your origin database."""

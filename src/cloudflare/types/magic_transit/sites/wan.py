@@ -19,12 +19,20 @@ class WAN(BaseModel):
     The default value is `mid`.
     """
 
+    load_balance_inner_flows: Optional[bool] = None
+
     name: Optional[str] = None
 
     physport: Optional[int] = None
 
     priority: Optional[int] = None
     """Priority of WAN for traffic loadbalancing."""
+
+    provisioned_download_kbps: Optional[int] = None
+    """Provisioned download rate of the WAN circuit in kilobits per second."""
+
+    provisioned_upload_kbps: Optional[int] = None
+    """Provisioned upload rate of the WAN circuit in kilobits per second."""
 
     site_id: Optional[str] = None
     """Identifier"""

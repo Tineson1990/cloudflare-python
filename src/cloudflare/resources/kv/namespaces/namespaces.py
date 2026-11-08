@@ -98,6 +98,7 @@ class NamespacesResource(SyncAPIResource):
         account_id: str,
         title: str,
         jurisdiction: Literal["eu", "fedramp", "us"] | Omit = omit,
+        mode: Literal["instant"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -105,19 +106,25 @@ class NamespacesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[Namespace]:
-        """Creates a namespace under the given title.
-
-        A `400` is returned if the account
-        already owns a namespace with this title. A namespace must be explicitly deleted
-        to be replaced.
+        """
+        Creates a Workers KV namespace in the specified account with the given title.
+        Returns `400` if the account already owns a namespace with that title; an
+        existing namespace must be explicitly deleted before it can be replaced. An
+        optional jurisdiction restricts where data is durably stored and can only be set
+        at creation time.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          title: A human-readable string name for a Namespace.
+          title: Human-readable string name for a Workers KV namespace.
 
           jurisdiction: Specify the jurisdiction to restrict the KV namespace to durably store data
               within. Can only be set at namespace creation time.
+
+          mode: The mode of the Workers KV namespace. Specify `instant` when creating a
+              namespace to create a KV Instant namespace. Omit this field when creating a
+              namespace to create a classic namespace. Currently, `instant` is the only
+              supported explicit value.
 
           extra_headers: Send extra headers
 
@@ -135,6 +142,7 @@ class NamespacesResource(SyncAPIResource):
                 {
                     "title": title,
                     "jurisdiction": jurisdiction,
+                    "mode": mode,
                 },
                 namespace_create_params.NamespaceCreateParams,
             ),
@@ -162,14 +170,15 @@ class NamespacesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Namespace:
         """
-        Modifies a namespace's title.
+        Changes the title of the specified Workers KV namespace and returns the updated
+        namespace. The namespace ID and stored key-value pairs are unchanged.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
-          title: A human-readable string name for a Namespace.
+          title: Human-readable string name for a Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -215,15 +224,18 @@ class NamespacesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncV4PagePaginationArray[Namespace]:
-        """
-        Returns the namespaces owned by an account.
+        """Lists Workers KV namespaces owned by the specified account.
+
+        Use `page` and
+        `per_page` to select a page of results, and `order` and `direction` to control
+        sorting.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          direction: Direction to order namespaces.
+          direction: Sort namespaces in ascending (`asc`) or descending (`desc`) order.
 
-          order: Field to order results by.
+          order: Namespace field to sort by (`id` or `title`).
 
           page: Page number of paginated results.
 
@@ -273,12 +285,13 @@ class NamespacesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[NamespaceDeleteResponse]:
         """
-        Deletes the namespace corresponding to the given ID.
+        Deletes the specified Workers KV namespace and its stored key-value pairs from
+        the account.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -321,15 +334,15 @@ class NamespacesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[NamespaceBulkDeleteResponse]:
-        """Remove multiple KV pairs from the namespace.
-
-        Body should be an array of up to
-        10,000 keys to be removed.
+        """
+        Deletes up to 10,000 key-value pairs from the specified Workers KV namespace.
+        Send a JSON array of the key names to delete. The result reports the number of
+        successful deletions and any keys that failed and should be retried.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -375,20 +388,21 @@ class NamespacesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[NamespaceBulkGetResponse]:
-        """Retrieve up to 100 KV pairs from the namespace.
-
-        Keys must contain text-based
-        values. JSON values can optionally be parsed instead of being returned as a
-        string value. Metadata can be included if `withMetadata` is true.
+        """
+        Retrieves the text-based values of up to 100 keys from the specified Workers KV
+        namespace. The result maps each requested key to its value. Set `type` to `json`
+        to parse JSON values instead of returning strings, and set `withMetadata` to
+        `true` to include metadata with each value. Binary values are not supported by
+        this operation.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           keys: Array of keys to retrieve (maximum of 100).
 
-          type: Whether to parse JSON values in the response.
+          type: Return values as strings with `text`, or parse stored JSON values with `json`.
 
           with_metadata: Whether to include metadata in the response.
 
@@ -446,19 +460,19 @@ class NamespacesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[NamespaceBulkUpdateResponse]:
-        """Write multiple keys and values at once.
-
-        Body should be an array of up to 10,000
-        key-value pairs to be stored, along with optional expiration information.
-        Existing values and expirations will be overwritten. If neither `expiration` nor
-        `expiration_ttl` is specified, the key-value pair will never expire. If both are
-        set, `expiration_ttl` is used and `expiration` is ignored. The entire request
-        size must be 100 megabytes or less.
+        """
+        Writes up to 10,000 key-value pairs to the specified Workers KV namespace from a
+        JSON array, with optional metadata and expiration settings for each pair.
+        Existing values and expirations are overwritten. If neither `expiration` nor
+        `expiration_ttl` is specified, the key-value pair will not expire. If both are
+        set, `expiration_ttl` takes precedence. The entire request must be 100 megabytes
+        or less. The result reports the number of successful writes and any keys that
+        failed and should be retried.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -502,12 +516,12 @@ class NamespacesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[Namespace]:
         """
-        Get the namespace corresponding to the given ID.
+        Returns the Workers KV namespace for the specified account and namespace ID.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -576,6 +590,7 @@ class AsyncNamespacesResource(AsyncAPIResource):
         account_id: str,
         title: str,
         jurisdiction: Literal["eu", "fedramp", "us"] | Omit = omit,
+        mode: Literal["instant"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -583,19 +598,25 @@ class AsyncNamespacesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[Namespace]:
-        """Creates a namespace under the given title.
-
-        A `400` is returned if the account
-        already owns a namespace with this title. A namespace must be explicitly deleted
-        to be replaced.
+        """
+        Creates a Workers KV namespace in the specified account with the given title.
+        Returns `400` if the account already owns a namespace with that title; an
+        existing namespace must be explicitly deleted before it can be replaced. An
+        optional jurisdiction restricts where data is durably stored and can only be set
+        at creation time.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          title: A human-readable string name for a Namespace.
+          title: Human-readable string name for a Workers KV namespace.
 
           jurisdiction: Specify the jurisdiction to restrict the KV namespace to durably store data
               within. Can only be set at namespace creation time.
+
+          mode: The mode of the Workers KV namespace. Specify `instant` when creating a
+              namespace to create a KV Instant namespace. Omit this field when creating a
+              namespace to create a classic namespace. Currently, `instant` is the only
+              supported explicit value.
 
           extra_headers: Send extra headers
 
@@ -613,6 +634,7 @@ class AsyncNamespacesResource(AsyncAPIResource):
                 {
                     "title": title,
                     "jurisdiction": jurisdiction,
+                    "mode": mode,
                 },
                 namespace_create_params.NamespaceCreateParams,
             ),
@@ -640,14 +662,15 @@ class AsyncNamespacesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Namespace:
         """
-        Modifies a namespace's title.
+        Changes the title of the specified Workers KV namespace and returns the updated
+        namespace. The namespace ID and stored key-value pairs are unchanged.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
-          title: A human-readable string name for a Namespace.
+          title: Human-readable string name for a Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -693,15 +716,18 @@ class AsyncNamespacesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Namespace, AsyncV4PagePaginationArray[Namespace]]:
-        """
-        Returns the namespaces owned by an account.
+        """Lists Workers KV namespaces owned by the specified account.
+
+        Use `page` and
+        `per_page` to select a page of results, and `order` and `direction` to control
+        sorting.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          direction: Direction to order namespaces.
+          direction: Sort namespaces in ascending (`asc`) or descending (`desc`) order.
 
-          order: Field to order results by.
+          order: Namespace field to sort by (`id` or `title`).
 
           page: Page number of paginated results.
 
@@ -751,12 +777,13 @@ class AsyncNamespacesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[NamespaceDeleteResponse]:
         """
-        Deletes the namespace corresponding to the given ID.
+        Deletes the specified Workers KV namespace and its stored key-value pairs from
+        the account.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -799,15 +826,15 @@ class AsyncNamespacesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[NamespaceBulkDeleteResponse]:
-        """Remove multiple KV pairs from the namespace.
-
-        Body should be an array of up to
-        10,000 keys to be removed.
+        """
+        Deletes up to 10,000 key-value pairs from the specified Workers KV namespace.
+        Send a JSON array of the key names to delete. The result reports the number of
+        successful deletions and any keys that failed and should be retried.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -853,20 +880,21 @@ class AsyncNamespacesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[NamespaceBulkGetResponse]:
-        """Retrieve up to 100 KV pairs from the namespace.
-
-        Keys must contain text-based
-        values. JSON values can optionally be parsed instead of being returned as a
-        string value. Metadata can be included if `withMetadata` is true.
+        """
+        Retrieves the text-based values of up to 100 keys from the specified Workers KV
+        namespace. The result maps each requested key to its value. Set `type` to `json`
+        to parse JSON values instead of returning strings, and set `withMetadata` to
+        `true` to include metadata with each value. Binary values are not supported by
+        this operation.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           keys: Array of keys to retrieve (maximum of 100).
 
-          type: Whether to parse JSON values in the response.
+          type: Return values as strings with `text`, or parse stored JSON values with `json`.
 
           with_metadata: Whether to include metadata in the response.
 
@@ -924,19 +952,19 @@ class AsyncNamespacesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[NamespaceBulkUpdateResponse]:
-        """Write multiple keys and values at once.
-
-        Body should be an array of up to 10,000
-        key-value pairs to be stored, along with optional expiration information.
-        Existing values and expirations will be overwritten. If neither `expiration` nor
-        `expiration_ttl` is specified, the key-value pair will never expire. If both are
-        set, `expiration_ttl` is used and `expiration` is ignored. The entire request
-        size must be 100 megabytes or less.
+        """
+        Writes up to 10,000 key-value pairs to the specified Workers KV namespace from a
+        JSON array, with optional metadata and expiration settings for each pair.
+        Existing values and expirations are overwritten. If neither `expiration` nor
+        `expiration_ttl` is specified, the key-value pair will not expire. If both are
+        set, `expiration_ttl` takes precedence. The entire request must be 100 megabytes
+        or less. The result reports the number of successful writes and any keys that
+        failed and should be retried.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           extra_headers: Send extra headers
 
@@ -980,12 +1008,12 @@ class AsyncNamespacesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[Namespace]:
         """
-        Get the namespace corresponding to the given ID.
+        Returns the Workers KV namespace for the specified account and namespace ID.
 
         Args:
-          account_id: Identifier.
+          account_id: ID of the Cloudflare account that owns the Workers KV namespaces.
 
-          namespace_id: Namespace identifier tag.
+          namespace_id: ID of the Workers KV namespace.
 
           extra_headers: Send extra headers
 

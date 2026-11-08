@@ -111,8 +111,18 @@ class AbuseReportsResource(SyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -139,7 +149,9 @@ class AbuseReportsResource(SyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
@@ -148,7 +160,9 @@ class AbuseReportsResource(SyncAPIResource):
           original_work: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           signature: Required for DMCA reports, should be same as Name. An affirmation that all
@@ -163,7 +177,10 @@ class AbuseReportsResource(SyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -222,8 +239,18 @@ class AbuseReportsResource(SyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -235,7 +262,9 @@ class AbuseReportsResource(SyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -245,7 +274,9 @@ class AbuseReportsResource(SyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           trademark_number: Text not exceeding 1000 characters
@@ -259,7 +290,10 @@ class AbuseReportsResource(SyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -318,8 +352,18 @@ class AbuseReportsResource(SyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -331,7 +375,9 @@ class AbuseReportsResource(SyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -341,7 +387,9 @@ class AbuseReportsResource(SyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -349,7 +397,10 @@ class AbuseReportsResource(SyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -419,8 +470,18 @@ class AbuseReportsResource(SyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -432,7 +493,9 @@ class AbuseReportsResource(SyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -442,7 +505,9 @@ class AbuseReportsResource(SyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -450,7 +515,10 @@ class AbuseReportsResource(SyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -511,8 +579,18 @@ class AbuseReportsResource(SyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -524,7 +602,9 @@ class AbuseReportsResource(SyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -537,7 +617,9 @@ class AbuseReportsResource(SyncAPIResource):
           ncmec_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -545,7 +627,10 @@ class AbuseReportsResource(SyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -604,8 +689,18 @@ class AbuseReportsResource(SyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -617,7 +712,9 @@ class AbuseReportsResource(SyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -627,7 +724,9 @@ class AbuseReportsResource(SyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -635,7 +734,10 @@ class AbuseReportsResource(SyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -690,8 +792,18 @@ class AbuseReportsResource(SyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -706,7 +818,9 @@ class AbuseReportsResource(SyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -714,7 +828,10 @@ class AbuseReportsResource(SyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -773,8 +890,18 @@ class AbuseReportsResource(SyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -786,7 +913,9 @@ class AbuseReportsResource(SyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
@@ -794,7 +923,9 @@ class AbuseReportsResource(SyncAPIResource):
 
           ncsei_subject_representation: If the submitter is the target of NCSEI in the URLs of the abuse report.
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -802,7 +933,10 @@ class AbuseReportsResource(SyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -1011,7 +1145,9 @@ class AbuseReportsResource(SyncAPIResource):
         domain: str | Omit = omit,
         mitigation_status: Literal["pending", "active", "in_review", "cancelled", "removed"] | Omit = omit,
         page: int | Omit = omit,
+        pending_notice: bool | Omit = omit,
         per_page: int | Omit = omit,
+        search: str | Omit = omit,
         sort: str | Omit = omit,
         status: Literal["accepted", "in_review"] | Omit = omit,
         type: Literal["PHISH", "GEN", "THREAT", "DMCA", "EMER", "TM", "REG_WHO", "NCSEI", "NETWORK"] | Omit = omit,
@@ -1023,7 +1159,9 @@ class AbuseReportsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncV4PagePagination[Optional[AbuseReportListResponse]]:
         """
-        List the abuse reports for a given account
+        List abuse reports made against domains or other content associated with the
+        account. To list reports that the account submitted, use the submitted abuse
+        reports endpoint instead.
 
         Args:
           created_after: Returns reports created after the specified date
@@ -1036,7 +1174,15 @@ class AbuseReportsResource(SyncAPIResource):
 
           page: Where in pagination to start listing abuse reports
 
+          pending_notice: Also include reports in an open Notice and Takedown notice period. Combined with
+              mitigation_status using OR, e.g. ?mitigation_status=active&pending_notice=true.
+
           per_page: How many abuse reports per page to list
+
+          search: Free-text search. Returns reports whose report ID starts with the term or whose
+              domain contains the term, both case-insensitively. Surrounding whitespace is
+              ignored, and an empty value is treated as absent. Combined with the other
+              filters using AND.
 
           sort: A property to sort by, followed by the order (id, cdate, domain, type, status)
 
@@ -1069,7 +1215,9 @@ class AbuseReportsResource(SyncAPIResource):
                         "domain": domain,
                         "mitigation_status": mitigation_status,
                         "page": page,
+                        "pending_notice": pending_notice,
                         "per_page": per_page,
+                        "search": search,
                         "sort": sort,
                         "status": status,
                         "type": type,
@@ -1093,7 +1241,9 @@ class AbuseReportsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AbuseReportGetResponse:
         """
-        Retrieve the details of an abuse report.
+        Retrieve the details of an abuse report made against a domain or other content
+        associated with the account. To retrieve a report that the account submitted,
+        use the submitted abuse report endpoint instead.
 
         Args:
           extra_headers: Send extra headers
@@ -1190,8 +1340,18 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -1218,7 +1378,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
@@ -1227,7 +1389,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
           original_work: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           signature: Required for DMCA reports, should be same as Name. An affirmation that all
@@ -1242,7 +1406,10 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -1301,8 +1468,18 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -1314,7 +1491,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -1324,7 +1503,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           trademark_number: Text not exceeding 1000 characters
@@ -1338,7 +1519,10 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -1397,8 +1581,18 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -1410,7 +1604,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -1420,7 +1616,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -1428,7 +1626,10 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -1498,8 +1699,18 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -1511,7 +1722,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -1521,7 +1734,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -1529,7 +1744,10 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -1590,8 +1808,18 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -1603,7 +1831,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -1616,7 +1846,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
           ncmec_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -1624,7 +1856,10 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -1683,8 +1918,18 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -1696,7 +1941,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           justification: A detailed description of the infringement, including any necessary access
@@ -1706,7 +1953,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -1714,7 +1963,10 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -1769,8 +2021,18 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -1785,7 +2047,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -1793,7 +2057,10 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -1852,8 +2119,18 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
         Requires the abuse-reports entitlement on the account (Enterprise accounts have
         it by default; other accounts must request access) and an API token with the
-        `Account > Abuse Reports > Edit` permission. If the account is not entitled, the
-        request is rejected with an HTTP `401` response (see below).
+        `Trust and Safety Write` permission. If the account is not entitled, the request
+        is rejected with an HTTP `401` response (see below).
+
+        Delegated reports: In limited circumstances, Cloudflare works with select
+        customers who have established abuse-handling programs. For these customers,
+        Cloudflare may forward abuse reports directly and in full—including reporter
+        contact information, comments, and supporting evidence—without redaction or
+        preprocessing by Cloudflare. This allows the customer to investigate and respond
+        using their own policies and processes. For delegated reports, the
+        report—including contact information and comments—will be forwarded to the
+        customer in full regardless of the `host_notification` and `owner_notification`
+        values.
 
         Args:
           report_param: The report type for submitted reports.
@@ -1865,7 +2142,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           email2: Should match the value provided in `email`
 
-          host_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          host_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           name: Text not exceeding 255 characters. This field may be released by Cloudflare to
@@ -1873,7 +2152,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           ncsei_subject_representation: If the submitter is the target of NCSEI in the URLs of the abuse report.
 
-          owner_notification: Notification type based on the abuse type. NOTE: Copyright (DMCA) and Trademark
+          owner_notification: Notification type based on the abuse type. For delegated reports, the
+              report—including contact information and comments—will be forwarded to the
+              customer in full regardless of this value. NOTE: Copyright (DMCA) and Trademark
               reports cannot be anonymous.
 
           urls: A list of valid URLs separated by ‘\n’ (new line character). The list of the
@@ -1881,7 +2162,10 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
               URL should be unique. This field may be released by Cloudflare to third parties
               such as the Lumen Database (https://lumendatabase.org/).
 
-          comments: Any additional comments about the infringement not exceeding 2000 characters
+          comments: Any additional comments about the infringement not exceeding 2000 characters.
+              Comments are kept internal to Cloudflare and not shared with the host or
+              customer as part of regular processing. For delegated reports, comments may be
+              shared in full.
 
           company: Text not exceeding 100 characters. This field may be released by Cloudflare to
               third parties such as the Lumen Database (https://lumendatabase.org/).
@@ -2090,7 +2374,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
         domain: str | Omit = omit,
         mitigation_status: Literal["pending", "active", "in_review", "cancelled", "removed"] | Omit = omit,
         page: int | Omit = omit,
+        pending_notice: bool | Omit = omit,
         per_page: int | Omit = omit,
+        search: str | Omit = omit,
         sort: str | Omit = omit,
         status: Literal["accepted", "in_review"] | Omit = omit,
         type: Literal["PHISH", "GEN", "THREAT", "DMCA", "EMER", "TM", "REG_WHO", "NCSEI", "NETWORK"] | Omit = omit,
@@ -2102,7 +2388,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Optional[AbuseReportListResponse], AsyncV4PagePagination[Optional[AbuseReportListResponse]]]:
         """
-        List the abuse reports for a given account
+        List abuse reports made against domains or other content associated with the
+        account. To list reports that the account submitted, use the submitted abuse
+        reports endpoint instead.
 
         Args:
           created_after: Returns reports created after the specified date
@@ -2115,7 +2403,15 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
 
           page: Where in pagination to start listing abuse reports
 
+          pending_notice: Also include reports in an open Notice and Takedown notice period. Combined with
+              mitigation_status using OR, e.g. ?mitigation_status=active&pending_notice=true.
+
           per_page: How many abuse reports per page to list
+
+          search: Free-text search. Returns reports whose report ID starts with the term or whose
+              domain contains the term, both case-insensitively. Surrounding whitespace is
+              ignored, and an empty value is treated as absent. Combined with the other
+              filters using AND.
 
           sort: A property to sort by, followed by the order (id, cdate, domain, type, status)
 
@@ -2148,7 +2444,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
                         "domain": domain,
                         "mitigation_status": mitigation_status,
                         "page": page,
+                        "pending_notice": pending_notice,
                         "per_page": per_page,
+                        "search": search,
                         "sort": sort,
                         "status": status,
                         "type": type,
@@ -2172,7 +2470,9 @@ class AsyncAbuseReportsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AbuseReportGetResponse:
         """
-        Retrieve the details of an abuse report.
+        Retrieve the details of an abuse report made against a domain or other content
+        associated with the account. To retrieve a report that the account submitted,
+        use the submitted abuse report endpoint instead.
 
         Args:
           extra_headers: Send extra headers

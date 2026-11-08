@@ -9,7 +9,6 @@ import pytest
 
 from cloudflare import Cloudflare, AsyncCloudflare
 from tests.utils import assert_matches_type
-from cloudflare.pagination import SyncCursorPagination, AsyncCursorPagination
 from cloudflare.types.rulesets import (
     RulesetGetResponse,
     RulesetListResponse,
@@ -27,9 +26,6 @@ class TestRulesets:
     @parametrize
     def test_method_create(self, client: Cloudflare) -> None:
         ruleset = client.rulesets.create(
-            kind="root",
-            name="My ruleset",
-            phase="http_request_firewall_custom",
             account_id="account_id",
         )
         assert_matches_type(RulesetCreateResponse, ruleset, path=["response"])
@@ -38,12 +34,12 @@ class TestRulesets:
     @parametrize
     def test_method_create_with_all_params(self, client: Cloudflare) -> None:
         ruleset = client.rulesets.create(
-            kind="root",
-            name="My ruleset",
-            phase="http_request_firewall_custom",
             account_id="account_id",
             dry_run=True,
             description="A description for my ruleset.",
+            kind="root",
+            name="My ruleset",
+            phase="http_request_firewall_custom",
             rules=[
                 {
                     "id": "3a03d665bac047339bb530ecb439a90d",
@@ -83,9 +79,6 @@ class TestRulesets:
     @parametrize
     def test_raw_response_create(self, client: Cloudflare) -> None:
         response = client.rulesets.with_raw_response.create(
-            kind="root",
-            name="My ruleset",
-            phase="http_request_firewall_custom",
             account_id="account_id",
         )
 
@@ -98,9 +91,6 @@ class TestRulesets:
     @parametrize
     def test_streaming_response_create(self, client: Cloudflare) -> None:
         with client.rulesets.with_streaming_response.create(
-            kind="root",
-            name="My ruleset",
-            phase="http_request_firewall_custom",
             account_id="account_id",
         ) as response:
             assert not response.is_closed
@@ -116,17 +106,11 @@ class TestRulesets:
     def test_path_params_create(self, client: Cloudflare) -> None:
         with pytest.raises(ValueError, match=r"You must provide either account_id or zone_id"):
             client.rulesets.with_raw_response.create(
-                kind="root",
-                name="My ruleset",
-                phase="http_request_firewall_custom",
                 account_id="",
             )
 
         with pytest.raises(ValueError, match=r"You must provide either account_id or zone_id"):
             client.rulesets.with_raw_response.create(
-                kind="root",
-                name="My ruleset",
-                phase="http_request_firewall_custom",
                 account_id="account_id",
             )
 
@@ -240,7 +224,7 @@ class TestRulesets:
         ruleset = client.rulesets.list(
             account_id="account_id",
         )
-        assert_matches_type(SyncCursorPagination[RulesetListResponse], ruleset, path=["response"])
+        assert_matches_type(RulesetListResponse, ruleset, path=["response"])
 
     @pytest.mark.skip(reason="TODO: investigate broken test")
     @parametrize
@@ -250,7 +234,7 @@ class TestRulesets:
             cursor="dGhpc2lzYW5leGFtcGxlCg",
             per_page=3,
         )
-        assert_matches_type(SyncCursorPagination[RulesetListResponse], ruleset, path=["response"])
+        assert_matches_type(RulesetListResponse, ruleset, path=["response"])
 
     @pytest.mark.skip(reason="TODO: investigate broken test")
     @parametrize
@@ -262,7 +246,7 @@ class TestRulesets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         ruleset = response.parse()
-        assert_matches_type(SyncCursorPagination[RulesetListResponse], ruleset, path=["response"])
+        assert_matches_type(RulesetListResponse, ruleset, path=["response"])
 
     @pytest.mark.skip(reason="TODO: investigate broken test")
     @parametrize
@@ -274,7 +258,7 @@ class TestRulesets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             ruleset = response.parse()
-            assert_matches_type(SyncCursorPagination[RulesetListResponse], ruleset, path=["response"])
+            assert_matches_type(RulesetListResponse, ruleset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -436,9 +420,6 @@ class TestAsyncRulesets:
     @parametrize
     async def test_method_create(self, async_client: AsyncCloudflare) -> None:
         ruleset = await async_client.rulesets.create(
-            kind="root",
-            name="My ruleset",
-            phase="http_request_firewall_custom",
             account_id="account_id",
         )
         assert_matches_type(RulesetCreateResponse, ruleset, path=["response"])
@@ -447,12 +428,12 @@ class TestAsyncRulesets:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncCloudflare) -> None:
         ruleset = await async_client.rulesets.create(
-            kind="root",
-            name="My ruleset",
-            phase="http_request_firewall_custom",
             account_id="account_id",
             dry_run=True,
             description="A description for my ruleset.",
+            kind="root",
+            name="My ruleset",
+            phase="http_request_firewall_custom",
             rules=[
                 {
                     "id": "3a03d665bac047339bb530ecb439a90d",
@@ -492,9 +473,6 @@ class TestAsyncRulesets:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncCloudflare) -> None:
         response = await async_client.rulesets.with_raw_response.create(
-            kind="root",
-            name="My ruleset",
-            phase="http_request_firewall_custom",
             account_id="account_id",
         )
 
@@ -507,9 +485,6 @@ class TestAsyncRulesets:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncCloudflare) -> None:
         async with async_client.rulesets.with_streaming_response.create(
-            kind="root",
-            name="My ruleset",
-            phase="http_request_firewall_custom",
             account_id="account_id",
         ) as response:
             assert not response.is_closed
@@ -525,17 +500,11 @@ class TestAsyncRulesets:
     async def test_path_params_create(self, async_client: AsyncCloudflare) -> None:
         with pytest.raises(ValueError, match=r"You must provide either account_id or zone_id"):
             await async_client.rulesets.with_raw_response.create(
-                kind="root",
-                name="My ruleset",
-                phase="http_request_firewall_custom",
                 account_id="",
             )
 
         with pytest.raises(ValueError, match=r"You must provide either account_id or zone_id"):
             await async_client.rulesets.with_raw_response.create(
-                kind="root",
-                name="My ruleset",
-                phase="http_request_firewall_custom",
                 account_id="account_id",
             )
 
@@ -649,7 +618,7 @@ class TestAsyncRulesets:
         ruleset = await async_client.rulesets.list(
             account_id="account_id",
         )
-        assert_matches_type(AsyncCursorPagination[RulesetListResponse], ruleset, path=["response"])
+        assert_matches_type(RulesetListResponse, ruleset, path=["response"])
 
     @pytest.mark.skip(reason="TODO: investigate broken test")
     @parametrize
@@ -659,7 +628,7 @@ class TestAsyncRulesets:
             cursor="dGhpc2lzYW5leGFtcGxlCg",
             per_page=3,
         )
-        assert_matches_type(AsyncCursorPagination[RulesetListResponse], ruleset, path=["response"])
+        assert_matches_type(RulesetListResponse, ruleset, path=["response"])
 
     @pytest.mark.skip(reason="TODO: investigate broken test")
     @parametrize
@@ -671,7 +640,7 @@ class TestAsyncRulesets:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         ruleset = await response.parse()
-        assert_matches_type(AsyncCursorPagination[RulesetListResponse], ruleset, path=["response"])
+        assert_matches_type(RulesetListResponse, ruleset, path=["response"])
 
     @pytest.mark.skip(reason="TODO: investigate broken test")
     @parametrize
@@ -683,7 +652,7 @@ class TestAsyncRulesets:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             ruleset = await response.parse()
-            assert_matches_type(AsyncCursorPagination[RulesetListResponse], ruleset, path=["response"])
+            assert_matches_type(RulesetListResponse, ruleset, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

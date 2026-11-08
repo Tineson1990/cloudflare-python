@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing import List, Union, Iterable, Optional
+from datetime import datetime
+from typing_extensions import Literal, Required, Annotated, TypedDict
+
+from ...._utils import PropertyInfo
 
 __all__ = ["ContentPolicyBatchParams", "Delete", "Patch", "Post", "Put"]
 
@@ -13,12 +16,22 @@ class ContentPolicyBatchParams(TypedDict, total=False):
     """Identifier."""
 
     deletes: Required[Iterable[Delete]]
+    """IDs of the content policies to delete."""
 
     patches: Required[Iterable[Patch]]
+    """
+    Partial updates to apply — each entry carries the policy's ID and only the
+    fields to change.
+    """
 
     posts: Required[Iterable[Post]]
+    """Content policies to create."""
 
     puts: Required[Iterable[Put]]
+    """
+    Full replacements to apply — each entry carries the policy's ID and every field
+    of its new value.
+    """
 
 
 class Delete(TypedDict, total=False):
@@ -30,39 +43,75 @@ class Patch(TypedDict, total=False):
     """A content policy pattern that matches against the subject or body of an email."""
 
     enabled: bool
+    """Whether the policy is active."""
+
+    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Timestamp at which the policy expires.
+
+    After this time, Email Security ignores the policy. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
 
     name: str
+    """Human-readable name of the policy."""
 
     notes: Optional[str]
+    """Optional note describing the purpose of the policy."""
 
     pattern: str
+    """Regular expression the policy matches against."""
 
     targets: List[Literal["SUBJECT", "BODY"]]
+    """Parts of the email the pattern is matched against."""
 
 
 class Post(TypedDict, total=False):
     """Create a content policy."""
 
     enabled: Required[bool]
+    """Whether the policy is active."""
 
     name: Required[str]
+    """Human-readable name of the policy."""
 
     pattern: Required[str]
+    """Regular expression the policy matches against."""
 
     targets: Required[List[Literal["SUBJECT", "BODY"]]]
+    """Parts of the email the pattern is matched against."""
+
+    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Timestamp at which the policy expires.
+
+    After this time, Email Security ignores the policy. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
 
     notes: Optional[str]
+    """Optional note describing the purpose of the policy."""
 
 
 class Put(TypedDict, total=False):
     """A content policy pattern that matches against the subject or body of an email."""
 
     enabled: Required[bool]
+    """Whether the policy is active."""
 
     name: Required[str]
+    """Human-readable name of the policy."""
 
     pattern: Required[str]
+    """Regular expression the policy matches against."""
 
     targets: Required[List[Literal["SUBJECT", "BODY"]]]
+    """Parts of the email the pattern is matched against."""
+
+    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Timestamp at which the policy expires.
+
+    After this time, Email Security ignores the policy. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
 
     notes: Optional[str]
+    """Optional note describing the purpose of the policy."""

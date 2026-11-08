@@ -8,6 +8,7 @@ from cloudflare.types.registrar import (
     WorkflowStatus,
     RegistrarCheckResponse,
     RegistrarSearchResponse,
+    RegistrarTransferCheckResponse,
 )
 ```
 
@@ -15,20 +16,7 @@ Methods:
 
 - <code title="post /accounts/{account_id}/registrar/domain-check">client.registrar.<a href="./src/cloudflare/resources/registrar/registrar.py">check</a>(\*, account_id, \*\*<a href="src/cloudflare/types/registrar/registrar_check_params.py">params</a>) -> <a href="./src/cloudflare/types/registrar/registrar_check_response.py">RegistrarCheckResponse</a></code>
 - <code title="get /accounts/{account_id}/registrar/domain-search">client.registrar.<a href="./src/cloudflare/resources/registrar/registrar.py">search</a>(\*, account_id, \*\*<a href="src/cloudflare/types/registrar/registrar_search_params.py">params</a>) -> <a href="./src/cloudflare/types/registrar/registrar_search_response.py">RegistrarSearchResponse</a></code>
-
-## Domains
-
-Types:
-
-```python
-from cloudflare.types.registrar import Domain
-```
-
-Methods:
-
-- <code title="put /accounts/{account_id}/registrar/domains/{domain_name}">client.registrar.domains.<a href="./src/cloudflare/resources/registrar/domains.py">update</a>(domain_name, \*, account_id, \*\*<a href="src/cloudflare/types/registrar/domain_update_params.py">params</a>) -> object</code>
-- <code title="get /accounts/{account_id}/registrar/domains">client.registrar.domains.<a href="./src/cloudflare/resources/registrar/domains.py">list</a>(\*, account_id) -> <a href="./src/cloudflare/types/registrar/domain.py">SyncSinglePage[Domain]</a></code>
-- <code title="get /accounts/{account_id}/registrar/domains/{domain_name}">client.registrar.domains.<a href="./src/cloudflare/resources/registrar/domains.py">get</a>(domain_name, \*, account_id) -> object</code>
+- <code title="post /accounts/{account_id}/registrar/domain-transfer-check">client.registrar.<a href="./src/cloudflare/resources/registrar/registrar.py">transfer_check</a>(\*, account_id, \*\*<a href="src/cloudflare/types/registrar/registrar_transfer_check_params.py">params</a>) -> <a href="./src/cloudflare/types/registrar/registrar_transfer_check_response.py">RegistrarTransferCheckResponse</a></code>
 
 ## Registrations
 

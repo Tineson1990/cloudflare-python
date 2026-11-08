@@ -170,15 +170,21 @@ class AIGatewayResource(SyncAPIResource):
         rate_limiting_limit: Optional[int],
         authentication: bool | Omit = omit,
         byok_only: bool | Omit = omit,
+        dlp: ai_gateway_create_params.DLP | Omit = omit,
+        guardrails: Optional[ai_gateway_create_params.Guardrails] | Omit = omit,
+        log_classification: bool | Omit = omit,
         log_management: Optional[int] | Omit = omit,
         log_management_strategy: Optional[Literal["STOP_INSERTING", "DELETE_OLDEST"]] | Omit = omit,
         logpush: bool | Omit = omit,
         logpush_public_key: Optional[str] | Omit = omit,
+        otel: Optional[Iterable[ai_gateway_create_params.Otel]] | Omit = omit,
         rate_limiting_technique: Optional[Literal["fixed", "sliding"]] | Omit = omit,
         retry_backoff: Optional[Literal["constant", "linear", "exponential"]] | Omit = omit,
         retry_delay: Optional[int] | Omit = omit,
         retry_max_attempts: Optional[int] | Omit = omit,
+        spend_limits: Optional[ai_gateway_create_params.SpendLimits] | Omit = omit,
         store_id: Optional[str] | Omit = omit,
+        stripe: Optional[ai_gateway_create_params.Stripe] | Omit = omit,
         workers_ai_billing_mode: Literal["postpaid", "unified"] | Omit = omit,
         zdr: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -189,10 +195,15 @@ class AIGatewayResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIGatewayCreateResponse:
         """
-        Creates a new AI Gateway.
+        Creates an AI Gateway in the account with the specified caching, rate limiting,
+        logging, and authentication settings. The gateway ID appears in request URLs and
+        must be unique within the account.
 
         Args:
-          id: gateway id
+          id: Unique identifier of the AI Gateway within the account.
+
+          authentication: Require authentication for gateway access. New gateways must have authentication
+              enabled. Once enabled, authentication cannot be disabled.
 
           byok_only: Requires customer-provided provider credentials and prevents fallback to Unified
               Billing.
@@ -202,6 +213,9 @@ class AIGatewayResource(SyncAPIResource):
           retry_delay: Delay between retry attempts in milliseconds (0-60000)
 
           retry_max_attempts: Maximum number of retry attempts for failed requests (1-5)
+
+          store_id: Secrets Store used by this gateway. Omit on update to keep the current store.
+              Cannot be cleared while stored keys or secret references depend on it.
 
           workers_ai_billing_mode: Controls how Workers AI inference calls routed through this gateway are billed.
               'postpaid' bills the account directly through Workers AI; 'unified' deducts
@@ -230,15 +244,21 @@ class AIGatewayResource(SyncAPIResource):
                     "rate_limiting_limit": rate_limiting_limit,
                     "authentication": authentication,
                     "byok_only": byok_only,
+                    "dlp": dlp,
+                    "guardrails": guardrails,
+                    "log_classification": log_classification,
                     "log_management": log_management,
                     "log_management_strategy": log_management_strategy,
                     "logpush": logpush,
                     "logpush_public_key": logpush_public_key,
+                    "otel": otel,
                     "rate_limiting_technique": rate_limiting_technique,
                     "retry_backoff": retry_backoff,
                     "retry_delay": retry_delay,
                     "retry_max_attempts": retry_max_attempts,
+                    "spend_limits": spend_limits,
                     "store_id": store_id,
+                    "stripe": stripe,
                     "workers_ai_billing_mode": workers_ai_billing_mode,
                     "zdr": zdr,
                 },
@@ -291,10 +311,14 @@ class AIGatewayResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIGatewayUpdateResponse:
         """
-        Updates an existing AI Gateway dataset.
+        Updates the configuration of an AI Gateway, such as its caching, rate limiting,
+        logging, and authentication settings.
 
         Args:
-          id: gateway id
+          id: Unique identifier of the AI Gateway within the account.
+
+          authentication: Require authentication for gateway access. New gateways must have authentication
+              enabled. Once enabled, authentication cannot be disabled.
 
           byok_only: Requires customer-provided provider credentials and prevents fallback to Unified
               Billing.
@@ -304,6 +328,9 @@ class AIGatewayResource(SyncAPIResource):
           retry_delay: Delay between retry attempts in milliseconds (0-60000)
 
           retry_max_attempts: Maximum number of retry attempts for failed requests (1-5)
+
+          store_id: Secrets Store used by this gateway. Omit on update to keep the current store.
+              Cannot be cleared while stored keys or secret references depend on it.
 
           workers_ai_billing_mode: Controls how Workers AI inference calls routed through this gateway are billed.
               'postpaid' bills the account directly through Workers AI; 'unified' deducts
@@ -377,8 +404,9 @@ class AIGatewayResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncV4PagePaginationArray[AIGatewayListResponse]:
-        """
-        Lists all AI Gateway evaluator types configured for the account.
+        """Lists the AI Gateways in the account.
+
+        Use `search` to filter by gateway ID.
 
         Args:
           search: Search by id
@@ -426,10 +454,10 @@ class AIGatewayResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIGatewayDeleteResponse:
         """
-        Deletes an AI Gateway dataset.
+        Permanently deletes an AI Gateway, its configuration, and its stored logs.
 
         Args:
-          id: gateway id
+          id: Unique identifier of the AI Gateway within the account.
 
           extra_headers: Send extra headers
 
@@ -468,10 +496,10 @@ class AIGatewayResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIGatewayGetResponse:
         """
-        Retrieves details for a specific AI Gateway dataset.
+        Retrieves the configuration of an AI Gateway.
 
         Args:
-          id: gateway id
+          id: Unique identifier of the AI Gateway within the account.
 
           extra_headers: Send extra headers
 
@@ -566,15 +594,21 @@ class AsyncAIGatewayResource(AsyncAPIResource):
         rate_limiting_limit: Optional[int],
         authentication: bool | Omit = omit,
         byok_only: bool | Omit = omit,
+        dlp: ai_gateway_create_params.DLP | Omit = omit,
+        guardrails: Optional[ai_gateway_create_params.Guardrails] | Omit = omit,
+        log_classification: bool | Omit = omit,
         log_management: Optional[int] | Omit = omit,
         log_management_strategy: Optional[Literal["STOP_INSERTING", "DELETE_OLDEST"]] | Omit = omit,
         logpush: bool | Omit = omit,
         logpush_public_key: Optional[str] | Omit = omit,
+        otel: Optional[Iterable[ai_gateway_create_params.Otel]] | Omit = omit,
         rate_limiting_technique: Optional[Literal["fixed", "sliding"]] | Omit = omit,
         retry_backoff: Optional[Literal["constant", "linear", "exponential"]] | Omit = omit,
         retry_delay: Optional[int] | Omit = omit,
         retry_max_attempts: Optional[int] | Omit = omit,
+        spend_limits: Optional[ai_gateway_create_params.SpendLimits] | Omit = omit,
         store_id: Optional[str] | Omit = omit,
+        stripe: Optional[ai_gateway_create_params.Stripe] | Omit = omit,
         workers_ai_billing_mode: Literal["postpaid", "unified"] | Omit = omit,
         zdr: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -585,10 +619,15 @@ class AsyncAIGatewayResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIGatewayCreateResponse:
         """
-        Creates a new AI Gateway.
+        Creates an AI Gateway in the account with the specified caching, rate limiting,
+        logging, and authentication settings. The gateway ID appears in request URLs and
+        must be unique within the account.
 
         Args:
-          id: gateway id
+          id: Unique identifier of the AI Gateway within the account.
+
+          authentication: Require authentication for gateway access. New gateways must have authentication
+              enabled. Once enabled, authentication cannot be disabled.
 
           byok_only: Requires customer-provided provider credentials and prevents fallback to Unified
               Billing.
@@ -598,6 +637,9 @@ class AsyncAIGatewayResource(AsyncAPIResource):
           retry_delay: Delay between retry attempts in milliseconds (0-60000)
 
           retry_max_attempts: Maximum number of retry attempts for failed requests (1-5)
+
+          store_id: Secrets Store used by this gateway. Omit on update to keep the current store.
+              Cannot be cleared while stored keys or secret references depend on it.
 
           workers_ai_billing_mode: Controls how Workers AI inference calls routed through this gateway are billed.
               'postpaid' bills the account directly through Workers AI; 'unified' deducts
@@ -626,15 +668,21 @@ class AsyncAIGatewayResource(AsyncAPIResource):
                     "rate_limiting_limit": rate_limiting_limit,
                     "authentication": authentication,
                     "byok_only": byok_only,
+                    "dlp": dlp,
+                    "guardrails": guardrails,
+                    "log_classification": log_classification,
                     "log_management": log_management,
                     "log_management_strategy": log_management_strategy,
                     "logpush": logpush,
                     "logpush_public_key": logpush_public_key,
+                    "otel": otel,
                     "rate_limiting_technique": rate_limiting_technique,
                     "retry_backoff": retry_backoff,
                     "retry_delay": retry_delay,
                     "retry_max_attempts": retry_max_attempts,
+                    "spend_limits": spend_limits,
                     "store_id": store_id,
+                    "stripe": stripe,
                     "workers_ai_billing_mode": workers_ai_billing_mode,
                     "zdr": zdr,
                 },
@@ -687,10 +735,14 @@ class AsyncAIGatewayResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIGatewayUpdateResponse:
         """
-        Updates an existing AI Gateway dataset.
+        Updates the configuration of an AI Gateway, such as its caching, rate limiting,
+        logging, and authentication settings.
 
         Args:
-          id: gateway id
+          id: Unique identifier of the AI Gateway within the account.
+
+          authentication: Require authentication for gateway access. New gateways must have authentication
+              enabled. Once enabled, authentication cannot be disabled.
 
           byok_only: Requires customer-provided provider credentials and prevents fallback to Unified
               Billing.
@@ -700,6 +752,9 @@ class AsyncAIGatewayResource(AsyncAPIResource):
           retry_delay: Delay between retry attempts in milliseconds (0-60000)
 
           retry_max_attempts: Maximum number of retry attempts for failed requests (1-5)
+
+          store_id: Secrets Store used by this gateway. Omit on update to keep the current store.
+              Cannot be cleared while stored keys or secret references depend on it.
 
           workers_ai_billing_mode: Controls how Workers AI inference calls routed through this gateway are billed.
               'postpaid' bills the account directly through Workers AI; 'unified' deducts
@@ -773,8 +828,9 @@ class AsyncAIGatewayResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[AIGatewayListResponse, AsyncV4PagePaginationArray[AIGatewayListResponse]]:
-        """
-        Lists all AI Gateway evaluator types configured for the account.
+        """Lists the AI Gateways in the account.
+
+        Use `search` to filter by gateway ID.
 
         Args:
           search: Search by id
@@ -822,10 +878,10 @@ class AsyncAIGatewayResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIGatewayDeleteResponse:
         """
-        Deletes an AI Gateway dataset.
+        Permanently deletes an AI Gateway, its configuration, and its stored logs.
 
         Args:
-          id: gateway id
+          id: Unique identifier of the AI Gateway within the account.
 
           extra_headers: Send extra headers
 
@@ -864,10 +920,10 @@ class AsyncAIGatewayResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AIGatewayGetResponse:
         """
-        Retrieves details for a specific AI Gateway dataset.
+        Retrieves the configuration of an AI Gateway.
 
         Args:
-          id: gateway id
+          id: Unique identifier of the AI Gateway within the account.
 
           extra_headers: Send extra headers
 

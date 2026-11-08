@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing import Union, Optional
+from datetime import datetime
+from typing_extensions import Literal, Required, Annotated, TypedDict
+
+from ...._utils import PropertyInfo
 
 __all__ = ["BlockSenderCreateParams"]
 
@@ -13,6 +16,7 @@ class BlockSenderCreateParams(TypedDict, total=False):
     """Identifier."""
 
     is_regex: Required[bool]
+    """Whether `pattern` is a regular expression instead of a literal value."""
 
     pattern: Required[str]
     """The pattern value to match.
@@ -40,3 +44,10 @@ class BlockSenderCreateParams(TypedDict, total=False):
     """
 
     comments: Optional[str]
+
+    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Timestamp at which the pattern expires.
+
+    After this time, Email Security ignores the pattern. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """

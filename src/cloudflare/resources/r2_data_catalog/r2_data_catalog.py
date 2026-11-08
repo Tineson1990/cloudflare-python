@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Type, Optional, cast
 
 import httpx
@@ -42,7 +43,7 @@ from .namespaces.namespaces import (
     NamespacesResourceWithStreamingResponse,
     AsyncNamespacesResourceWithStreamingResponse,
 )
-from ...types.r2_data_catalog import r2_data_catalog_delete_params
+from ...types.r2_data_catalog import r2_data_catalog_delete_params, r2_data_catalog_enable_params
 from ...types.r2_data_catalog.r2_data_catalog_get_response import R2DataCatalogGetResponse
 from ...types.r2_data_catalog.r2_data_catalog_list_response import R2DataCatalogListResponse
 from ...types.r2_data_catalog.r2_data_catalog_enable_response import R2DataCatalogEnableResponse
@@ -82,6 +83,7 @@ class R2DataCatalogResource(SyncAPIResource):
         """
         return R2DataCatalogResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("Use `GET /accounts/{account_id}/basin-catalog` instead.")
     def list(
         self,
         *,
@@ -123,6 +125,7 @@ class R2DataCatalogResource(SyncAPIResource):
             cast_to=cast(Type[Optional[R2DataCatalogListResponse]], ResultWrapper[R2DataCatalogListResponse]),
         )
 
+    @typing_extensions.deprecated("Use `POST /accounts/{account_id}/basin-catalog/{bucket_name}/delete` instead.")
     def delete(
         self,
         bucket_name: str,
@@ -175,6 +178,7 @@ class R2DataCatalogResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    @typing_extensions.deprecated("Use `POST /accounts/{account_id}/basin-catalog/{bucket_name}/disable` instead.")
     def disable(
         self,
         bucket_name: str,
@@ -222,11 +226,13 @@ class R2DataCatalogResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    @typing_extensions.deprecated("Use `POST /accounts/{account_id}/basin-catalog/{bucket_name}/enable` instead.")
     def enable(
         self,
         bucket_name: str,
         *,
         account_id: str,
+        credential: r2_data_catalog_enable_params.Credential | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -245,6 +251,8 @@ class R2DataCatalogResource(SyncAPIResource):
 
           bucket_name: Specifies the R2 bucket name.
 
+          credential: Contains request to store catalog credentials.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -261,6 +269,7 @@ class R2DataCatalogResource(SyncAPIResource):
             path_template(
                 "/accounts/{account_id}/r2-catalog/{bucket_name}/enable", account_id=account_id, bucket_name=bucket_name
             ),
+            body=maybe_transform({"credential": credential}, r2_data_catalog_enable_params.R2DataCatalogEnableParams),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -271,6 +280,7 @@ class R2DataCatalogResource(SyncAPIResource):
             cast_to=cast(Type[Optional[R2DataCatalogEnableResponse]], ResultWrapper[R2DataCatalogEnableResponse]),
         )
 
+    @typing_extensions.deprecated("Use `GET /accounts/{account_id}/basin-catalog/{bucket_name}` instead.")
     def get(
         self,
         bucket_name: str,
@@ -351,6 +361,7 @@ class AsyncR2DataCatalogResource(AsyncAPIResource):
         """
         return AsyncR2DataCatalogResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("Use `GET /accounts/{account_id}/basin-catalog` instead.")
     async def list(
         self,
         *,
@@ -392,6 +403,7 @@ class AsyncR2DataCatalogResource(AsyncAPIResource):
             cast_to=cast(Type[Optional[R2DataCatalogListResponse]], ResultWrapper[R2DataCatalogListResponse]),
         )
 
+    @typing_extensions.deprecated("Use `POST /accounts/{account_id}/basin-catalog/{bucket_name}/delete` instead.")
     async def delete(
         self,
         bucket_name: str,
@@ -446,6 +458,7 @@ class AsyncR2DataCatalogResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    @typing_extensions.deprecated("Use `POST /accounts/{account_id}/basin-catalog/{bucket_name}/disable` instead.")
     async def disable(
         self,
         bucket_name: str,
@@ -493,11 +506,13 @@ class AsyncR2DataCatalogResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    @typing_extensions.deprecated("Use `POST /accounts/{account_id}/basin-catalog/{bucket_name}/enable` instead.")
     async def enable(
         self,
         bucket_name: str,
         *,
         account_id: str,
+        credential: r2_data_catalog_enable_params.Credential | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -516,6 +531,8 @@ class AsyncR2DataCatalogResource(AsyncAPIResource):
 
           bucket_name: Specifies the R2 bucket name.
 
+          credential: Contains request to store catalog credentials.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -532,6 +549,9 @@ class AsyncR2DataCatalogResource(AsyncAPIResource):
             path_template(
                 "/accounts/{account_id}/r2-catalog/{bucket_name}/enable", account_id=account_id, bucket_name=bucket_name
             ),
+            body=await async_maybe_transform(
+                {"credential": credential}, r2_data_catalog_enable_params.R2DataCatalogEnableParams
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -542,6 +562,7 @@ class AsyncR2DataCatalogResource(AsyncAPIResource):
             cast_to=cast(Type[Optional[R2DataCatalogEnableResponse]], ResultWrapper[R2DataCatalogEnableResponse]),
         )
 
+    @typing_extensions.deprecated("Use `GET /accounts/{account_id}/basin-catalog/{bucket_name}` instead.")
     async def get(
         self,
         bucket_name: str,
@@ -594,20 +615,30 @@ class R2DataCatalogResourceWithRawResponse:
     def __init__(self, r2_data_catalog: R2DataCatalogResource) -> None:
         self._r2_data_catalog = r2_data_catalog
 
-        self.list = to_raw_response_wrapper(
-            r2_data_catalog.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                r2_data_catalog.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = to_raw_response_wrapper(
-            r2_data_catalog.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                r2_data_catalog.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.disable = to_raw_response_wrapper(
-            r2_data_catalog.disable,
+        self.disable = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                r2_data_catalog.disable,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.enable = to_raw_response_wrapper(
-            r2_data_catalog.enable,
+        self.enable = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                r2_data_catalog.enable,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get = to_raw_response_wrapper(
-            r2_data_catalog.get,
+        self.get = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                r2_data_catalog.get,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -627,20 +658,30 @@ class AsyncR2DataCatalogResourceWithRawResponse:
     def __init__(self, r2_data_catalog: AsyncR2DataCatalogResource) -> None:
         self._r2_data_catalog = r2_data_catalog
 
-        self.list = async_to_raw_response_wrapper(
-            r2_data_catalog.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                r2_data_catalog.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = async_to_raw_response_wrapper(
-            r2_data_catalog.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                r2_data_catalog.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.disable = async_to_raw_response_wrapper(
-            r2_data_catalog.disable,
+        self.disable = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                r2_data_catalog.disable,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.enable = async_to_raw_response_wrapper(
-            r2_data_catalog.enable,
+        self.enable = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                r2_data_catalog.enable,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get = async_to_raw_response_wrapper(
-            r2_data_catalog.get,
+        self.get = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                r2_data_catalog.get,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -660,20 +701,30 @@ class R2DataCatalogResourceWithStreamingResponse:
     def __init__(self, r2_data_catalog: R2DataCatalogResource) -> None:
         self._r2_data_catalog = r2_data_catalog
 
-        self.list = to_streamed_response_wrapper(
-            r2_data_catalog.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                r2_data_catalog.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = to_streamed_response_wrapper(
-            r2_data_catalog.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                r2_data_catalog.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.disable = to_streamed_response_wrapper(
-            r2_data_catalog.disable,
+        self.disable = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                r2_data_catalog.disable,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.enable = to_streamed_response_wrapper(
-            r2_data_catalog.enable,
+        self.enable = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                r2_data_catalog.enable,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get = to_streamed_response_wrapper(
-            r2_data_catalog.get,
+        self.get = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                r2_data_catalog.get,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property
@@ -693,20 +744,30 @@ class AsyncR2DataCatalogResourceWithStreamingResponse:
     def __init__(self, r2_data_catalog: AsyncR2DataCatalogResource) -> None:
         self._r2_data_catalog = r2_data_catalog
 
-        self.list = async_to_streamed_response_wrapper(
-            r2_data_catalog.list,
+        self.list = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                r2_data_catalog.list,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.delete = async_to_streamed_response_wrapper(
-            r2_data_catalog.delete,
+        self.delete = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                r2_data_catalog.delete,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.disable = async_to_streamed_response_wrapper(
-            r2_data_catalog.disable,
+        self.disable = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                r2_data_catalog.disable,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.enable = async_to_streamed_response_wrapper(
-            r2_data_catalog.enable,
+        self.enable = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                r2_data_catalog.enable,  # pyright: ignore[reportDeprecated],
+            )
         )
-        self.get = async_to_streamed_response_wrapper(
-            r2_data_catalog.get,
+        self.get = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                r2_data_catalog.get,  # pyright: ignore[reportDeprecated],
+            )
         )
 
     @cached_property

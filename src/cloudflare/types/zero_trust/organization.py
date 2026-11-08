@@ -115,7 +115,11 @@ class Organization(BaseModel):
     """
 
     auth_domain: Optional[str] = None
-    """The unique subdomain assigned to your Zero Trust organization."""
+    """The unique subdomain assigned to your Zero Trust organization.
+
+    If omitted on creation, a unique subdomain is auto-generated in the format
+    `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
+    """
 
     auto_redirect_to_identity: Optional[bool] = None
     """
@@ -142,6 +146,9 @@ class Organization(BaseModel):
     the request.
     """
 
+    disable_end_user_app_creation: Optional[bool] = None
+    """Whether creation of end user applications is disabled for this organization."""
+
     is_ui_read_only: Optional[bool] = None
     """Lock all settings as Read-Only in the Dashboard, regardless of user permission.
 
@@ -166,7 +173,11 @@ class Organization(BaseModel):
     """
 
     name: Optional[str] = None
-    """The name of your Zero Trust organization."""
+    """The name of your Zero Trust organization.
+
+    When omitted on creation, defaults to the provided auth_domain; when both are
+    omitted, defaults to the auto-generated subdomain slug (e.g. frosty-moon-7a3b).
+    """
 
     service_token_inactivity: Optional[ServiceTokenInactivity] = None
     """Configures automatic enforcement for inactive service tokens.
@@ -182,6 +193,16 @@ class Organization(BaseModel):
 
     Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs),
     ms, s, m, h.
+    """
+
+    strict_service_token_auth: Optional[bool] = None
+    """Enables new behaviors for requests made with Access service tokens.
+
+    Unauthorized requests emit audit logs, and return a 401 or 403 status code in
+    the response instead of redirecting to the login page. Successful requests no
+    longer receive a CF_Authorization cookie in the response. Zero Trust
+    organizations created on or after October 5, 2026 will have this setting enabled
+    by default, and cannot disable it.
     """
 
     ui_read_only_toggle_reason: Optional[str] = None

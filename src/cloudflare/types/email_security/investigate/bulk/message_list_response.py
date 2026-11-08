@@ -20,6 +20,7 @@ __all__ = [
     "MessageProperties",
     "MessageFinding",
     "MessageValidation",
+    "MessageValidationEmailSecurityValidation",
 ]
 
 
@@ -27,6 +28,7 @@ class ActionParamsMove(BaseModel):
     client_recipient: str
 
     destination: Literal["Inbox", "JunkEmail", "DeletedItems", "RecoverableItemsDeletions", "RecoverableItemsPurges"]
+    """The mailbox folder to move messages to."""
 
     type: Literal["MOVE"]
 
@@ -143,6 +145,7 @@ class MessageFinding(BaseModel):
             "NONE",
         ]
     ] = None
+    """The verdict Email Security assigns to a message."""
 
     field: Optional[str] = None
 
@@ -157,7 +160,7 @@ class MessageFinding(BaseModel):
     value: Optional[str] = None
 
 
-class MessageValidation(BaseModel):
+class MessageValidationEmailSecurityValidation(BaseModel):
     comment: Optional[str] = None
 
     dkim: Optional[Literal["pass", "neutral", "fail", "error", "none"]] = None
@@ -165,6 +168,9 @@ class MessageValidation(BaseModel):
     dmarc: Optional[Literal["pass", "neutral", "fail", "error", "none"]] = None
 
     spf: Optional[Literal["pass", "neutral", "fail", "error", "none"]] = None
+
+
+MessageValidation: TypeAlias = Union[MessageValidationEmailSecurityValidation, Optional[object]]
 
 
 class Message(BaseModel):
@@ -236,6 +242,7 @@ class Message(BaseModel):
             "NONE",
         ]
     ] = None
+    """The verdict Email Security assigns to a message."""
 
     findings: Optional[List[MessageFinding]] = None
     """

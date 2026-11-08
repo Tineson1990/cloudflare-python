@@ -34,12 +34,6 @@ class UsageGetAccountUsageV2ResponseItem(BaseModel):
     charge_period_start: datetime = FieldInfo(alias="ChargePeriodStart")
     """Inclusive start of the time interval during which the usage was consumed."""
 
-    consumed_quantity: float = FieldInfo(alias="ConsumedQuantity")
-    """Measured usage amount within the charge period.
-
-    Reflects raw metered consumption before pricing transformations.
-    """
-
     consumed_unit: str = FieldInfo(alias="ConsumedUnit")
     """
     Unit of measure for the consumed quantity (e.g., "GB", "Requests",
@@ -71,13 +65,16 @@ class UsageGetAccountUsageV2ResponseItem(BaseModel):
     billing_account_id: Optional[str] = FieldInfo(alias="BillingAccountId", default=None)
     """Public identifier of the Cloudflare account (account tag).
 
-    Omitted when account is not part of the requested grouping.
+    Omitted when account is not part of the requested grouping, and always omitted
+    for usage measured at contract level, even when grouping by account: that usage
+    is returned as its own record with no account.
     """
 
     billing_account_name: Optional[str] = FieldInfo(alias="BillingAccountName", default=None)
     """Display name of the Cloudflare account.
 
-    Omitted when account is not part of the requested grouping.
+    Omitted when account is not part of the requested grouping, and for usage
+    measured at contract level.
     """
 
     billing_currency: Optional[str] = FieldInfo(alias="BillingCurrency", default=None)
@@ -93,6 +90,12 @@ class UsageGetAccountUsageV2ResponseItem(BaseModel):
     """
     Indicates whether the row represents a correction to one or more charges
     invoiced in a previous billing period.
+    """
+
+    consumed_quantity: Optional[float] = FieldInfo(alias="ConsumedQuantity", default=None)
+    """Measured usage amount within the charge period.
+
+    Reflects raw metered consumption before pricing transformations.
     """
 
     contracted_cost: Optional[float] = FieldInfo(alias="ContractedCost", default=None)
@@ -191,10 +194,19 @@ class UsageGetAccountUsageV2ResponseItem(BaseModel):
     """
 
     x_zone_id: Optional[str] = FieldInfo(alias="x_ZoneId", default=None)
-    """The identifier for the Cloudflare zone (zone tag). Cloudflare extension."""
+    """The identifier for the Cloudflare zone (zone tag).
+
+    Omitted when zone is not part of the requested grouping, and always omitted for
+    usage measured at contract level, even when grouping by zone. Cloudflare
+    extension.
+    """
 
     x_zone_name: Optional[str] = FieldInfo(alias="x_ZoneName", default=None)
-    """The display name of the Cloudflare zone. Cloudflare extension."""
+    """The display name of the Cloudflare zone.
+
+    Omitted when zone is not part of the requested grouping, and for usage measured
+    at contract level. Cloudflare extension.
+    """
 
 
 UsageGetAccountUsageV2Response: TypeAlias = List[UsageGetAccountUsageV2ResponseItem]

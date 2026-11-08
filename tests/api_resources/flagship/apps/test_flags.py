@@ -76,6 +76,7 @@ class TestFlags:
             ],
             variations={"foo": "string"},
             description="description",
+            metadata={"foo": True},
             type="boolean",
         )
         assert_matches_type(FlagCreateResponse, flag, path=["response"])
@@ -242,6 +243,7 @@ class TestFlags:
             ],
             variations={"foo": "string"},
             description="description",
+            metadata={"foo": True},
             type="boolean",
         )
         assert_matches_type(FlagUpdateResponse, flag, path=["response"])
@@ -396,7 +398,7 @@ class TestFlags:
             app_id="app_id",
             account_id="account_id",
             cursor="cursor",
-            limit="limit",
+            limit=1,
         )
         assert_matches_type(SyncCursorPaginationAfter[FlagListResponse], flag, path=["response"])
 
@@ -618,6 +620,7 @@ class TestAsyncFlags:
             ],
             variations={"foo": "string"},
             description="description",
+            metadata={"foo": True},
             type="boolean",
         )
         assert_matches_type(FlagCreateResponse, flag, path=["response"])
@@ -784,6 +787,7 @@ class TestAsyncFlags:
             ],
             variations={"foo": "string"},
             description="description",
+            metadata={"foo": True},
             type="boolean",
         )
         assert_matches_type(FlagUpdateResponse, flag, path=["response"])
@@ -938,7 +942,7 @@ class TestAsyncFlags:
             app_id="app_id",
             account_id="account_id",
             cursor="cursor",
-            limit="limit",
+            limit=1,
         )
         assert_matches_type(AsyncCursorPaginationAfter[FlagListResponse], flag, path=["response"])
 

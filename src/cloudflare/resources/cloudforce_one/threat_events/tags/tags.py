@@ -106,7 +106,7 @@ class TagsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagCreateResponse:
         """
-        Creates a new tag to be used accross threat events.
+        Creates a tag in the account and returns the complete tag.
 
         Args:
           account_id: Account ID.
@@ -126,8 +126,8 @@ class TagsResource(SyncAPIResource):
           external_references: Structured external references ({ url, description }). Public: returned to all
               accounts.
 
-          internal_aliases: Internal structured aliases ({ value, confidence 1-10, tlp }). CFONE-only: never
-              returned to non-CFONE accounts.
+          internal_aliases: Owner-private structured aliases ({ value, confidence 1-10, tlp }). Returned to
+              the owning account and omitted from shared-catalog non-owner responses.
 
           properties: Structured metadata blob. Optional. When `categoryUuid` is given, validated
               against this category's schema on write. When typeless, accepted free-form. Use
@@ -199,13 +199,13 @@ class TagsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagListResponse:
-        """Returns all Source-of-Truth tags for an account.
+        """Lists the account's tags.
 
-        Supports legacy free-text
-        `search` on tag value and `categoryUuid` exact match, plus a structured
-        `filters` JSON array for filtering by metadata fields (originCountryISO,
-        actorCategory, motive, priority, etc.). Country values may be passed as alpha-2,
-        alpha-3, name, or common alias.
+        Use `search` to match tag values, `categoryUuid` to
+        limit results to one category, and `filters` (a JSON array) to filter by fields
+        such as `originCountryISO`, `actorCategory`, `motive`, or `priority`. Country
+        filters accept alpha-2 or alpha-3 codes, names, or common aliases. Tags marked
+        TLP:PURPLE are visible only to Cloudforce One.
 
         Args:
           account_id: Account ID.
@@ -285,7 +285,7 @@ class TagsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagDeleteResponse:
         """
-        Deletes a Source-of-Truth tag by UUID.
+        Deletes a tag by its UUID.
 
         Args:
           account_id: Account ID.
@@ -350,7 +350,7 @@ class TagsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagEditResponse:
         """
-        Updates a Source-of-Truth tag by UUID.
+        Updates the given fields of a tag and returns the complete tag.
 
         Args:
           account_id: Account ID.
@@ -372,8 +372,8 @@ class TagsResource(SyncAPIResource):
           external_references: Structured external references ({ url, description }). Public: returned to all
               accounts.
 
-          internal_aliases: Internal structured aliases ({ value, confidence 1-10, tlp }). CFONE-only: never
-              returned to non-CFONE accounts.
+          internal_aliases: Owner-private structured aliases ({ value, confidence 1-10, tlp }). Returned to
+              the owning account and omitted from shared-catalog non-owner responses.
 
           properties: Custom field values blob. When omitted, the existing value is preserved. When
               provided, performs a shallow per-key merge over the stored value (unmentioned
@@ -497,7 +497,7 @@ class AsyncTagsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagCreateResponse:
         """
-        Creates a new tag to be used accross threat events.
+        Creates a tag in the account and returns the complete tag.
 
         Args:
           account_id: Account ID.
@@ -517,8 +517,8 @@ class AsyncTagsResource(AsyncAPIResource):
           external_references: Structured external references ({ url, description }). Public: returned to all
               accounts.
 
-          internal_aliases: Internal structured aliases ({ value, confidence 1-10, tlp }). CFONE-only: never
-              returned to non-CFONE accounts.
+          internal_aliases: Owner-private structured aliases ({ value, confidence 1-10, tlp }). Returned to
+              the owning account and omitted from shared-catalog non-owner responses.
 
           properties: Structured metadata blob. Optional. When `categoryUuid` is given, validated
               against this category's schema on write. When typeless, accepted free-form. Use
@@ -590,13 +590,13 @@ class AsyncTagsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagListResponse:
-        """Returns all Source-of-Truth tags for an account.
+        """Lists the account's tags.
 
-        Supports legacy free-text
-        `search` on tag value and `categoryUuid` exact match, plus a structured
-        `filters` JSON array for filtering by metadata fields (originCountryISO,
-        actorCategory, motive, priority, etc.). Country values may be passed as alpha-2,
-        alpha-3, name, or common alias.
+        Use `search` to match tag values, `categoryUuid` to
+        limit results to one category, and `filters` (a JSON array) to filter by fields
+        such as `originCountryISO`, `actorCategory`, `motive`, or `priority`. Country
+        filters accept alpha-2 or alpha-3 codes, names, or common aliases. Tags marked
+        TLP:PURPLE are visible only to Cloudforce One.
 
         Args:
           account_id: Account ID.
@@ -676,7 +676,7 @@ class AsyncTagsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagDeleteResponse:
         """
-        Deletes a Source-of-Truth tag by UUID.
+        Deletes a tag by its UUID.
 
         Args:
           account_id: Account ID.
@@ -741,7 +741,7 @@ class AsyncTagsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TagEditResponse:
         """
-        Updates a Source-of-Truth tag by UUID.
+        Updates the given fields of a tag and returns the complete tag.
 
         Args:
           account_id: Account ID.
@@ -763,8 +763,8 @@ class AsyncTagsResource(AsyncAPIResource):
           external_references: Structured external references ({ url, description }). Public: returned to all
               accounts.
 
-          internal_aliases: Internal structured aliases ({ value, confidence 1-10, tlp }). CFONE-only: never
-              returned to non-CFONE accounts.
+          internal_aliases: Owner-private structured aliases ({ value, confidence 1-10, tlp }). Returned to
+              the owning account and omitted from shared-catalog non-owner responses.
 
           properties: Custom field values blob. When omitted, the existing value is preserved. When
               provided, performs a shallow per-key merge over the stored value (unmentioned

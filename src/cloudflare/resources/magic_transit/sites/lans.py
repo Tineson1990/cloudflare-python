@@ -64,6 +64,7 @@ class LANsResource(SyncAPIResource):
         name: str | Omit = omit,
         nat: NatParam | Omit = omit,
         physport: int | Omit = omit,
+        remote_subnets: Iterable[lan_create_params.RemoteSubnet] | Omit = omit,
         routed_subnets: Iterable[RoutedSubnetParam] | Omit = omit,
         static_addressing: LANStaticAddressingParam | Omit = omit,
         vlan_tag: int | Omit = omit,
@@ -121,6 +122,7 @@ class LANsResource(SyncAPIResource):
                     "name": name,
                     "nat": nat,
                     "physport": physport,
+                    "remote_subnets": remote_subnets,
                     "routed_subnets": routed_subnets,
                     "static_addressing": static_addressing,
                     "vlan_tag": vlan_tag,
@@ -141,11 +143,13 @@ class LANsResource(SyncAPIResource):
         account_id: str,
         site_id: str,
         bond_id: int | Omit = omit,
+        ha_link: bool | Omit = omit,
         is_breakout: bool | Omit = omit,
         is_prioritized: bool | Omit = omit,
         name: str | Omit = omit,
         nat: NatParam | Omit = omit,
         physport: int | Omit = omit,
+        remote_subnets: Iterable[lan_update_params.RemoteSubnet] | Omit = omit,
         routed_subnets: Iterable[RoutedSubnetParam] | Omit = omit,
         static_addressing: LANStaticAddressingParam | Omit = omit,
         vlan_tag: int | Omit = omit,
@@ -165,6 +169,9 @@ class LANsResource(SyncAPIResource):
           site_id: Identifier
 
           lan_id: Identifier
+
+          ha_link: mark true to use this LAN for HA probing. only works for site with HA turned on.
+              only one LAN can be set as the ha_link.
 
           is_breakout: mark true to use this LAN for source-based breakout traffic
 
@@ -200,11 +207,13 @@ class LANsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "bond_id": bond_id,
+                    "ha_link": ha_link,
                     "is_breakout": is_breakout,
                     "is_prioritized": is_prioritized,
                     "name": name,
                     "nat": nat,
                     "physport": physport,
+                    "remote_subnets": remote_subnets,
                     "routed_subnets": routed_subnets,
                     "static_addressing": static_addressing,
                     "vlan_tag": vlan_tag,
@@ -323,11 +332,13 @@ class LANsResource(SyncAPIResource):
         account_id: str,
         site_id: str,
         bond_id: int | Omit = omit,
+        ha_link: bool | Omit = omit,
         is_breakout: bool | Omit = omit,
         is_prioritized: bool | Omit = omit,
         name: str | Omit = omit,
         nat: NatParam | Omit = omit,
         physport: int | Omit = omit,
+        remote_subnets: Iterable[lan_edit_params.RemoteSubnet] | Omit = omit,
         routed_subnets: Iterable[RoutedSubnetParam] | Omit = omit,
         static_addressing: LANStaticAddressingParam | Omit = omit,
         vlan_tag: int | Omit = omit,
@@ -347,6 +358,9 @@ class LANsResource(SyncAPIResource):
           site_id: Identifier
 
           lan_id: Identifier
+
+          ha_link: mark true to use this LAN for HA probing. only works for site with HA turned on.
+              only one LAN can be set as the ha_link.
 
           is_breakout: mark true to use this LAN for source-based breakout traffic
 
@@ -382,11 +396,13 @@ class LANsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "bond_id": bond_id,
+                    "ha_link": ha_link,
                     "is_breakout": is_breakout,
                     "is_prioritized": is_prioritized,
                     "name": name,
                     "nat": nat,
                     "physport": physport,
+                    "remote_subnets": remote_subnets,
                     "routed_subnets": routed_subnets,
                     "static_addressing": static_addressing,
                     "vlan_tag": vlan_tag,
@@ -490,6 +506,7 @@ class AsyncLANsResource(AsyncAPIResource):
         name: str | Omit = omit,
         nat: NatParam | Omit = omit,
         physport: int | Omit = omit,
+        remote_subnets: Iterable[lan_create_params.RemoteSubnet] | Omit = omit,
         routed_subnets: Iterable[RoutedSubnetParam] | Omit = omit,
         static_addressing: LANStaticAddressingParam | Omit = omit,
         vlan_tag: int | Omit = omit,
@@ -547,6 +564,7 @@ class AsyncLANsResource(AsyncAPIResource):
                     "name": name,
                     "nat": nat,
                     "physport": physport,
+                    "remote_subnets": remote_subnets,
                     "routed_subnets": routed_subnets,
                     "static_addressing": static_addressing,
                     "vlan_tag": vlan_tag,
@@ -567,11 +585,13 @@ class AsyncLANsResource(AsyncAPIResource):
         account_id: str,
         site_id: str,
         bond_id: int | Omit = omit,
+        ha_link: bool | Omit = omit,
         is_breakout: bool | Omit = omit,
         is_prioritized: bool | Omit = omit,
         name: str | Omit = omit,
         nat: NatParam | Omit = omit,
         physport: int | Omit = omit,
+        remote_subnets: Iterable[lan_update_params.RemoteSubnet] | Omit = omit,
         routed_subnets: Iterable[RoutedSubnetParam] | Omit = omit,
         static_addressing: LANStaticAddressingParam | Omit = omit,
         vlan_tag: int | Omit = omit,
@@ -591,6 +611,9 @@ class AsyncLANsResource(AsyncAPIResource):
           site_id: Identifier
 
           lan_id: Identifier
+
+          ha_link: mark true to use this LAN for HA probing. only works for site with HA turned on.
+              only one LAN can be set as the ha_link.
 
           is_breakout: mark true to use this LAN for source-based breakout traffic
 
@@ -626,11 +649,13 @@ class AsyncLANsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "bond_id": bond_id,
+                    "ha_link": ha_link,
                     "is_breakout": is_breakout,
                     "is_prioritized": is_prioritized,
                     "name": name,
                     "nat": nat,
                     "physport": physport,
+                    "remote_subnets": remote_subnets,
                     "routed_subnets": routed_subnets,
                     "static_addressing": static_addressing,
                     "vlan_tag": vlan_tag,
@@ -749,11 +774,13 @@ class AsyncLANsResource(AsyncAPIResource):
         account_id: str,
         site_id: str,
         bond_id: int | Omit = omit,
+        ha_link: bool | Omit = omit,
         is_breakout: bool | Omit = omit,
         is_prioritized: bool | Omit = omit,
         name: str | Omit = omit,
         nat: NatParam | Omit = omit,
         physport: int | Omit = omit,
+        remote_subnets: Iterable[lan_edit_params.RemoteSubnet] | Omit = omit,
         routed_subnets: Iterable[RoutedSubnetParam] | Omit = omit,
         static_addressing: LANStaticAddressingParam | Omit = omit,
         vlan_tag: int | Omit = omit,
@@ -773,6 +800,9 @@ class AsyncLANsResource(AsyncAPIResource):
           site_id: Identifier
 
           lan_id: Identifier
+
+          ha_link: mark true to use this LAN for HA probing. only works for site with HA turned on.
+              only one LAN can be set as the ha_link.
 
           is_breakout: mark true to use this LAN for source-based breakout traffic
 
@@ -808,11 +838,13 @@ class AsyncLANsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "bond_id": bond_id,
+                    "ha_link": ha_link,
                     "is_breakout": is_breakout,
                     "is_prioritized": is_prioritized,
                     "name": name,
                     "nat": nat,
                     "physport": physport,
+                    "remote_subnets": remote_subnets,
                     "routed_subnets": routed_subnets,
                     "static_addressing": static_addressing,
                     "vlan_tag": vlan_tag,

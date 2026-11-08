@@ -52,38 +52,7 @@ class AccountTagsResource(SyncAPIResource):
         *,
         account_id: str,
         resource_id: str,
-        resource_type: Literal[
-            "access_application",
-            "access_group",
-            "account",
-            "account_ruleset",
-            "ai_gateway",
-            "alerting_policy",
-            "alerting_webhook",
-            "cloudflared_tunnel",
-            "cws_deployment",
-            "cws_policy",
-            "cws_policy_set",
-            "cws_workload",
-            "d1_database",
-            "durable_object_namespace",
-            "gateway_list",
-            "gateway_rule",
-            "image",
-            "infrastructure_target",
-            "kv_namespace",
-            "load_balancer_monitor",
-            "load_balancer_pool",
-            "pages_project",
-            "queue",
-            "r2_bucket",
-            "resource_share",
-            "stream_live_input",
-            "stream_video",
-            "vectorize_index",
-            "worker",
-            "worker_version",
-        ],
+        resource_type: Literal["worker_version"],
         worker_id: str,
         tags: Dict[str, str] | Omit = omit,
         if_match: str | Omit = omit,
@@ -94,16 +63,17 @@ class AccountTagsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[AccountTagUpdateResponse]:
-        """
-        Creates or updates tags for a specific account-level resource.
+        """Creates or updates tags for a specific account-level resource.
+
+        Replaces all
+        existing tags for the resource.
 
         Args:
           account_id: Identifier.
 
           resource_id: Identifies the unique resource.
 
-          resource_type: Enum for base account-level resource types (those with no extra required
-              fields).
+          resource_type: Enum for worker_version resource type.
 
           worker_id: Worker ID is required only for worker_version resources
 
@@ -129,9 +99,12 @@ class AccountTagsResource(SyncAPIResource):
         resource_type: Literal[
             "access_application",
             "access_group",
+            "access_service_token",
             "account",
             "account_ruleset",
             "ai_gateway",
+            "ai_search_instance",
+            "ai_search_namespace",
             "alerting_policy",
             "alerting_webhook",
             "cloudflared_tunnel",
@@ -140,6 +113,7 @@ class AccountTagsResource(SyncAPIResource):
             "cws_policy_set",
             "cws_workload",
             "d1_database",
+            "device",
             "durable_object_namespace",
             "gateway_list",
             "gateway_rule",
@@ -148,6 +122,7 @@ class AccountTagsResource(SyncAPIResource):
             "kv_namespace",
             "load_balancer_monitor",
             "load_balancer_pool",
+            "namespace_worker",
             "pages_project",
             "queue",
             "r2_bucket",
@@ -166,8 +141,10 @@ class AccountTagsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[AccountTagUpdateResponse]:
-        """
-        Creates or updates tags for a specific account-level resource.
+        """Creates or updates tags for a specific account-level resource.
+
+        Replaces all
+        existing tags for the resource.
 
         Args:
           account_id: Identifier.
@@ -198,44 +175,16 @@ class AccountTagsResource(SyncAPIResource):
         *,
         account_id: str,
         resource_id: str,
-        resource_type: Literal[
-            "access_application",
-            "access_group",
-            "account",
-            "account_ruleset",
-            "ai_gateway",
-            "alerting_policy",
-            "alerting_webhook",
-            "cloudflared_tunnel",
-            "cws_deployment",
-            "cws_policy",
-            "cws_policy_set",
-            "cws_workload",
-            "d1_database",
-            "durable_object_namespace",
-            "gateway_list",
-            "gateway_rule",
-            "image",
-            "infrastructure_target",
-            "kv_namespace",
-            "load_balancer_monitor",
-            "load_balancer_pool",
-            "pages_project",
-            "queue",
-            "r2_bucket",
-            "resource_share",
-            "stream_live_input",
-            "stream_video",
-            "vectorize_index",
-            "worker",
-            "worker_version",
-        ]
+        resource_type: Literal["worker_version"]
         | Literal[
             "access_application",
             "access_group",
+            "access_service_token",
             "account",
             "account_ruleset",
             "ai_gateway",
+            "ai_search_instance",
+            "ai_search_namespace",
             "alerting_policy",
             "alerting_webhook",
             "cloudflared_tunnel",
@@ -244,6 +193,7 @@ class AccountTagsResource(SyncAPIResource):
             "cws_policy_set",
             "cws_workload",
             "d1_database",
+            "device",
             "durable_object_namespace",
             "gateway_list",
             "gateway_rule",
@@ -252,6 +202,7 @@ class AccountTagsResource(SyncAPIResource):
             "kv_namespace",
             "load_balancer_monitor",
             "load_balancer_pool",
+            "namespace_worker",
             "pages_project",
             "queue",
             "r2_bucket",
@@ -346,9 +297,12 @@ class AccountTagsResource(SyncAPIResource):
         resource_type: Literal[
             "access_application",
             "access_group",
+            "access_service_token",
             "account",
             "account_ruleset",
             "ai_gateway",
+            "ai_search_instance",
+            "ai_search_namespace",
             "alerting_policy",
             "alerting_webhook",
             "cloudflared_tunnel",
@@ -357,6 +311,7 @@ class AccountTagsResource(SyncAPIResource):
             "cws_policy_set",
             "cws_workload",
             "d1_database",
+            "device",
             "durable_object_namespace",
             "gateway_list",
             "gateway_rule",
@@ -365,6 +320,7 @@ class AccountTagsResource(SyncAPIResource):
             "kv_namespace",
             "load_balancer_monitor",
             "load_balancer_pool",
+            "namespace_worker",
             "pages_project",
             "queue",
             "r2_bucket",
@@ -457,38 +413,7 @@ class AsyncAccountTagsResource(AsyncAPIResource):
         *,
         account_id: str,
         resource_id: str,
-        resource_type: Literal[
-            "access_application",
-            "access_group",
-            "account",
-            "account_ruleset",
-            "ai_gateway",
-            "alerting_policy",
-            "alerting_webhook",
-            "cloudflared_tunnel",
-            "cws_deployment",
-            "cws_policy",
-            "cws_policy_set",
-            "cws_workload",
-            "d1_database",
-            "durable_object_namespace",
-            "gateway_list",
-            "gateway_rule",
-            "image",
-            "infrastructure_target",
-            "kv_namespace",
-            "load_balancer_monitor",
-            "load_balancer_pool",
-            "pages_project",
-            "queue",
-            "r2_bucket",
-            "resource_share",
-            "stream_live_input",
-            "stream_video",
-            "vectorize_index",
-            "worker",
-            "worker_version",
-        ],
+        resource_type: Literal["worker_version"],
         worker_id: str,
         tags: Dict[str, str] | Omit = omit,
         if_match: str | Omit = omit,
@@ -499,16 +424,17 @@ class AsyncAccountTagsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[AccountTagUpdateResponse]:
-        """
-        Creates or updates tags for a specific account-level resource.
+        """Creates or updates tags for a specific account-level resource.
+
+        Replaces all
+        existing tags for the resource.
 
         Args:
           account_id: Identifier.
 
           resource_id: Identifies the unique resource.
 
-          resource_type: Enum for base account-level resource types (those with no extra required
-              fields).
+          resource_type: Enum for worker_version resource type.
 
           worker_id: Worker ID is required only for worker_version resources
 
@@ -534,9 +460,12 @@ class AsyncAccountTagsResource(AsyncAPIResource):
         resource_type: Literal[
             "access_application",
             "access_group",
+            "access_service_token",
             "account",
             "account_ruleset",
             "ai_gateway",
+            "ai_search_instance",
+            "ai_search_namespace",
             "alerting_policy",
             "alerting_webhook",
             "cloudflared_tunnel",
@@ -545,6 +474,7 @@ class AsyncAccountTagsResource(AsyncAPIResource):
             "cws_policy_set",
             "cws_workload",
             "d1_database",
+            "device",
             "durable_object_namespace",
             "gateway_list",
             "gateway_rule",
@@ -553,6 +483,7 @@ class AsyncAccountTagsResource(AsyncAPIResource):
             "kv_namespace",
             "load_balancer_monitor",
             "load_balancer_pool",
+            "namespace_worker",
             "pages_project",
             "queue",
             "r2_bucket",
@@ -571,8 +502,10 @@ class AsyncAccountTagsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[AccountTagUpdateResponse]:
-        """
-        Creates or updates tags for a specific account-level resource.
+        """Creates or updates tags for a specific account-level resource.
+
+        Replaces all
+        existing tags for the resource.
 
         Args:
           account_id: Identifier.
@@ -603,44 +536,16 @@ class AsyncAccountTagsResource(AsyncAPIResource):
         *,
         account_id: str,
         resource_id: str,
-        resource_type: Literal[
-            "access_application",
-            "access_group",
-            "account",
-            "account_ruleset",
-            "ai_gateway",
-            "alerting_policy",
-            "alerting_webhook",
-            "cloudflared_tunnel",
-            "cws_deployment",
-            "cws_policy",
-            "cws_policy_set",
-            "cws_workload",
-            "d1_database",
-            "durable_object_namespace",
-            "gateway_list",
-            "gateway_rule",
-            "image",
-            "infrastructure_target",
-            "kv_namespace",
-            "load_balancer_monitor",
-            "load_balancer_pool",
-            "pages_project",
-            "queue",
-            "r2_bucket",
-            "resource_share",
-            "stream_live_input",
-            "stream_video",
-            "vectorize_index",
-            "worker",
-            "worker_version",
-        ]
+        resource_type: Literal["worker_version"]
         | Literal[
             "access_application",
             "access_group",
+            "access_service_token",
             "account",
             "account_ruleset",
             "ai_gateway",
+            "ai_search_instance",
+            "ai_search_namespace",
             "alerting_policy",
             "alerting_webhook",
             "cloudflared_tunnel",
@@ -649,6 +554,7 @@ class AsyncAccountTagsResource(AsyncAPIResource):
             "cws_policy_set",
             "cws_workload",
             "d1_database",
+            "device",
             "durable_object_namespace",
             "gateway_list",
             "gateway_rule",
@@ -657,6 +563,7 @@ class AsyncAccountTagsResource(AsyncAPIResource):
             "kv_namespace",
             "load_balancer_monitor",
             "load_balancer_pool",
+            "namespace_worker",
             "pages_project",
             "queue",
             "r2_bucket",
@@ -751,9 +658,12 @@ class AsyncAccountTagsResource(AsyncAPIResource):
         resource_type: Literal[
             "access_application",
             "access_group",
+            "access_service_token",
             "account",
             "account_ruleset",
             "ai_gateway",
+            "ai_search_instance",
+            "ai_search_namespace",
             "alerting_policy",
             "alerting_webhook",
             "cloudflared_tunnel",
@@ -762,6 +672,7 @@ class AsyncAccountTagsResource(AsyncAPIResource):
             "cws_policy_set",
             "cws_workload",
             "d1_database",
+            "device",
             "durable_object_namespace",
             "gateway_list",
             "gateway_rule",
@@ -770,6 +681,7 @@ class AsyncAccountTagsResource(AsyncAPIResource):
             "kv_namespace",
             "load_balancer_monitor",
             "load_balancer_pool",
+            "namespace_worker",
             "pages_project",
             "queue",
             "r2_bucket",

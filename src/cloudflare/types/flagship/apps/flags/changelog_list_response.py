@@ -13,73 +13,67 @@ __all__ = [
     "UnionMember0After",
     "UnionMember0AfterRule",
     "UnionMember0AfterRuleCondition",
-    "UnionMember0AfterRuleConditionUnionMember0",
-    "UnionMember0AfterRuleConditionUnionMember1",
-    "UnionMember0AfterRuleConditionUnionMember1Clause",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember0",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1Clause",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
+    "UnionMember0AfterRuleConditionFlagshipBaseCondition",
+    "UnionMember0AfterRuleConditionFlagshipLogicalCondition",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClause",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4",
+    "UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause",
     "UnionMember0AfterRuleRollout",
     "UnionMember1",
     "UnionMember1After",
     "UnionMember1AfterRule",
     "UnionMember1AfterRuleCondition",
-    "UnionMember1AfterRuleConditionUnionMember0",
-    "UnionMember1AfterRuleConditionUnionMember1",
-    "UnionMember1AfterRuleConditionUnionMember1Clause",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember0",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1Clause",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
+    "UnionMember1AfterRuleConditionFlagshipBaseCondition",
+    "UnionMember1AfterRuleConditionFlagshipLogicalCondition",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClause",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4",
+    "UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause",
     "UnionMember1AfterRuleRollout",
     "UnionMember2",
     "UnionMember2After",
     "UnionMember2AfterRule",
     "UnionMember2AfterRuleCondition",
-    "UnionMember2AfterRuleConditionUnionMember0",
-    "UnionMember2AfterRuleConditionUnionMember1",
-    "UnionMember2AfterRuleConditionUnionMember1Clause",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember0",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1Clause",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0",
-    "UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1",
+    "UnionMember2AfterRuleConditionFlagshipBaseCondition",
+    "UnionMember2AfterRuleConditionFlagshipLogicalCondition",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClause",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4",
+    "UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause",
     "UnionMember2AfterRuleRollout",
     "UnionMember2Diff",
 ]
 
 
-class UnionMember0AfterRuleConditionUnionMember0(BaseModel):
+class UnionMember0AfterRuleConditionFlagshipBaseCondition(BaseModel):
     attribute: str
 
     operator: Literal[
@@ -94,12 +88,14 @@ class UnionMember0AfterRuleConditionUnionMember0(BaseModel):
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember0(BaseModel):
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition(BaseModel):
     attribute: str
 
     operator: Literal[
@@ -114,52 +110,14 @@ class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember0(BaseModel):
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0(BaseModel):
-    attribute: str
-
-    operator: Literal[
-        "equals",
-        "not_equals",
-        "greater_than",
-        "less_than",
-        "greater_than_or_equals",
-        "less_than_or_equals",
-        "contains",
-        "starts_with",
-        "ends_with",
-        "in",
-        "not_in",
-    ]
-
-    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
-
-
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(BaseModel):
-    attribute: str
-
-    operator: Literal[
-        "equals",
-        "not_equals",
-        "greater_than",
-        "less_than",
-        "greater_than_or_equals",
-        "less_than_or_equals",
-        "contains",
-        "starts_with",
-        "ends_with",
-        "in",
-        "not_in",
-    ]
-
-    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
-
-
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition(
     BaseModel
 ):
     attribute: str
@@ -176,12 +134,14 @@ class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMem
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition(
     BaseModel
 ):
     attribute: str
@@ -198,96 +158,138 @@ class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMem
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition(
     BaseModel
 ):
-    clauses: List[Union[Optional[str], float, bool, Dict[str, object], List[object]]]
+    attribute: str
 
-    logical_operator: Literal["AND", "OR"]
+    operator: Literal[
+        "equals",
+        "not_equals",
+        "greater_than",
+        "less_than",
+        "greater_than_or_equals",
+        "less_than_or_equals",
+        "contains",
+        "starts_with",
+        "ends_with",
+        "in",
+        "not_in",
+        "has",
+        "not_has",
+    ]
+
+    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
-]
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause(
+    BaseModel
+):
+    attribute: str
+
+    operator: Literal[
+        "equals",
+        "not_equals",
+        "greater_than",
+        "less_than",
+        "greater_than_or_equals",
+        "less_than_or_equals",
+        "contains",
+        "starts_with",
+        "ends_with",
+        "in",
+        "not_in",
+        "has",
+        "not_has",
+    ]
+
+    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4(
     BaseModel
 ):
     clauses: List[
-        UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause
+        UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause
     ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause: TypeAlias = Union[
+    UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition,
+    UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4,
 ]
 
 
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(BaseModel):
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3(
+    BaseModel
+):
     clauses: List[
-        UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause
+        UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause
     ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause: TypeAlias = Union[
+    UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition,
+    UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3,
 ]
 
 
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1(BaseModel):
-    clauses: List[UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause]
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2(
+    BaseModel
+):
+    clauses: List[
+        UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause
+    ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause: TypeAlias = Union[
+    UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition,
+    UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2,
 ]
 
 
-class UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1(BaseModel):
-    clauses: List[UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1Clause]
+class UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1(BaseModel):
+    clauses: List[UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember0AfterRuleConditionUnionMember1Clause: TypeAlias = Union[
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember0,
-    UnionMember0AfterRuleConditionUnionMember1ClauseUnionMember1,
+UnionMember0AfterRuleConditionFlagshipLogicalConditionClause: TypeAlias = Union[
+    UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition,
+    UnionMember0AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1,
 ]
 
 
-class UnionMember0AfterRuleConditionUnionMember1(BaseModel):
-    clauses: List[UnionMember0AfterRuleConditionUnionMember1Clause]
+class UnionMember0AfterRuleConditionFlagshipLogicalCondition(BaseModel):
+    clauses: List[UnionMember0AfterRuleConditionFlagshipLogicalConditionClause]
 
     logical_operator: Literal["AND", "OR"]
 
 
 UnionMember0AfterRuleCondition: TypeAlias = Union[
-    UnionMember0AfterRuleConditionUnionMember0, UnionMember0AfterRuleConditionUnionMember1
+    UnionMember0AfterRuleConditionFlagshipBaseCondition, UnionMember0AfterRuleConditionFlagshipLogicalCondition
 ]
 
 
 class UnionMember0AfterRuleRollout(BaseModel):
     percentage: float
-    """Percentage of matching traffic (0–100) served this variation.
-
-    For multi-way splits, use cumulative upper bounds across rules (e.g. 30, 70,
-    100).
+    """
+    Percentage of matching traffic (0–100, up to 2 decimal places) served this
+    variation. For multi-way splits, use cumulative upper bounds across rules (e.g.
+    30, 70, 100).
     """
 
     attribute: Optional[str] = None
@@ -350,6 +352,13 @@ class UnionMember0After(BaseModel):
     """
 
     description: Optional[str] = None
+    """Optional operator-facing description. It does not affect flag evaluation."""
+
+    metadata: Optional[Dict[str, Union[bool, str, float]]] = None
+    """Key-value metadata associated with the flag.
+
+    Returned only when the flag has metadata.
+    """
 
     updated_at: Optional[str] = None
 
@@ -364,7 +373,7 @@ class UnionMember0(BaseModel):
     flag_key: str
 
 
-class UnionMember1AfterRuleConditionUnionMember0(BaseModel):
+class UnionMember1AfterRuleConditionFlagshipBaseCondition(BaseModel):
     attribute: str
 
     operator: Literal[
@@ -379,12 +388,14 @@ class UnionMember1AfterRuleConditionUnionMember0(BaseModel):
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember0(BaseModel):
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition(BaseModel):
     attribute: str
 
     operator: Literal[
@@ -399,52 +410,14 @@ class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember0(BaseModel):
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0(BaseModel):
-    attribute: str
-
-    operator: Literal[
-        "equals",
-        "not_equals",
-        "greater_than",
-        "less_than",
-        "greater_than_or_equals",
-        "less_than_or_equals",
-        "contains",
-        "starts_with",
-        "ends_with",
-        "in",
-        "not_in",
-    ]
-
-    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
-
-
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(BaseModel):
-    attribute: str
-
-    operator: Literal[
-        "equals",
-        "not_equals",
-        "greater_than",
-        "less_than",
-        "greater_than_or_equals",
-        "less_than_or_equals",
-        "contains",
-        "starts_with",
-        "ends_with",
-        "in",
-        "not_in",
-    ]
-
-    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
-
-
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition(
     BaseModel
 ):
     attribute: str
@@ -461,12 +434,14 @@ class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMem
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition(
     BaseModel
 ):
     attribute: str
@@ -483,96 +458,138 @@ class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMem
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition(
     BaseModel
 ):
-    clauses: List[Union[Optional[str], float, bool, Dict[str, object], List[object]]]
+    attribute: str
 
-    logical_operator: Literal["AND", "OR"]
+    operator: Literal[
+        "equals",
+        "not_equals",
+        "greater_than",
+        "less_than",
+        "greater_than_or_equals",
+        "less_than_or_equals",
+        "contains",
+        "starts_with",
+        "ends_with",
+        "in",
+        "not_in",
+        "has",
+        "not_has",
+    ]
+
+    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
-]
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause(
+    BaseModel
+):
+    attribute: str
+
+    operator: Literal[
+        "equals",
+        "not_equals",
+        "greater_than",
+        "less_than",
+        "greater_than_or_equals",
+        "less_than_or_equals",
+        "contains",
+        "starts_with",
+        "ends_with",
+        "in",
+        "not_in",
+        "has",
+        "not_has",
+    ]
+
+    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4(
     BaseModel
 ):
     clauses: List[
-        UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause
+        UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause
     ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause: TypeAlias = Union[
+    UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition,
+    UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4,
 ]
 
 
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(BaseModel):
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3(
+    BaseModel
+):
     clauses: List[
-        UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause
+        UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause
     ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause: TypeAlias = Union[
+    UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition,
+    UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3,
 ]
 
 
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1(BaseModel):
-    clauses: List[UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause]
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2(
+    BaseModel
+):
+    clauses: List[
+        UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause
+    ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause: TypeAlias = Union[
+    UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition,
+    UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2,
 ]
 
 
-class UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1(BaseModel):
-    clauses: List[UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1Clause]
+class UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1(BaseModel):
+    clauses: List[UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember1AfterRuleConditionUnionMember1Clause: TypeAlias = Union[
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember0,
-    UnionMember1AfterRuleConditionUnionMember1ClauseUnionMember1,
+UnionMember1AfterRuleConditionFlagshipLogicalConditionClause: TypeAlias = Union[
+    UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition,
+    UnionMember1AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1,
 ]
 
 
-class UnionMember1AfterRuleConditionUnionMember1(BaseModel):
-    clauses: List[UnionMember1AfterRuleConditionUnionMember1Clause]
+class UnionMember1AfterRuleConditionFlagshipLogicalCondition(BaseModel):
+    clauses: List[UnionMember1AfterRuleConditionFlagshipLogicalConditionClause]
 
     logical_operator: Literal["AND", "OR"]
 
 
 UnionMember1AfterRuleCondition: TypeAlias = Union[
-    UnionMember1AfterRuleConditionUnionMember0, UnionMember1AfterRuleConditionUnionMember1
+    UnionMember1AfterRuleConditionFlagshipBaseCondition, UnionMember1AfterRuleConditionFlagshipLogicalCondition
 ]
 
 
 class UnionMember1AfterRuleRollout(BaseModel):
     percentage: float
-    """Percentage of matching traffic (0–100) served this variation.
-
-    For multi-way splits, use cumulative upper bounds across rules (e.g. 30, 70,
-    100).
+    """
+    Percentage of matching traffic (0–100, up to 2 decimal places) served this
+    variation. For multi-way splits, use cumulative upper bounds across rules (e.g.
+    30, 70, 100).
     """
 
     attribute: Optional[str] = None
@@ -635,6 +652,13 @@ class UnionMember1After(BaseModel):
     """
 
     description: Optional[str] = None
+    """Optional operator-facing description. It does not affect flag evaluation."""
+
+    metadata: Optional[Dict[str, Union[bool, str, float]]] = None
+    """Key-value metadata associated with the flag.
+
+    Returned only when the flag has metadata.
+    """
 
     updated_at: Optional[str] = None
 
@@ -649,7 +673,7 @@ class UnionMember1(BaseModel):
     flag_key: str
 
 
-class UnionMember2AfterRuleConditionUnionMember0(BaseModel):
+class UnionMember2AfterRuleConditionFlagshipBaseCondition(BaseModel):
     attribute: str
 
     operator: Literal[
@@ -664,12 +688,14 @@ class UnionMember2AfterRuleConditionUnionMember0(BaseModel):
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember0(BaseModel):
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition(BaseModel):
     attribute: str
 
     operator: Literal[
@@ -684,52 +710,14 @@ class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember0(BaseModel):
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0(BaseModel):
-    attribute: str
-
-    operator: Literal[
-        "equals",
-        "not_equals",
-        "greater_than",
-        "less_than",
-        "greater_than_or_equals",
-        "less_than_or_equals",
-        "contains",
-        "starts_with",
-        "ends_with",
-        "in",
-        "not_in",
-    ]
-
-    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
-
-
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(BaseModel):
-    attribute: str
-
-    operator: Literal[
-        "equals",
-        "not_equals",
-        "greater_than",
-        "less_than",
-        "greater_than_or_equals",
-        "less_than_or_equals",
-        "contains",
-        "starts_with",
-        "ends_with",
-        "in",
-        "not_in",
-    ]
-
-    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
-
-
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition(
     BaseModel
 ):
     attribute: str
@@ -746,12 +734,14 @@ class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMem
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0(
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition(
     BaseModel
 ):
     attribute: str
@@ -768,96 +758,138 @@ class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMem
         "ends_with",
         "in",
         "not_in",
+        "has",
+        "not_has",
     ]
 
     value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition(
     BaseModel
 ):
-    clauses: List[Union[Optional[str], float, bool, Dict[str, object], List[object]]]
+    attribute: str
 
-    logical_operator: Literal["AND", "OR"]
+    operator: Literal[
+        "equals",
+        "not_equals",
+        "greater_than",
+        "less_than",
+        "greater_than_or_equals",
+        "less_than_or_equals",
+        "contains",
+        "starts_with",
+        "ends_with",
+        "in",
+        "not_in",
+        "has",
+        "not_has",
+    ]
+
+    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
-]
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause(
+    BaseModel
+):
+    attribute: str
+
+    operator: Literal[
+        "equals",
+        "not_equals",
+        "greater_than",
+        "less_than",
+        "greater_than_or_equals",
+        "less_than_or_equals",
+        "contains",
+        "starts_with",
+        "ends_with",
+        "in",
+        "not_in",
+        "has",
+        "not_has",
+    ]
+
+    value: Union[Optional[str], float, bool, Dict[str, object], List[object]]
 
 
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4(
     BaseModel
 ):
     clauses: List[
-        UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause
+        UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4Clause
     ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause: TypeAlias = Union[
+    UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipBaseCondition,
+    UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3ClauseFlagshipLogicalCondition4,
 ]
 
 
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1(BaseModel):
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3(
+    BaseModel
+):
     clauses: List[
-        UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1Clause
+        UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3Clause
     ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause: TypeAlias = Union[
+    UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipBaseCondition,
+    UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2ClauseFlagshipLogicalCondition3,
 ]
 
 
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1(BaseModel):
-    clauses: List[UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1Clause]
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2(
+    BaseModel
+):
+    clauses: List[
+        UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2Clause
+    ]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1Clause: TypeAlias = Union[
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember0,
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1ClauseUnionMember1,
+UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause: TypeAlias = Union[
+    UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipBaseCondition,
+    UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1ClauseFlagshipLogicalCondition2,
 ]
 
 
-class UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1(BaseModel):
-    clauses: List[UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1Clause]
+class UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1(BaseModel):
+    clauses: List[UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1Clause]
 
     logical_operator: Literal["AND", "OR"]
 
 
-UnionMember2AfterRuleConditionUnionMember1Clause: TypeAlias = Union[
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember0,
-    UnionMember2AfterRuleConditionUnionMember1ClauseUnionMember1,
+UnionMember2AfterRuleConditionFlagshipLogicalConditionClause: TypeAlias = Union[
+    UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipBaseCondition,
+    UnionMember2AfterRuleConditionFlagshipLogicalConditionClauseFlagshipLogicalCondition1,
 ]
 
 
-class UnionMember2AfterRuleConditionUnionMember1(BaseModel):
-    clauses: List[UnionMember2AfterRuleConditionUnionMember1Clause]
+class UnionMember2AfterRuleConditionFlagshipLogicalCondition(BaseModel):
+    clauses: List[UnionMember2AfterRuleConditionFlagshipLogicalConditionClause]
 
     logical_operator: Literal["AND", "OR"]
 
 
 UnionMember2AfterRuleCondition: TypeAlias = Union[
-    UnionMember2AfterRuleConditionUnionMember0, UnionMember2AfterRuleConditionUnionMember1
+    UnionMember2AfterRuleConditionFlagshipBaseCondition, UnionMember2AfterRuleConditionFlagshipLogicalCondition
 ]
 
 
 class UnionMember2AfterRuleRollout(BaseModel):
     percentage: float
-    """Percentage of matching traffic (0–100) served this variation.
-
-    For multi-way splits, use cumulative upper bounds across rules (e.g. 30, 70,
-    100).
+    """
+    Percentage of matching traffic (0–100, up to 2 decimal places) served this
+    variation. For multi-way splits, use cumulative upper bounds across rules (e.g.
+    30, 70, 100).
     """
 
     attribute: Optional[str] = None
@@ -920,6 +952,13 @@ class UnionMember2After(BaseModel):
     """
 
     description: Optional[str] = None
+    """Optional operator-facing description. It does not affect flag evaluation."""
+
+    metadata: Optional[Dict[str, Union[bool, str, float]]] = None
+    """Key-value metadata associated with the flag.
+
+    Returned only when the flag has metadata.
+    """
 
     updated_at: Optional[str] = None
 

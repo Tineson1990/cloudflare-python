@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing import Union, Iterable, Optional
+from datetime import datetime
+from typing_extensions import Literal, Required, Annotated, TypedDict
+
+from ...._utils import PropertyInfo
 
 __all__ = ["BlockSenderBatchParams", "Delete", "Patch", "Post", "Put"]
 
@@ -13,12 +16,22 @@ class BlockSenderBatchParams(TypedDict, total=False):
     """Identifier."""
 
     deletes: Required[Iterable[Delete]]
+    """IDs of the blocked sender patterns to delete."""
 
     patches: Required[Iterable[Patch]]
+    """
+    Partial updates to apply — each entry carries the pattern's ID and only the
+    fields to change.
+    """
 
     posts: Required[Iterable[Post]]
+    """Blocked sender patterns to create."""
 
     puts: Required[Iterable[Put]]
+    """
+    Full replacements to apply — each entry carries the pattern's ID and every field
+    of its new value.
+    """
 
 
 class Delete(TypedDict, total=False):
@@ -31,7 +44,15 @@ class Patch(TypedDict, total=False):
 
     comments: Optional[str]
 
+    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Timestamp at which the pattern expires.
+
+    After this time, Email Security ignores the pattern. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
+
     is_regex: bool
+    """Whether `pattern` is a regular expression instead of a literal value."""
 
     pattern: str
     """The pattern value to match.
@@ -63,6 +84,7 @@ class Post(TypedDict, total=False):
     """Create a blocked sender pattern."""
 
     is_regex: Required[bool]
+    """Whether `pattern` is a regular expression instead of a literal value."""
 
     pattern: Required[str]
     """The pattern value to match.
@@ -90,12 +112,20 @@ class Post(TypedDict, total=False):
     """
 
     comments: Optional[str]
+
+    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Timestamp at which the pattern expires.
+
+    After this time, Email Security ignores the pattern. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
 
 
 class Put(TypedDict, total=False):
     """A blocked sender pattern."""
 
     is_regex: Required[bool]
+    """Whether `pattern` is a regular expression instead of a literal value."""
 
     pattern: Required[str]
     """The pattern value to match.
@@ -123,3 +153,10 @@ class Put(TypedDict, total=False):
     """
 
     comments: Optional[str]
+
+    expires_at: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
+    """Timestamp at which the pattern expires.
+
+    After this time, Email Security ignores the pattern. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """

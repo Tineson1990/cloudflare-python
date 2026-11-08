@@ -53,7 +53,7 @@ class SinksResource(SyncAPIResource):
         *,
         account_id: str,
         name: str,
-        type: Literal["r2", "r2_data_catalog"],
+        type: Literal["r2", "r2_data_catalog", "basin_catalog"],
         config: sink_create_params.Config | Omit = omit,
         format: sink_create_params.Format | Omit = omit,
         schema: sink_create_params.Schema | Omit = omit,
@@ -116,7 +116,9 @@ class SinksResource(SyncAPIResource):
         self,
         *,
         account_id: str,
+        direction: Literal["asc", "desc"] | Omit = omit,
         name: str | Omit = omit,
+        order_by: Literal["name", "created_at"] | Omit = omit,
         page: float | Omit = omit,
         per_page: float | Omit = omit,
         pipeline_id: str | Omit = omit,
@@ -133,7 +135,11 @@ class SinksResource(SyncAPIResource):
         Args:
           account_id: Specifies the public ID of the account.
 
+          direction: Sort direction.
+
           name: Filters sinks by name (case-insensitive substring).
+
+          order_by: Sorts sinks by this field. Defaults to `created_at`.
 
           extra_headers: Send extra headers
 
@@ -155,7 +161,9 @@ class SinksResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "direction": direction,
                         "name": name,
+                        "order_by": order_by,
                         "page": page,
                         "per_page": per_page,
                         "pipeline_id": pipeline_id,
@@ -284,7 +292,7 @@ class AsyncSinksResource(AsyncAPIResource):
         *,
         account_id: str,
         name: str,
-        type: Literal["r2", "r2_data_catalog"],
+        type: Literal["r2", "r2_data_catalog", "basin_catalog"],
         config: sink_create_params.Config | Omit = omit,
         format: sink_create_params.Format | Omit = omit,
         schema: sink_create_params.Schema | Omit = omit,
@@ -347,7 +355,9 @@ class AsyncSinksResource(AsyncAPIResource):
         self,
         *,
         account_id: str,
+        direction: Literal["asc", "desc"] | Omit = omit,
         name: str | Omit = omit,
+        order_by: Literal["name", "created_at"] | Omit = omit,
         page: float | Omit = omit,
         per_page: float | Omit = omit,
         pipeline_id: str | Omit = omit,
@@ -364,7 +374,11 @@ class AsyncSinksResource(AsyncAPIResource):
         Args:
           account_id: Specifies the public ID of the account.
 
+          direction: Sort direction.
+
           name: Filters sinks by name (case-insensitive substring).
+
+          order_by: Sorts sinks by this field. Defaults to `created_at`.
 
           extra_headers: Send extra headers
 
@@ -386,7 +400,9 @@ class AsyncSinksResource(AsyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "direction": direction,
                         "name": name,
+                        "order_by": order_by,
                         "page": page,
                         "per_page": per_page,
                         "pipeline_id": pipeline_id,

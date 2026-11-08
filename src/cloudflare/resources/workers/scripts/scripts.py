@@ -194,22 +194,33 @@ class ScriptsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ScriptUpdateResponse:
-        """Upload a worker module.
+        """Upload Worker code and configuration.
 
-        You can find more about the multipart metadata on our
-        docs:
-        https://developers.cloudflare.com/workers/configuration/multipart-upload-metadata/.
+        For ES module and other module-based
+        Workers, use `multipart/form-data` with a JSON `metadata` part whose
+        `main_module` field names the entrypoint file. Upload each module as a separate
+        file part; JavaScript ES module parts use the `application/javascript+module`
+        content type.
+
+        Raw `application/javascript` and `text/javascript` request bodies accept only
+        legacy service-worker syntax using `addEventListener`. They do not accept ES
+        module syntax such as `export default`. To upload a module Worker, use the
+        multipart request format instead.
+
+        Learn more about multipart metadata in the
+        [documentation](https://developers.cloudflare.com/workers/configuration/multipart-upload-metadata/).
 
         Args:
           account_id: Identifier.
 
-          script_name: Name of the script, used in URLs and route configuration.
+          script_name: Name of the script.
 
           metadata: JSON-encoded metadata about the uploaded parts and Worker configuration.
 
-          bindings_inherit: When set to "strict", the upload will fail if any `inherit` type bindings cannot
-              be resolved against the previous version of the Worker. Without this,
-              unresolvable inherit bindings are silently dropped.
+          bindings_inherit: When set to "strict", the upload will fail with error 10057 if any `inherit`
+              type bindings cannot be resolved against the latest uploaded version of the
+              Worker, which may not be the deployed version. Without this, unresolvable
+              inherit bindings are silently dropped.
 
           files: An array of modules (often JavaScript files) comprising a Worker script. At
               least one module must be present and referenced in the metadata as `main_module`
@@ -325,7 +336,7 @@ class ScriptsResource(SyncAPIResource):
         Args:
           account_id: Identifier.
 
-          script_name: Name of the script, used in URLs and route configuration.
+          script_name: Name of the script.
 
           force: If true, delete the Worker even when other Workers still reference it. Service
               bindings in those Workers may be left broken. Durable Object namespaces
@@ -379,7 +390,7 @@ class ScriptsResource(SyncAPIResource):
         Args:
           account_id: Identifier.
 
-          script_name: Name of the script, used in URLs and route configuration.
+          script_name: Name of the script.
 
           extra_headers: Send extra headers
 
@@ -544,22 +555,33 @@ class AsyncScriptsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ScriptUpdateResponse:
-        """Upload a worker module.
+        """Upload Worker code and configuration.
 
-        You can find more about the multipart metadata on our
-        docs:
-        https://developers.cloudflare.com/workers/configuration/multipart-upload-metadata/.
+        For ES module and other module-based
+        Workers, use `multipart/form-data` with a JSON `metadata` part whose
+        `main_module` field names the entrypoint file. Upload each module as a separate
+        file part; JavaScript ES module parts use the `application/javascript+module`
+        content type.
+
+        Raw `application/javascript` and `text/javascript` request bodies accept only
+        legacy service-worker syntax using `addEventListener`. They do not accept ES
+        module syntax such as `export default`. To upload a module Worker, use the
+        multipart request format instead.
+
+        Learn more about multipart metadata in the
+        [documentation](https://developers.cloudflare.com/workers/configuration/multipart-upload-metadata/).
 
         Args:
           account_id: Identifier.
 
-          script_name: Name of the script, used in URLs and route configuration.
+          script_name: Name of the script.
 
           metadata: JSON-encoded metadata about the uploaded parts and Worker configuration.
 
-          bindings_inherit: When set to "strict", the upload will fail if any `inherit` type bindings cannot
-              be resolved against the previous version of the Worker. Without this,
-              unresolvable inherit bindings are silently dropped.
+          bindings_inherit: When set to "strict", the upload will fail with error 10057 if any `inherit`
+              type bindings cannot be resolved against the latest uploaded version of the
+              Worker, which may not be the deployed version. Without this, unresolvable
+              inherit bindings are silently dropped.
 
           files: An array of modules (often JavaScript files) comprising a Worker script. At
               least one module must be present and referenced in the metadata as `main_module`
@@ -677,7 +699,7 @@ class AsyncScriptsResource(AsyncAPIResource):
         Args:
           account_id: Identifier.
 
-          script_name: Name of the script, used in URLs and route configuration.
+          script_name: Name of the script.
 
           force: If true, delete the Worker even when other Workers still reference it. Service
               bindings in those Workers may be left broken. Durable Object namespaces
@@ -731,7 +753,7 @@ class AsyncScriptsResource(AsyncAPIResource):
         Args:
           account_id: Identifier.
 
-          script_name: Name of the script, used in URLs and route configuration.
+          script_name: Name of the script.
 
           extra_headers: Send extra headers
 

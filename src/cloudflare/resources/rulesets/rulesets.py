@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Type, Iterable, cast
+from typing import Any, Iterable, cast
 
 import httpx
 
@@ -33,7 +33,6 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._wrappers import ResultWrapper
-from ...pagination import SyncCursorPagination, AsyncCursorPagination
 from .phases.phases import (
     PhasesResource,
     AsyncPhasesResource,
@@ -42,7 +41,7 @@ from .phases.phases import (
     PhasesResourceWithStreamingResponse,
     AsyncPhasesResourceWithStreamingResponse,
 )
-from ..._base_client import AsyncPaginator, make_request_options
+from ..._base_client import make_request_options
 from ...types.rulesets import (
     Kind,
     Phase,
@@ -96,13 +95,13 @@ class RulesetsResource(SyncAPIResource):
     def create(
         self,
         *,
-        kind: Kind,
-        name: str,
-        phase: Phase,
         account_id: str | Omit = omit,
         zone_id: str | Omit = omit,
         dry_run: bool | Omit = omit,
         description: str | Omit = omit,
+        kind: Kind | Omit = omit,
+        name: str | Omit = omit,
+        phase: Phase | Omit = omit,
         rules: Iterable[ruleset_create_params.Rule] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -111,17 +110,12 @@ class RulesetsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> RulesetCreateResponse:
-        """
-        Creates a ruleset.
+        """Creates a ruleset.
 
         Args:
-          kind: The kind of the ruleset.
+          account_id: The Account ID to use for this endpoint.
 
-          name: The human-readable name of the ruleset.
-
-          phase: The phase of the ruleset.
-
-          account_id: The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+        Mutually exclusive with the Zone ID.
 
           zone_id: The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 
@@ -130,6 +124,12 @@ class RulesetsResource(SyncAPIResource):
               204 continue to return 204.
 
           description: An informative description of the ruleset.
+
+          kind: The kind of the ruleset.
+
+          name: The human-readable name of the ruleset.
+
+          phase: The phase of the ruleset.
 
           rules: The list of rules in the ruleset.
 
@@ -163,10 +163,10 @@ class RulesetsResource(SyncAPIResource):
                 ),
                 body=maybe_transform(
                     {
+                        "description": description,
                         "kind": kind,
                         "name": name,
                         "phase": phase,
-                        "description": description,
                         "rules": rules,
                     },
                     ruleset_create_params.RulesetCreateParams,
@@ -296,7 +296,7 @@ class RulesetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncCursorPagination[RulesetListResponse]:
+    ) -> RulesetListResponse:
         """
         Fetches all rulesets.
 
@@ -329,27 +329,32 @@ class RulesetsResource(SyncAPIResource):
 
             account_or_zone = "zones"
             account_or_zone_id = zone_id
-        return self._get_api_list(
-            path_template(
-                "/{account_or_zone}/{account_or_zone_id}/rulesets",
-                account_or_zone=account_or_zone,
-                account_or_zone_id=account_or_zone_id,
-            ),
-            page=SyncCursorPagination[RulesetListResponse],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "cursor": cursor,
-                        "per_page": per_page,
-                    },
-                    ruleset_list_params.RulesetListParams,
+        return cast(
+            RulesetListResponse,
+            self._get(
+                path_template(
+                    "/{account_or_zone}/{account_or_zone_id}/rulesets",
+                    account_or_zone=account_or_zone,
+                    account_or_zone_id=account_or_zone_id,
                 ),
+                options=make_request_options(
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    query=maybe_transform(
+                        {
+                            "cursor": cursor,
+                            "per_page": per_page,
+                        },
+                        ruleset_list_params.RulesetListParams,
+                    ),
+                    post_parser=ResultWrapper[RulesetListResponse]._unwrapper,
+                ),
+                cast_to=cast(
+                    Any, ResultWrapper[RulesetListResponse]
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            model=RulesetListResponse,
         )
 
     def delete(
@@ -465,21 +470,26 @@ class RulesetsResource(SyncAPIResource):
 
             account_or_zone = "zones"
             account_or_zone_id = zone_id
-        return self._get(
-            path_template(
-                "/{account_or_zone}/{account_or_zone_id}/rulesets/{ruleset_id}",
-                ruleset_id=ruleset_id,
-                account_or_zone=account_or_zone,
-                account_or_zone_id=account_or_zone_id,
+        return cast(
+            RulesetGetResponse,
+            self._get(
+                path_template(
+                    "/{account_or_zone}/{account_or_zone_id}/rulesets/{ruleset_id}",
+                    ruleset_id=ruleset_id,
+                    account_or_zone=account_or_zone,
+                    account_or_zone_id=account_or_zone_id,
+                ),
+                options=make_request_options(
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    post_parser=ResultWrapper[RulesetGetResponse]._unwrapper,
+                ),
+                cast_to=cast(
+                    Any, ResultWrapper[RulesetGetResponse]
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                post_parser=ResultWrapper[RulesetGetResponse]._unwrapper,
-            ),
-            cast_to=cast(Type[RulesetGetResponse], ResultWrapper[RulesetGetResponse]),
         )
 
 
@@ -518,13 +528,13 @@ class AsyncRulesetsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        kind: Kind,
-        name: str,
-        phase: Phase,
         account_id: str | Omit = omit,
         zone_id: str | Omit = omit,
         dry_run: bool | Omit = omit,
         description: str | Omit = omit,
+        kind: Kind | Omit = omit,
+        name: str | Omit = omit,
+        phase: Phase | Omit = omit,
         rules: Iterable[ruleset_create_params.Rule] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -533,17 +543,12 @@ class AsyncRulesetsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> RulesetCreateResponse:
-        """
-        Creates a ruleset.
+        """Creates a ruleset.
 
         Args:
-          kind: The kind of the ruleset.
+          account_id: The Account ID to use for this endpoint.
 
-          name: The human-readable name of the ruleset.
-
-          phase: The phase of the ruleset.
-
-          account_id: The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+        Mutually exclusive with the Zone ID.
 
           zone_id: The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 
@@ -552,6 +557,12 @@ class AsyncRulesetsResource(AsyncAPIResource):
               204 continue to return 204.
 
           description: An informative description of the ruleset.
+
+          kind: The kind of the ruleset.
+
+          name: The human-readable name of the ruleset.
+
+          phase: The phase of the ruleset.
 
           rules: The list of rules in the ruleset.
 
@@ -585,10 +596,10 @@ class AsyncRulesetsResource(AsyncAPIResource):
                 ),
                 body=await async_maybe_transform(
                     {
+                        "description": description,
                         "kind": kind,
                         "name": name,
                         "phase": phase,
-                        "description": description,
                         "rules": rules,
                     },
                     ruleset_create_params.RulesetCreateParams,
@@ -705,7 +716,7 @@ class AsyncRulesetsResource(AsyncAPIResource):
             ),
         )
 
-    def list(
+    async def list(
         self,
         *,
         account_id: str | Omit = omit,
@@ -718,7 +729,7 @@ class AsyncRulesetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[RulesetListResponse, AsyncCursorPagination[RulesetListResponse]]:
+    ) -> RulesetListResponse:
         """
         Fetches all rulesets.
 
@@ -751,27 +762,32 @@ class AsyncRulesetsResource(AsyncAPIResource):
 
             account_or_zone = "zones"
             account_or_zone_id = zone_id
-        return self._get_api_list(
-            path_template(
-                "/{account_or_zone}/{account_or_zone_id}/rulesets",
-                account_or_zone=account_or_zone,
-                account_or_zone_id=account_or_zone_id,
-            ),
-            page=AsyncCursorPagination[RulesetListResponse],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "cursor": cursor,
-                        "per_page": per_page,
-                    },
-                    ruleset_list_params.RulesetListParams,
+        return cast(
+            RulesetListResponse,
+            await self._get(
+                path_template(
+                    "/{account_or_zone}/{account_or_zone_id}/rulesets",
+                    account_or_zone=account_or_zone,
+                    account_or_zone_id=account_or_zone_id,
                 ),
+                options=make_request_options(
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    query=await async_maybe_transform(
+                        {
+                            "cursor": cursor,
+                            "per_page": per_page,
+                        },
+                        ruleset_list_params.RulesetListParams,
+                    ),
+                    post_parser=ResultWrapper[RulesetListResponse]._unwrapper,
+                ),
+                cast_to=cast(
+                    Any, ResultWrapper[RulesetListResponse]
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            model=RulesetListResponse,
         )
 
     async def delete(
@@ -887,21 +903,26 @@ class AsyncRulesetsResource(AsyncAPIResource):
 
             account_or_zone = "zones"
             account_or_zone_id = zone_id
-        return await self._get(
-            path_template(
-                "/{account_or_zone}/{account_or_zone_id}/rulesets/{ruleset_id}",
-                ruleset_id=ruleset_id,
-                account_or_zone=account_or_zone,
-                account_or_zone_id=account_or_zone_id,
+        return cast(
+            RulesetGetResponse,
+            await self._get(
+                path_template(
+                    "/{account_or_zone}/{account_or_zone_id}/rulesets/{ruleset_id}",
+                    ruleset_id=ruleset_id,
+                    account_or_zone=account_or_zone,
+                    account_or_zone_id=account_or_zone_id,
+                ),
+                options=make_request_options(
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    post_parser=ResultWrapper[RulesetGetResponse]._unwrapper,
+                ),
+                cast_to=cast(
+                    Any, ResultWrapper[RulesetGetResponse]
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                post_parser=ResultWrapper[RulesetGetResponse]._unwrapper,
-            ),
-            cast_to=cast(Type[RulesetGetResponse], ResultWrapper[RulesetGetResponse]),
         )
 
 

@@ -24,7 +24,15 @@ class Patch(BaseModel):
 
     created_at: Optional[datetime] = None
 
+    expires_at: Optional[datetime] = None
+    """Timestamp at which the pattern expires.
+
+    After this time, Email Security ignores the pattern. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
+
     is_regex: Optional[bool] = None
+    """Whether `pattern` is a regular expression instead of a literal value."""
 
     last_modified: Optional[datetime] = None
     """Deprecated, use `modified_at` instead. End of life: November 1, 2026."""
@@ -67,7 +75,15 @@ class Post(BaseModel):
 
     created_at: Optional[datetime] = None
 
+    expires_at: Optional[datetime] = None
+    """Timestamp at which the pattern expires.
+
+    After this time, Email Security ignores the pattern. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
+
     is_regex: Optional[bool] = None
+    """Whether `pattern` is a regular expression instead of a literal value."""
 
     last_modified: Optional[datetime] = None
     """Deprecated, use `modified_at` instead. End of life: November 1, 2026."""
@@ -110,7 +126,15 @@ class Put(BaseModel):
 
     created_at: Optional[datetime] = None
 
+    expires_at: Optional[datetime] = None
+    """Timestamp at which the pattern expires.
+
+    After this time, Email Security ignores the pattern. The value must lie in the
+    future. Send `null` to clear the expiration.
+    """
+
     is_regex: Optional[bool] = None
+    """Whether `pattern` is a regular expression instead of a literal value."""
 
     last_modified: Optional[datetime] = None
     """Deprecated, use `modified_at` instead. End of life: November 1, 2026."""

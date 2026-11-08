@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import List, Type, Iterable, Optional, cast
+from typing import List, Type, Union, Iterable, Optional, cast
+from datetime import datetime
 from typing_extensions import Literal
 
 import httpx
@@ -64,6 +65,7 @@ class ContentPoliciesResource(SyncAPIResource):
         name: str,
         pattern: str,
         targets: List[Literal["SUBJECT", "BODY"]],
+        expires_at: Union[str, datetime, None] | Omit = omit,
         notes: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -79,6 +81,20 @@ class ContentPoliciesResource(SyncAPIResource):
 
         Args:
           account_id: Identifier.
+
+          enabled: Whether the policy is active.
+
+          name: Human-readable name of the policy.
+
+          pattern: Regular expression the policy matches against.
+
+          targets: Parts of the email the pattern is matched against.
+
+          expires_at: Timestamp at which the policy expires. After this time, Email Security ignores
+              the policy. The value must lie in the future. Send `null` to clear the
+              expiration.
+
+          notes: Optional note describing the purpose of the policy.
 
           extra_headers: Send extra headers
 
@@ -98,6 +114,7 @@ class ContentPoliciesResource(SyncAPIResource):
                     "name": name,
                     "pattern": pattern,
                     "targets": targets,
+                    "expires_at": expires_at,
                     "notes": notes,
                 },
                 content_policy_create_params.ContentPolicyCreateParams,
@@ -118,6 +135,7 @@ class ContentPoliciesResource(SyncAPIResource):
         account_id: str,
         direction: Literal["asc", "desc"] | Omit = omit,
         enabled: bool | Omit = omit,
+        expired: bool | Omit = omit,
         name: str | Omit = omit,
         order: Literal["name", "created_at"] | Omit = omit,
         page: int | Omit = omit,
@@ -142,6 +160,9 @@ class ContentPoliciesResource(SyncAPIResource):
           direction: The sorting direction.
 
           enabled: Filter by enabled status.
+
+          expired: Filter to return only expired policies (`true`) or only policies that still
+              apply (`false`). Omit to return both.
 
           name: Filter by exact policy name.
 
@@ -175,6 +196,7 @@ class ContentPoliciesResource(SyncAPIResource):
                     {
                         "direction": direction,
                         "enabled": enabled,
+                        "expired": expired,
                         "name": name,
                         "order": order,
                         "page": page,
@@ -252,14 +274,24 @@ class ContentPoliciesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[ContentPolicyBatchResponse]:
-        """Executes multiple operations atomically.
-
-        All four operation arrays (deletes,
-        patches, puts, posts) are required and executed in order. Send empty arrays for
-        unused operations.
+        """
+        Executes multiple content policy operations atomically: delete, partially
+        update, replace, and create content policies in a single request. All four
+        operation arrays (deletes, patches, puts, posts) are required and executed in
+        order. Send empty arrays for unused operations.
 
         Args:
           account_id: Identifier.
+
+          deletes: IDs of the content policies to delete.
+
+          patches: Partial updates to apply — each entry carries the policy's ID and only the
+              fields to change.
+
+          posts: Content policies to create.
+
+          puts: Full replacements to apply — each entry carries the policy's ID and every field
+              of its new value.
 
           extra_headers: Send extra headers
 
@@ -300,6 +332,7 @@ class ContentPoliciesResource(SyncAPIResource):
         *,
         account_id: str,
         enabled: bool | Omit = omit,
+        expires_at: Union[str, datetime, None] | Omit = omit,
         name: str | Omit = omit,
         notes: Optional[str] | Omit = omit,
         pattern: str | Omit = omit,
@@ -319,6 +352,20 @@ class ContentPoliciesResource(SyncAPIResource):
           account_id: Identifier.
 
           policy_id: Content policy identifier.
+
+          enabled: Whether the policy is active.
+
+          expires_at: Timestamp at which the policy expires. After this time, Email Security ignores
+              the policy. The value must lie in the future. Send `null` to clear the
+              expiration.
+
+          name: Human-readable name of the policy.
+
+          notes: Optional note describing the purpose of the policy.
+
+          pattern: Regular expression the policy matches against.
+
+          targets: Parts of the email the pattern is matched against.
 
           extra_headers: Send extra headers
 
@@ -341,6 +388,7 @@ class ContentPoliciesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "enabled": enabled,
+                    "expires_at": expires_at,
                     "name": name,
                     "notes": notes,
                     "pattern": pattern,
@@ -436,6 +484,7 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
         name: str,
         pattern: str,
         targets: List[Literal["SUBJECT", "BODY"]],
+        expires_at: Union[str, datetime, None] | Omit = omit,
         notes: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -451,6 +500,20 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
 
         Args:
           account_id: Identifier.
+
+          enabled: Whether the policy is active.
+
+          name: Human-readable name of the policy.
+
+          pattern: Regular expression the policy matches against.
+
+          targets: Parts of the email the pattern is matched against.
+
+          expires_at: Timestamp at which the policy expires. After this time, Email Security ignores
+              the policy. The value must lie in the future. Send `null` to clear the
+              expiration.
+
+          notes: Optional note describing the purpose of the policy.
 
           extra_headers: Send extra headers
 
@@ -470,6 +533,7 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
                     "name": name,
                     "pattern": pattern,
                     "targets": targets,
+                    "expires_at": expires_at,
                     "notes": notes,
                 },
                 content_policy_create_params.ContentPolicyCreateParams,
@@ -490,6 +554,7 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
         account_id: str,
         direction: Literal["asc", "desc"] | Omit = omit,
         enabled: bool | Omit = omit,
+        expired: bool | Omit = omit,
         name: str | Omit = omit,
         order: Literal["name", "created_at"] | Omit = omit,
         page: int | Omit = omit,
@@ -514,6 +579,9 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
           direction: The sorting direction.
 
           enabled: Filter by enabled status.
+
+          expired: Filter to return only expired policies (`true`) or only policies that still
+              apply (`false`). Omit to return both.
 
           name: Filter by exact policy name.
 
@@ -547,6 +615,7 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
                     {
                         "direction": direction,
                         "enabled": enabled,
+                        "expired": expired,
                         "name": name,
                         "order": order,
                         "page": page,
@@ -624,14 +693,24 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[ContentPolicyBatchResponse]:
-        """Executes multiple operations atomically.
-
-        All four operation arrays (deletes,
-        patches, puts, posts) are required and executed in order. Send empty arrays for
-        unused operations.
+        """
+        Executes multiple content policy operations atomically: delete, partially
+        update, replace, and create content policies in a single request. All four
+        operation arrays (deletes, patches, puts, posts) are required and executed in
+        order. Send empty arrays for unused operations.
 
         Args:
           account_id: Identifier.
+
+          deletes: IDs of the content policies to delete.
+
+          patches: Partial updates to apply — each entry carries the policy's ID and only the
+              fields to change.
+
+          posts: Content policies to create.
+
+          puts: Full replacements to apply — each entry carries the policy's ID and every field
+              of its new value.
 
           extra_headers: Send extra headers
 
@@ -672,6 +751,7 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
         *,
         account_id: str,
         enabled: bool | Omit = omit,
+        expires_at: Union[str, datetime, None] | Omit = omit,
         name: str | Omit = omit,
         notes: Optional[str] | Omit = omit,
         pattern: str | Omit = omit,
@@ -691,6 +771,20 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
           account_id: Identifier.
 
           policy_id: Content policy identifier.
+
+          enabled: Whether the policy is active.
+
+          expires_at: Timestamp at which the policy expires. After this time, Email Security ignores
+              the policy. The value must lie in the future. Send `null` to clear the
+              expiration.
+
+          name: Human-readable name of the policy.
+
+          notes: Optional note describing the purpose of the policy.
+
+          pattern: Regular expression the policy matches against.
+
+          targets: Parts of the email the pattern is matched against.
 
           extra_headers: Send extra headers
 
@@ -713,6 +807,7 @@ class AsyncContentPoliciesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "enabled": enabled,
+                    "expires_at": expires_at,
                     "name": name,
                     "notes": notes,
                     "pattern": pattern,

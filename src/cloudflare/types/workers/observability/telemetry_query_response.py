@@ -489,12 +489,33 @@ class CalculationAggregateGroup(BaseModel):
 
 class CalculationAggregate(BaseModel):
     count: float
+    """
+    Estimated number of matching events: the sum of the sample intervals of the
+    stored events. It equals the number of stored events when sampleInterval is 1.
+    """
 
     interval: float
+    """Deprecated alias of sampleInterval.
+
+    Always has the same value; use sampleInterval instead.
+    """
 
     sample_interval: float = FieldInfo(alias="sampleInterval")
+    """Average sample interval of the matched events.
+
+    Each stored event has a sample interval of 1 / (the sampling rate applied when
+    it was ingested): the Worker's head_sampling_rate multiplied by any platform
+    sampling applied to the account or script. A value of 1 means none of the
+    matched events were sampled. A value above 1 means count and value are estimated
+    from sampled data, not exact. This is independent of statistics.abr_level.
+    """
 
     value: float
+    """Result of the calculation.
+
+    count, sum, avg, median, and percentiles are weighted by each event's sample
+    interval
+    """
 
     groups: Optional[List[CalculationAggregateGroup]] = None
 
@@ -507,12 +528,33 @@ class CalculationSeriesDataGroup(BaseModel):
 
 class CalculationSeriesData(BaseModel):
     count: float
+    """
+    Estimated number of matching events: the sum of the sample intervals of the
+    stored events. It equals the number of stored events when sampleInterval is 1.
+    """
 
     interval: float
+    """Deprecated alias of sampleInterval.
+
+    Always has the same value; use sampleInterval instead.
+    """
 
     sample_interval: float = FieldInfo(alias="sampleInterval")
+    """Average sample interval of the matched events.
+
+    Each stored event has a sample interval of 1 / (the sampling rate applied when
+    it was ingested): the Worker's head_sampling_rate multiplied by any platform
+    sampling applied to the account or script. A value of 1 means none of the
+    matched events were sampled. A value above 1 means count and value are estimated
+    from sampled data, not exact. This is independent of statistics.abr_level.
+    """
 
     value: float
+    """Result of the calculation.
+
+    count, sum, avg, median, and percentiles are weighted by each event's sample
+    interval
+    """
 
     first_seen: Optional[str] = FieldInfo(alias="firstSeen", default=None)
 
@@ -545,12 +587,33 @@ class CompareAggregateGroup(BaseModel):
 
 class CompareAggregate(BaseModel):
     count: float
+    """
+    Estimated number of matching events: the sum of the sample intervals of the
+    stored events. It equals the number of stored events when sampleInterval is 1.
+    """
 
     interval: float
+    """Deprecated alias of sampleInterval.
+
+    Always has the same value; use sampleInterval instead.
+    """
 
     sample_interval: float = FieldInfo(alias="sampleInterval")
+    """Average sample interval of the matched events.
+
+    Each stored event has a sample interval of 1 / (the sampling rate applied when
+    it was ingested): the Worker's head_sampling_rate multiplied by any platform
+    sampling applied to the account or script. A value of 1 means none of the
+    matched events were sampled. A value above 1 means count and value are estimated
+    from sampled data, not exact. This is independent of statistics.abr_level.
+    """
 
     value: float
+    """Result of the calculation.
+
+    count, sum, avg, median, and percentiles are weighted by each event's sample
+    interval
+    """
 
     groups: Optional[List[CompareAggregateGroup]] = None
 
@@ -563,12 +626,33 @@ class CompareSeriesDataGroup(BaseModel):
 
 class CompareSeriesData(BaseModel):
     count: float
+    """
+    Estimated number of matching events: the sum of the sample intervals of the
+    stored events. It equals the number of stored events when sampleInterval is 1.
+    """
 
     interval: float
+    """Deprecated alias of sampleInterval.
+
+    Always has the same value; use sampleInterval instead.
+    """
 
     sample_interval: float = FieldInfo(alias="sampleInterval")
+    """Average sample interval of the matched events.
+
+    Each stored event has a sample interval of 1 / (the sampling rate applied when
+    it was ingested): the Worker's head_sampling_rate multiplied by any platform
+    sampling applied to the account or script. A value of 1 means none of the
+    matched events were sampled. A value above 1 means count and value are estimated
+    from sampled data, not exact. This is independent of statistics.abr_level.
+    """
 
     value: float
+    """Result of the calculation.
+
+    count, sum, avg, median, and percentiles are weighted by each event's sample
+    interval
+    """
 
     first_seen: Optional[str] = FieldInfo(alias="firstSeen", default=None)
 
@@ -651,11 +735,17 @@ class EventsEventMetadata(BaseModel):
     end_time: Optional[int] = FieldInfo(alias="endTime", default=None)
     """Span end time as a Unix epoch in milliseconds."""
 
+    end_time_ns: Optional[str] = FieldInfo(alias="endTimeNs", default=None)
+    """Span end time as a Unix epoch in nanoseconds."""
+
     error: Optional[str] = None
     """Error message, present when the log represents an error."""
 
     error_template: Optional[str] = FieldInfo(alias="errorTemplate", default=None)
     """Templatized version of the error message used for grouping similar errors."""
+
+    event_size: Optional[int] = FieldInfo(alias="eventSize", default=None)
+    """Size of the stored telemetry event in bytes."""
 
     fingerprint: Optional[str] = None
     """Content-based fingerprint used to group similar events."""
@@ -702,14 +792,33 @@ class EventsEventMetadata(BaseModel):
     span_name: Optional[str] = FieldInfo(alias="spanName", default=None)
     """Human-readable name for this span."""
 
+    span_status: Optional[Literal["unset", "ok", "error"]] = FieldInfo(alias="spanStatus", default=None)
+    """OpenTelemetry span status.
+
+    Present only on spans. `unset` when the span did not set a status, including
+    spans recorded before status was captured.
+    """
+
+    span_status_message: Optional[str] = FieldInfo(alias="spanStatusMessage", default=None)
+    """OpenTelemetry span status message.
+
+    Present only on spans when the status is `error` and a message was set.
+    """
+
     stack_id: Optional[str] = FieldInfo(alias="stackId", default=None)
     """Stack / deployment identifier."""
 
     start_time: Optional[int] = FieldInfo(alias="startTime", default=None)
     """Span start time as a Unix epoch in milliseconds."""
 
+    start_time_ns: Optional[str] = FieldInfo(alias="startTimeNs", default=None)
+    """Span start time as a Unix epoch in nanoseconds."""
+
     status_code: Optional[int] = FieldInfo(alias="statusCode", default=None)
     """HTTP response status code returned by the Worker."""
+
+    timestamp_ns: Optional[str] = FieldInfo(alias="timestampNs", default=None)
+    """Event time as a Unix epoch in nanoseconds."""
 
     trace_duration: Optional[int] = FieldInfo(alias="traceDuration", default=None)
     """Total duration of the entire trace in milliseconds."""
@@ -929,10 +1038,26 @@ class EventsSeriesData(BaseModel):
     aggregates: EventsSeriesDataAggregates
 
     count: float
+    """
+    Estimated number of matching events: the sum of the sample intervals of the
+    stored events. It equals the number of stored events when sampleInterval is 1.
+    """
 
     interval: float
+    """Deprecated alias of sampleInterval.
+
+    Always has the same value; use sampleInterval instead.
+    """
 
     sample_interval: float = FieldInfo(alias="sampleInterval")
+    """Average sample interval of the matched events.
+
+    Each stored event has a sample interval of 1 / (the sampling rate applied when
+    it was ingested): the Worker's head_sampling_rate multiplied by any platform
+    sampling applied to the account or script. A value of 1 means none of the
+    matched events were sampled. A value above 1 means count and value are estimated
+    from sampled data, not exact. This is independent of statistics.abr_level.
+    """
 
     errors: Optional[float] = None
 
@@ -997,11 +1122,17 @@ class InvocationMetadata(BaseModel):
     end_time: Optional[int] = FieldInfo(alias="endTime", default=None)
     """Span end time as a Unix epoch in milliseconds."""
 
+    end_time_ns: Optional[str] = FieldInfo(alias="endTimeNs", default=None)
+    """Span end time as a Unix epoch in nanoseconds."""
+
     error: Optional[str] = None
     """Error message, present when the log represents an error."""
 
     error_template: Optional[str] = FieldInfo(alias="errorTemplate", default=None)
     """Templatized version of the error message used for grouping similar errors."""
+
+    event_size: Optional[int] = FieldInfo(alias="eventSize", default=None)
+    """Size of the stored telemetry event in bytes."""
 
     fingerprint: Optional[str] = None
     """Content-based fingerprint used to group similar events."""
@@ -1048,14 +1179,33 @@ class InvocationMetadata(BaseModel):
     span_name: Optional[str] = FieldInfo(alias="spanName", default=None)
     """Human-readable name for this span."""
 
+    span_status: Optional[Literal["unset", "ok", "error"]] = FieldInfo(alias="spanStatus", default=None)
+    """OpenTelemetry span status.
+
+    Present only on spans. `unset` when the span did not set a status, including
+    spans recorded before status was captured.
+    """
+
+    span_status_message: Optional[str] = FieldInfo(alias="spanStatusMessage", default=None)
+    """OpenTelemetry span status message.
+
+    Present only on spans when the status is `error` and a message was set.
+    """
+
     stack_id: Optional[str] = FieldInfo(alias="stackId", default=None)
     """Stack / deployment identifier."""
 
     start_time: Optional[int] = FieldInfo(alias="startTime", default=None)
     """Span start time as a Unix epoch in milliseconds."""
 
+    start_time_ns: Optional[str] = FieldInfo(alias="startTimeNs", default=None)
+    """Span start time as a Unix epoch in nanoseconds."""
+
     status_code: Optional[int] = FieldInfo(alias="statusCode", default=None)
     """HTTP response status code returned by the Worker."""
+
+    timestamp_ns: Optional[str] = FieldInfo(alias="timestampNs", default=None)
+    """Event time as a Unix epoch in nanoseconds."""
 
     trace_duration: Optional[int] = FieldInfo(alias="traceDuration", default=None)
     """Total duration of the entire trace in milliseconds."""

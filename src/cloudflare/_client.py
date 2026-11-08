@@ -40,6 +40,7 @@ if TYPE_CHECKING:
     from .resources import (
         ai,
         d1,
+        k2,
         kv,
         r2,
         acm,
@@ -91,6 +92,7 @@ if TYPE_CHECKING:
         addressing,
         ai_gateway,
         audit_logs,
+        containers,
         email_auth,
         hyperdrive,
         page_rules,
@@ -109,9 +111,11 @@ if TYPE_CHECKING:
         custom_pages,
         dns_firewall,
         healthchecks,
+        monetization,
         realtime_kit,
         security_txt,
         abuse_reports,
+        basin_catalog,
         email_routing,
         email_sending,
         magic_transit,
@@ -152,18 +156,17 @@ if TYPE_CHECKING:
         network_interconnects,
         vulnerability_scanner,
         workers_for_platforms,
-        magic_cloud_networking,
         origin_ca_certificates,
         origin_tls_client_auth,
         certificate_authorities,
         leaked_credential_checks,
         magic_network_monitoring,
-        tenant_custom_nameservers,
         origin_tls_compliance_modes,
         origin_post_quantum_encryption,
     )
     from .resources.ai.ai import AIResource, AsyncAIResource
     from .resources.d1.d1 import D1Resource, AsyncD1Resource
+    from .resources.k2.k2 import K2Resource, AsyncK2Resource
     from .resources.kv.kv import KVResource, AsyncKVResource
     from .resources.r2.r2 import R2Resource, AsyncR2Resource
     from .resources.acm.acm import ACMResource, AsyncACMResource
@@ -215,6 +218,7 @@ if TYPE_CHECKING:
     from .resources.addressing.addressing import AddressingResource, AsyncAddressingResource
     from .resources.ai_gateway.ai_gateway import AIGatewayResource, AsyncAIGatewayResource
     from .resources.audit_logs.audit_logs import AuditLogsResource, AsyncAuditLogsResource
+    from .resources.containers.containers import ContainersResource, AsyncContainersResource
     from .resources.email_auth.email_auth import EmailAuthResource, AsyncEmailAuthResource
     from .resources.hyperdrive.hyperdrive import HyperdriveResource, AsyncHyperdriveResource
     from .resources.page_rules.page_rules import PageRulesResource, AsyncPageRulesResource
@@ -233,9 +237,11 @@ if TYPE_CHECKING:
     from .resources.custom_pages.custom_pages import CustomPagesResource, AsyncCustomPagesResource
     from .resources.dns_firewall.dns_firewall import DNSFirewallResource, AsyncDNSFirewallResource
     from .resources.healthchecks.healthchecks import HealthchecksResource, AsyncHealthchecksResource
+    from .resources.monetization.monetization import MonetizationResource, AsyncMonetizationResource
     from .resources.realtime_kit.realtime_kit import RealtimeKitResource, AsyncRealtimeKitResource
     from .resources.security_txt.security_txt import SecurityTXTResource, AsyncSecurityTXTResource
     from .resources.abuse_reports.abuse_reports import AbuseReportsResource, AsyncAbuseReportsResource
+    from .resources.basin_catalog.basin_catalog import BasinCatalogResource, AsyncBasinCatalogResource
     from .resources.email_routing.email_routing import EmailRoutingResource, AsyncEmailRoutingResource
     from .resources.email_sending.email_sending import EmailSendingResource, AsyncEmailSendingResource
     from .resources.magic_transit.magic_transit import MagicTransitResource, AsyncMagicTransitResource
@@ -300,10 +306,6 @@ if TYPE_CHECKING:
         WorkersForPlatformsResource,
         AsyncWorkersForPlatformsResource,
     )
-    from .resources.magic_cloud_networking.magic_cloud_networking import (
-        MagicCloudNetworkingResource,
-        AsyncMagicCloudNetworkingResource,
-    )
     from .resources.origin_ca_certificates.origin_ca_certificates import (
         OriginCACertificatesResource,
         AsyncOriginCACertificatesResource,
@@ -323,10 +325,6 @@ if TYPE_CHECKING:
     from .resources.magic_network_monitoring.magic_network_monitoring import (
         MagicNetworkMonitoringResource,
         AsyncMagicNetworkMonitoringResource,
-    )
-    from .resources.tenant_custom_nameservers.tenant_custom_nameservers import (
-        TenantCustomNameserversResource,
-        AsyncTenantCustomNameserversResource,
     )
     from .resources.origin_tls_compliance_modes.origin_tls_compliance_modes import (
         OriginTLSComplianceModesResource,
@@ -443,6 +441,11 @@ class Cloudflare(SyncAPIClient):
 
     @cached_property
     def organizations(self) -> OrganizationsResource:
+        """
+        User API tokens can list and create Organizations, but reading, updating, or deleting an Organization requires a Global API key and your registered email address. The `cloudflare_organization` Terraform resource therefore requires a Global API key for its full lifecycle.
+
+        See [Organizations authentication limitations](https://developers.cloudflare.com/fundamentals/organizations/limitations/#api-authentication) for credential compatibility by operation. Each endpoint’s **Security** section lists its supported authentication methods, with **Accepted Permissions** where applicable.
+        """
         from .resources.organizations import OrganizationsResource
 
         return OrganizationsResource(self)
@@ -554,12 +557,6 @@ class Cloudflare(SyncAPIClient):
         from .resources.custom_nameservers import CustomNameserversResource
 
         return CustomNameserversResource(self)
-
-    @cached_property
-    def tenant_custom_nameservers(self) -> TenantCustomNameserversResource:
-        from .resources.tenant_custom_nameservers import TenantCustomNameserversResource
-
-        return TenantCustomNameserversResource(self)
 
     @cached_property
     def dns_firewall(self) -> DNSFirewallResource:
@@ -682,6 +679,12 @@ class Cloudflare(SyncAPIClient):
         return DurableObjectsResource(self)
 
     @cached_property
+    def containers(self) -> ContainersResource:
+        from .resources.containers import ContainersResource
+
+        return ContainersResource(self)
+
+    @cached_property
     def queues(self) -> QueuesResource:
         from .resources.queues import QueuesResource
 
@@ -790,10 +793,10 @@ class Cloudflare(SyncAPIClient):
         return MagicNetworkMonitoringResource(self)
 
     @cached_property
-    def magic_cloud_networking(self) -> MagicCloudNetworkingResource:
-        from .resources.magic_cloud_networking import MagicCloudNetworkingResource
+    def monetization(self) -> MonetizationResource:
+        from .resources.monetization import MonetizationResource
 
-        return MagicCloudNetworkingResource(self)
+        return MonetizationResource(self)
 
     @cached_property
     def network_interconnects(self) -> NetworkInterconnectsResource:
@@ -1066,6 +1069,12 @@ class Cloudflare(SyncAPIClient):
         from .resources.r2_data_catalog import R2DataCatalogResource
 
         return R2DataCatalogResource(self)
+
+    @cached_property
+    def basin_catalog(self) -> BasinCatalogResource:
+        from .resources.basin_catalog import BasinCatalogResource
+
+        return BasinCatalogResource(self)
 
     @cached_property
     def workers_for_platforms(self) -> WorkersForPlatformsResource:
@@ -1356,6 +1365,12 @@ class Cloudflare(SyncAPIClient):
         return PipelinesResource(self)
 
     @cached_property
+    def k2(self) -> K2Resource:
+        from .resources.k2 import K2Resource
+
+        return K2Resource(self)
+
+    @cached_property
     def schema_validation(self) -> SchemaValidationResource:
         from .resources.schema_validation import SchemaValidationResource
 
@@ -1643,6 +1658,11 @@ class AsyncCloudflare(AsyncAPIClient):
 
     @cached_property
     def organizations(self) -> AsyncOrganizationsResource:
+        """
+        User API tokens can list and create Organizations, but reading, updating, or deleting an Organization requires a Global API key and your registered email address. The `cloudflare_organization` Terraform resource therefore requires a Global API key for its full lifecycle.
+
+        See [Organizations authentication limitations](https://developers.cloudflare.com/fundamentals/organizations/limitations/#api-authentication) for credential compatibility by operation. Each endpoint’s **Security** section lists its supported authentication methods, with **Accepted Permissions** where applicable.
+        """
         from .resources.organizations import AsyncOrganizationsResource
 
         return AsyncOrganizationsResource(self)
@@ -1754,12 +1774,6 @@ class AsyncCloudflare(AsyncAPIClient):
         from .resources.custom_nameservers import AsyncCustomNameserversResource
 
         return AsyncCustomNameserversResource(self)
-
-    @cached_property
-    def tenant_custom_nameservers(self) -> AsyncTenantCustomNameserversResource:
-        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResource
-
-        return AsyncTenantCustomNameserversResource(self)
 
     @cached_property
     def dns_firewall(self) -> AsyncDNSFirewallResource:
@@ -1882,6 +1896,12 @@ class AsyncCloudflare(AsyncAPIClient):
         return AsyncDurableObjectsResource(self)
 
     @cached_property
+    def containers(self) -> AsyncContainersResource:
+        from .resources.containers import AsyncContainersResource
+
+        return AsyncContainersResource(self)
+
+    @cached_property
     def queues(self) -> AsyncQueuesResource:
         from .resources.queues import AsyncQueuesResource
 
@@ -1990,10 +2010,10 @@ class AsyncCloudflare(AsyncAPIClient):
         return AsyncMagicNetworkMonitoringResource(self)
 
     @cached_property
-    def magic_cloud_networking(self) -> AsyncMagicCloudNetworkingResource:
-        from .resources.magic_cloud_networking import AsyncMagicCloudNetworkingResource
+    def monetization(self) -> AsyncMonetizationResource:
+        from .resources.monetization import AsyncMonetizationResource
 
-        return AsyncMagicCloudNetworkingResource(self)
+        return AsyncMonetizationResource(self)
 
     @cached_property
     def network_interconnects(self) -> AsyncNetworkInterconnectsResource:
@@ -2266,6 +2286,12 @@ class AsyncCloudflare(AsyncAPIClient):
         from .resources.r2_data_catalog import AsyncR2DataCatalogResource
 
         return AsyncR2DataCatalogResource(self)
+
+    @cached_property
+    def basin_catalog(self) -> AsyncBasinCatalogResource:
+        from .resources.basin_catalog import AsyncBasinCatalogResource
+
+        return AsyncBasinCatalogResource(self)
 
     @cached_property
     def workers_for_platforms(self) -> AsyncWorkersForPlatformsResource:
@@ -2556,6 +2582,12 @@ class AsyncCloudflare(AsyncAPIClient):
         return AsyncPipelinesResource(self)
 
     @cached_property
+    def k2(self) -> AsyncK2Resource:
+        from .resources.k2 import AsyncK2Resource
+
+        return AsyncK2Resource(self)
+
+    @cached_property
     def schema_validation(self) -> AsyncSchemaValidationResource:
         from .resources.schema_validation import AsyncSchemaValidationResource
 
@@ -2763,6 +2795,11 @@ class CloudflareWithRawResponse:
 
     @cached_property
     def organizations(self) -> organizations.OrganizationsResourceWithRawResponse:
+        """
+        User API tokens can list and create Organizations, but reading, updating, or deleting an Organization requires a Global API key and your registered email address. The `cloudflare_organization` Terraform resource therefore requires a Global API key for its full lifecycle.
+
+        See [Organizations authentication limitations](https://developers.cloudflare.com/fundamentals/organizations/limitations/#api-authentication) for credential compatibility by operation. Each endpoint’s **Security** section lists its supported authentication methods, with **Accepted Permissions** where applicable.
+        """
         from .resources.organizations import OrganizationsResourceWithRawResponse
 
         return OrganizationsResourceWithRawResponse(self._client.organizations)
@@ -2874,12 +2911,6 @@ class CloudflareWithRawResponse:
         from .resources.custom_nameservers import CustomNameserversResourceWithRawResponse
 
         return CustomNameserversResourceWithRawResponse(self._client.custom_nameservers)
-
-    @cached_property
-    def tenant_custom_nameservers(self) -> tenant_custom_nameservers.TenantCustomNameserversResourceWithRawResponse:
-        from .resources.tenant_custom_nameservers import TenantCustomNameserversResourceWithRawResponse
-
-        return TenantCustomNameserversResourceWithRawResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.DNSFirewallResourceWithRawResponse:
@@ -3002,6 +3033,12 @@ class CloudflareWithRawResponse:
         return DurableObjectsResourceWithRawResponse(self._client.durable_objects)
 
     @cached_property
+    def containers(self) -> containers.ContainersResourceWithRawResponse:
+        from .resources.containers import ContainersResourceWithRawResponse
+
+        return ContainersResourceWithRawResponse(self._client.containers)
+
+    @cached_property
     def queues(self) -> queues.QueuesResourceWithRawResponse:
         from .resources.queues import QueuesResourceWithRawResponse
 
@@ -3110,10 +3147,10 @@ class CloudflareWithRawResponse:
         return MagicNetworkMonitoringResourceWithRawResponse(self._client.magic_network_monitoring)
 
     @cached_property
-    def magic_cloud_networking(self) -> magic_cloud_networking.MagicCloudNetworkingResourceWithRawResponse:
-        from .resources.magic_cloud_networking import MagicCloudNetworkingResourceWithRawResponse
+    def monetization(self) -> monetization.MonetizationResourceWithRawResponse:
+        from .resources.monetization import MonetizationResourceWithRawResponse
 
-        return MagicCloudNetworkingResourceWithRawResponse(self._client.magic_cloud_networking)
+        return MonetizationResourceWithRawResponse(self._client.monetization)
 
     @cached_property
     def network_interconnects(self) -> network_interconnects.NetworkInterconnectsResourceWithRawResponse:
@@ -3386,6 +3423,12 @@ class CloudflareWithRawResponse:
         from .resources.r2_data_catalog import R2DataCatalogResourceWithRawResponse
 
         return R2DataCatalogResourceWithRawResponse(self._client.r2_data_catalog)
+
+    @cached_property
+    def basin_catalog(self) -> basin_catalog.BasinCatalogResourceWithRawResponse:
+        from .resources.basin_catalog import BasinCatalogResourceWithRawResponse
+
+        return BasinCatalogResourceWithRawResponse(self._client.basin_catalog)
 
     @cached_property
     def workers_for_platforms(self) -> workers_for_platforms.WorkersForPlatformsResourceWithRawResponse:
@@ -3680,6 +3723,12 @@ class CloudflareWithRawResponse:
         return PipelinesResourceWithRawResponse(self._client.pipelines)
 
     @cached_property
+    def k2(self) -> k2.K2ResourceWithRawResponse:
+        from .resources.k2 import K2ResourceWithRawResponse
+
+        return K2ResourceWithRawResponse(self._client.k2)
+
+    @cached_property
     def schema_validation(self) -> schema_validation.SchemaValidationResourceWithRawResponse:
         from .resources.schema_validation import SchemaValidationResourceWithRawResponse
 
@@ -3712,6 +3761,11 @@ class AsyncCloudflareWithRawResponse:
 
     @cached_property
     def organizations(self) -> organizations.AsyncOrganizationsResourceWithRawResponse:
+        """
+        User API tokens can list and create Organizations, but reading, updating, or deleting an Organization requires a Global API key and your registered email address. The `cloudflare_organization` Terraform resource therefore requires a Global API key for its full lifecycle.
+
+        See [Organizations authentication limitations](https://developers.cloudflare.com/fundamentals/organizations/limitations/#api-authentication) for credential compatibility by operation. Each endpoint’s **Security** section lists its supported authentication methods, with **Accepted Permissions** where applicable.
+        """
         from .resources.organizations import AsyncOrganizationsResourceWithRawResponse
 
         return AsyncOrganizationsResourceWithRawResponse(self._client.organizations)
@@ -3823,14 +3877,6 @@ class AsyncCloudflareWithRawResponse:
         from .resources.custom_nameservers import AsyncCustomNameserversResourceWithRawResponse
 
         return AsyncCustomNameserversResourceWithRawResponse(self._client.custom_nameservers)
-
-    @cached_property
-    def tenant_custom_nameservers(
-        self,
-    ) -> tenant_custom_nameservers.AsyncTenantCustomNameserversResourceWithRawResponse:
-        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResourceWithRawResponse
-
-        return AsyncTenantCustomNameserversResourceWithRawResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.AsyncDNSFirewallResourceWithRawResponse:
@@ -3953,6 +3999,12 @@ class AsyncCloudflareWithRawResponse:
         return AsyncDurableObjectsResourceWithRawResponse(self._client.durable_objects)
 
     @cached_property
+    def containers(self) -> containers.AsyncContainersResourceWithRawResponse:
+        from .resources.containers import AsyncContainersResourceWithRawResponse
+
+        return AsyncContainersResourceWithRawResponse(self._client.containers)
+
+    @cached_property
     def queues(self) -> queues.AsyncQueuesResourceWithRawResponse:
         from .resources.queues import AsyncQueuesResourceWithRawResponse
 
@@ -4061,10 +4113,10 @@ class AsyncCloudflareWithRawResponse:
         return AsyncMagicNetworkMonitoringResourceWithRawResponse(self._client.magic_network_monitoring)
 
     @cached_property
-    def magic_cloud_networking(self) -> magic_cloud_networking.AsyncMagicCloudNetworkingResourceWithRawResponse:
-        from .resources.magic_cloud_networking import AsyncMagicCloudNetworkingResourceWithRawResponse
+    def monetization(self) -> monetization.AsyncMonetizationResourceWithRawResponse:
+        from .resources.monetization import AsyncMonetizationResourceWithRawResponse
 
-        return AsyncMagicCloudNetworkingResourceWithRawResponse(self._client.magic_cloud_networking)
+        return AsyncMonetizationResourceWithRawResponse(self._client.monetization)
 
     @cached_property
     def network_interconnects(self) -> network_interconnects.AsyncNetworkInterconnectsResourceWithRawResponse:
@@ -4337,6 +4389,12 @@ class AsyncCloudflareWithRawResponse:
         from .resources.r2_data_catalog import AsyncR2DataCatalogResourceWithRawResponse
 
         return AsyncR2DataCatalogResourceWithRawResponse(self._client.r2_data_catalog)
+
+    @cached_property
+    def basin_catalog(self) -> basin_catalog.AsyncBasinCatalogResourceWithRawResponse:
+        from .resources.basin_catalog import AsyncBasinCatalogResourceWithRawResponse
+
+        return AsyncBasinCatalogResourceWithRawResponse(self._client.basin_catalog)
 
     @cached_property
     def workers_for_platforms(self) -> workers_for_platforms.AsyncWorkersForPlatformsResourceWithRawResponse:
@@ -4631,6 +4689,12 @@ class AsyncCloudflareWithRawResponse:
         return AsyncPipelinesResourceWithRawResponse(self._client.pipelines)
 
     @cached_property
+    def k2(self) -> k2.AsyncK2ResourceWithRawResponse:
+        from .resources.k2 import AsyncK2ResourceWithRawResponse
+
+        return AsyncK2ResourceWithRawResponse(self._client.k2)
+
+    @cached_property
     def schema_validation(self) -> schema_validation.AsyncSchemaValidationResourceWithRawResponse:
         from .resources.schema_validation import AsyncSchemaValidationResourceWithRawResponse
 
@@ -4663,6 +4727,11 @@ class CloudflareWithStreamedResponse:
 
     @cached_property
     def organizations(self) -> organizations.OrganizationsResourceWithStreamingResponse:
+        """
+        User API tokens can list and create Organizations, but reading, updating, or deleting an Organization requires a Global API key and your registered email address. The `cloudflare_organization` Terraform resource therefore requires a Global API key for its full lifecycle.
+
+        See [Organizations authentication limitations](https://developers.cloudflare.com/fundamentals/organizations/limitations/#api-authentication) for credential compatibility by operation. Each endpoint’s **Security** section lists its supported authentication methods, with **Accepted Permissions** where applicable.
+        """
         from .resources.organizations import OrganizationsResourceWithStreamingResponse
 
         return OrganizationsResourceWithStreamingResponse(self._client.organizations)
@@ -4774,14 +4843,6 @@ class CloudflareWithStreamedResponse:
         from .resources.custom_nameservers import CustomNameserversResourceWithStreamingResponse
 
         return CustomNameserversResourceWithStreamingResponse(self._client.custom_nameservers)
-
-    @cached_property
-    def tenant_custom_nameservers(
-        self,
-    ) -> tenant_custom_nameservers.TenantCustomNameserversResourceWithStreamingResponse:
-        from .resources.tenant_custom_nameservers import TenantCustomNameserversResourceWithStreamingResponse
-
-        return TenantCustomNameserversResourceWithStreamingResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.DNSFirewallResourceWithStreamingResponse:
@@ -4904,6 +4965,12 @@ class CloudflareWithStreamedResponse:
         return DurableObjectsResourceWithStreamingResponse(self._client.durable_objects)
 
     @cached_property
+    def containers(self) -> containers.ContainersResourceWithStreamingResponse:
+        from .resources.containers import ContainersResourceWithStreamingResponse
+
+        return ContainersResourceWithStreamingResponse(self._client.containers)
+
+    @cached_property
     def queues(self) -> queues.QueuesResourceWithStreamingResponse:
         from .resources.queues import QueuesResourceWithStreamingResponse
 
@@ -5012,10 +5079,10 @@ class CloudflareWithStreamedResponse:
         return MagicNetworkMonitoringResourceWithStreamingResponse(self._client.magic_network_monitoring)
 
     @cached_property
-    def magic_cloud_networking(self) -> magic_cloud_networking.MagicCloudNetworkingResourceWithStreamingResponse:
-        from .resources.magic_cloud_networking import MagicCloudNetworkingResourceWithStreamingResponse
+    def monetization(self) -> monetization.MonetizationResourceWithStreamingResponse:
+        from .resources.monetization import MonetizationResourceWithStreamingResponse
 
-        return MagicCloudNetworkingResourceWithStreamingResponse(self._client.magic_cloud_networking)
+        return MonetizationResourceWithStreamingResponse(self._client.monetization)
 
     @cached_property
     def network_interconnects(self) -> network_interconnects.NetworkInterconnectsResourceWithStreamingResponse:
@@ -5288,6 +5355,12 @@ class CloudflareWithStreamedResponse:
         from .resources.r2_data_catalog import R2DataCatalogResourceWithStreamingResponse
 
         return R2DataCatalogResourceWithStreamingResponse(self._client.r2_data_catalog)
+
+    @cached_property
+    def basin_catalog(self) -> basin_catalog.BasinCatalogResourceWithStreamingResponse:
+        from .resources.basin_catalog import BasinCatalogResourceWithStreamingResponse
+
+        return BasinCatalogResourceWithStreamingResponse(self._client.basin_catalog)
 
     @cached_property
     def workers_for_platforms(self) -> workers_for_platforms.WorkersForPlatformsResourceWithStreamingResponse:
@@ -5582,6 +5655,12 @@ class CloudflareWithStreamedResponse:
         return PipelinesResourceWithStreamingResponse(self._client.pipelines)
 
     @cached_property
+    def k2(self) -> k2.K2ResourceWithStreamingResponse:
+        from .resources.k2 import K2ResourceWithStreamingResponse
+
+        return K2ResourceWithStreamingResponse(self._client.k2)
+
+    @cached_property
     def schema_validation(self) -> schema_validation.SchemaValidationResourceWithStreamingResponse:
         from .resources.schema_validation import SchemaValidationResourceWithStreamingResponse
 
@@ -5614,6 +5693,11 @@ class AsyncCloudflareWithStreamedResponse:
 
     @cached_property
     def organizations(self) -> organizations.AsyncOrganizationsResourceWithStreamingResponse:
+        """
+        User API tokens can list and create Organizations, but reading, updating, or deleting an Organization requires a Global API key and your registered email address. The `cloudflare_organization` Terraform resource therefore requires a Global API key for its full lifecycle.
+
+        See [Organizations authentication limitations](https://developers.cloudflare.com/fundamentals/organizations/limitations/#api-authentication) for credential compatibility by operation. Each endpoint’s **Security** section lists its supported authentication methods, with **Accepted Permissions** where applicable.
+        """
         from .resources.organizations import AsyncOrganizationsResourceWithStreamingResponse
 
         return AsyncOrganizationsResourceWithStreamingResponse(self._client.organizations)
@@ -5727,14 +5811,6 @@ class AsyncCloudflareWithStreamedResponse:
         from .resources.custom_nameservers import AsyncCustomNameserversResourceWithStreamingResponse
 
         return AsyncCustomNameserversResourceWithStreamingResponse(self._client.custom_nameservers)
-
-    @cached_property
-    def tenant_custom_nameservers(
-        self,
-    ) -> tenant_custom_nameservers.AsyncTenantCustomNameserversResourceWithStreamingResponse:
-        from .resources.tenant_custom_nameservers import AsyncTenantCustomNameserversResourceWithStreamingResponse
-
-        return AsyncTenantCustomNameserversResourceWithStreamingResponse(self._client.tenant_custom_nameservers)
 
     @cached_property
     def dns_firewall(self) -> dns_firewall.AsyncDNSFirewallResourceWithStreamingResponse:
@@ -5857,6 +5933,12 @@ class AsyncCloudflareWithStreamedResponse:
         return AsyncDurableObjectsResourceWithStreamingResponse(self._client.durable_objects)
 
     @cached_property
+    def containers(self) -> containers.AsyncContainersResourceWithStreamingResponse:
+        from .resources.containers import AsyncContainersResourceWithStreamingResponse
+
+        return AsyncContainersResourceWithStreamingResponse(self._client.containers)
+
+    @cached_property
     def queues(self) -> queues.AsyncQueuesResourceWithStreamingResponse:
         from .resources.queues import AsyncQueuesResourceWithStreamingResponse
 
@@ -5967,10 +6049,10 @@ class AsyncCloudflareWithStreamedResponse:
         return AsyncMagicNetworkMonitoringResourceWithStreamingResponse(self._client.magic_network_monitoring)
 
     @cached_property
-    def magic_cloud_networking(self) -> magic_cloud_networking.AsyncMagicCloudNetworkingResourceWithStreamingResponse:
-        from .resources.magic_cloud_networking import AsyncMagicCloudNetworkingResourceWithStreamingResponse
+    def monetization(self) -> monetization.AsyncMonetizationResourceWithStreamingResponse:
+        from .resources.monetization import AsyncMonetizationResourceWithStreamingResponse
 
-        return AsyncMagicCloudNetworkingResourceWithStreamingResponse(self._client.magic_cloud_networking)
+        return AsyncMonetizationResourceWithStreamingResponse(self._client.monetization)
 
     @cached_property
     def network_interconnects(self) -> network_interconnects.AsyncNetworkInterconnectsResourceWithStreamingResponse:
@@ -6243,6 +6325,12 @@ class AsyncCloudflareWithStreamedResponse:
         from .resources.r2_data_catalog import AsyncR2DataCatalogResourceWithStreamingResponse
 
         return AsyncR2DataCatalogResourceWithStreamingResponse(self._client.r2_data_catalog)
+
+    @cached_property
+    def basin_catalog(self) -> basin_catalog.AsyncBasinCatalogResourceWithStreamingResponse:
+        from .resources.basin_catalog import AsyncBasinCatalogResourceWithStreamingResponse
+
+        return AsyncBasinCatalogResourceWithStreamingResponse(self._client.basin_catalog)
 
     @cached_property
     def workers_for_platforms(self) -> workers_for_platforms.AsyncWorkersForPlatformsResourceWithStreamingResponse:
@@ -6541,6 +6629,12 @@ class AsyncCloudflareWithStreamedResponse:
         from .resources.pipelines import AsyncPipelinesResourceWithStreamingResponse
 
         return AsyncPipelinesResourceWithStreamingResponse(self._client.pipelines)
+
+    @cached_property
+    def k2(self) -> k2.AsyncK2ResourceWithStreamingResponse:
+        from .resources.k2 import AsyncK2ResourceWithStreamingResponse
+
+        return AsyncK2ResourceWithStreamingResponse(self._client.k2)
 
     @cached_property
     def schema_validation(self) -> schema_validation.AsyncSchemaValidationResourceWithStreamingResponse:
